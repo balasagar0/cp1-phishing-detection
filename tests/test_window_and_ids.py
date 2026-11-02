@@ -160,7 +160,8 @@ def test_bad_input_is_rejected():
 
 def test_cors_preflight():
     r = client().options("/correlate", headers={"Origin": "http://localhost:5173", "Access-Control-Request-Method": "POST"})
-    assert r.status_code == 200 and r.headers.get("access-control-allow-origin") == "*", (r.status_code, dict(r.headers))
+    # since R2-04 (D-06) CORS names the console's dev origin explicitly instead of '*'
+    assert r.status_code == 200 and r.headers.get("access-control-allow-origin") == "http://localhost:5173", (r.status_code, dict(r.headers))
 
 
 if __name__ == "__main__":

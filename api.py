@@ -1,24 +1,29 @@
-"""Local API for the React console:  uvicorn api:app --port 8000
+"""Local API for the console:  uvicorn api:app --port 8000
 POST /score        {"channel":"email|sms|url","text":"...","subject":"(email only, optional)"}
 POST /score/batch  {"items":[{...},{...}]}
 POST /correlate    {"events":[{"channel","text","subject","identity","time"},...], "window_minutes": 60}   (window optional; events further apart are not combined or linked)
 Calls, voice and video have no detector. /score answers HTTP 501 for them. /correlate accepts them, returns them as "not assessed" and keeps them out of
 the bundle risk; when no event can be assessed it answers status CANNOT_ASSESS with no risk, never a low score."""
-import sys, math
+import sys, math, os
 from pathlib import Path
 from typing import List, Optional
 sys.path.insert(0, str(Path(__file__).parent / "src"))
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
-from predict import Detectors, extract_ids, SCORED, NOT_ASSESSED
+from predict import Detectors, extract_ids, ModelUnavailable, SCORED, NOT_ASSESSED
 from fusion import Fusion
+from url_features import check_url
 from datetime import datetime
 
+CHANNELS = SCORED + NOT_ASSESSED
 NOT_BUILT = "no detector for this channel (not built in CP1)"
+# CORS for the console's development server only (R2-04, D-06). The built console is served from this app, so it needs no CORS.
+# CP1_CORS_ORIGINS="http://host:port,..." replaces the list. Never '*'.
+ORIGINS = [o.strip() for o in os.environ.get("CP1_CORS_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173").split(",") if o.strip() and o.strip() != "*"]
 
-app = FastAPI(title="CP1 per-channel phishing detectors", version="0.1")
-app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])  # local demo only
+app = FastAPI(title="CP1 per-channel phishing detectors", version="0.2")
+app.add_middleware(CORSMiddleware, allow_origins=ORIGINS, allow_methods=["GET", "POST", "OPTIONS"], allow_headers=["Content-Type"])
 D = Detectors()
 _real = Path(__file__).parent / "models" / "fusion_model_real.joblib"   # written by src/refit_fusion.py --save
 F = Fusion(_real if _real.exists() else Path(__file__).parent / "models" / "fusion_model.joblib")
@@ -54,22 +59,31 @@ def _minutes(t, i):
     return v
 
 
+def _check(channel, text, where=""):
+    """Refuses an unknown channel or a malformed URL with HTTP 422 and a clear message (R2-06, D-02)."""
+    if channel not in CHANNELS: raise HTTPException(status_code=422, detail=f"{where}'channel' must be one of {', '.join(CHANNELS)}, got '{channel}'")
+    if channel == "url":
+        why = check_url(text)
+        if why: raise HTTPException(status_code=422, detail=f"{where}'{text[:80]}' is not a valid URL: {why}")
+
+
 class Batch(BaseModel):
     items: List[Item]
 
 
 def _run(it: Item):
-    ch = it.channel.lower()
+    ch = it.channel.lower(); _check(ch, it.text)
     if ch in NOT_ASSESSED: raise HTTPException(status_code=501, detail=f"channel '{ch}' is not assessed: {NOT_BUILT}")
     try:
         return D.score(ch, it.text, it.subject or "")
-    except NotImplementedError as e:
-        raise HTTPException(status_code=501, detail=str(e))
+    except ModelUnavailable as e:
+        raise HTTPException(status_code=503, detail=str(e))
 
 
 @app.get("/health")
 def health():
-    return {"status": "ok", "channels": list(SCORED), "not_trained": ["voice", "video"], "not_assessed_channels": list(NOT_ASSESSED), "fusion_trained_on": F.trained_on, "window_minutes": F.window}
+    return {"status": "ok" if not D.unavailable else "degraded", "channels": [c for c in SCORED if D.available(c)], "not_trained": ["voice", "video"],
+            "not_assessed_channels": list(NOT_ASSESSED), "not_available": D.unavailable, "fusion_trained_on": F.trained_on, "window_minutes": F.window}
 
 
 @app.post("/score")
@@ -86,16 +100,17 @@ def score_batch(b: Batch):
 def correlate(b: Bundle):
     """Scores every event with its channel detector, then scores the bundle with the correlation model.
     Events further apart than the time window are not combined or linked; each window is scored on its own and the bundle takes the highest.
-    Events that cannot be assessed (calls, voice, video) are listed but kept out of the bundle risk (R2-07)."""
+    Events that cannot be assessed (calls, voice, video, or a channel whose model is not loaded) are listed but kept out of the bundle risk."""
     if not b.events: raise HTTPException(status_code=422, detail="no events")
     out, ev, idx, skipped = [], [], [], []
     for i, e in enumerate(b.events):
-        ch = e.channel.lower(); ids = extract_ids(ch, e.text, e.identity or ""); t = _minutes(e.time, i)
-        if ch in NOT_ASSESSED:
-            out.append({"channel": ch, "assessed": False, "score": None, "label": "not assessed", "reason": NOT_BUILT, "identity_tokens": ids, "t_minutes": t})
-            skipped.append({"index": i, "channel": ch, "reason": NOT_BUILT}); continue
-        try: r = D.score(ch, e.text, e.subject or "")
-        except NotImplementedError as ex: raise HTTPException(status_code=501, detail=str(ex))
+        ch = e.channel.lower(); _check(ch, e.text, f"event {i}: ")
+        ids = extract_ids(ch, e.text, e.identity or ""); t = _minutes(e.time, i)
+        reason = NOT_BUILT if ch in NOT_ASSESSED else (f"the {ch} model is not loaded: {D.unavailable[ch]}" if not D.available(ch) else None)
+        if reason:
+            out.append({"channel": ch, "assessed": False, "score": None, "label": "not assessed", "reason": reason, "identity_tokens": ids, "t_minutes": t})
+            skipped.append({"index": i, "channel": ch, "reason": reason}); continue
+        r = D.score(ch, e.text, e.subject or "")
         out.append({**r, "assessed": True, "identity_tokens": ids, "t_minutes": t}); ev.append({"channel": r["channel"], "score": r["score"], "ids": ids, "t": t}); idx.append(i)
     if not ev:
         for o in out: o["in_window"] = False

@@ -26,7 +26,7 @@ OUT = ROOT / "reports" / "final_cases_results.json"
 
 # Defects that are open on this build. A case linked to one of these may fail without failing the suite (it is reported as xfail).
 # Update this set as defects close: a defect leaves it only after its failing case passes.
-OPEN_DEFECTS = {"D-01", "D-02", "D-06", "D-09", "D-10", "D-12", "D-14", "D-16", "D-17", "D-18"}
+OPEN_DEFECTS = {"D-01", "D-09", "D-10", "D-12", "D-16", "D-17", "D-18"}
 
 CASES, RESULTS, SAMPLE_RESULTS, SCENARIO_RESULTS = {}, {}, {}, {}
 

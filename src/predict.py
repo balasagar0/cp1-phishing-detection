@@ -69,18 +69,30 @@ def extract_ids(channel, text, identity=""):
 
 SCORED = ("email", "sms", "url")
 NOT_ASSESSED = ("call", "voice", "video")      # accepted as events, never scored: no detector is built for them
+MODEL_FILES = {"email": "email_model.joblib", "sms": "sms_model.joblib", "url": "url_string_model.joblib"}
+
+
+class ModelUnavailable(RuntimeError):
+    """The channel has a detector, but its model file could not be loaded when the service started."""
 
 
 class Detectors:
     def __init__(self, models_dir=MODELS, threshold=0.5):
-        d = Path(models_dir); self.threshold = threshold
-        self.email = joblib.load(d / "email_model.joblib")
-        self.sms = joblib.load(d / "sms_model.joblib")
-        self.url = joblib.load(d / "url_string_model.joblib")
-        self._hv = HashingVectorizer(**self.url["hasher_params"], dtype=np.float32)
-        self._gram_hv = HashingVectorizer(analyzer=lambda s: [s], n_features=self.url["hasher_params"]["n_features"], alternate_sign=False, norm=None)
-        self._sms_names = np.array([n.split("__", 1)[1] for n in self.sms["pipe"][0].get_feature_names_out()])
-        self._sms_is_word = np.array([n.startswith("tfidfvectorizer-1__") for n in self.sms["pipe"][0].get_feature_names_out()])
+        """Loads each channel's model on its own. A missing or broken file makes only that channel unavailable (degraded mode, D-14)."""
+        d = Path(models_dir); self.threshold = threshold; self.unavailable = {}
+        for ch, f in MODEL_FILES.items():
+            try: setattr(self, ch, joblib.load(d / f))
+            except Exception as e:
+                setattr(self, ch, None); self.unavailable[ch] = f"{f} could not be loaded ({type(e).__name__})"
+        if self.url is not None:
+            self._hv = HashingVectorizer(**self.url["hasher_params"], dtype=np.float32)
+            self._gram_hv = HashingVectorizer(analyzer=lambda s: [s], n_features=self.url["hasher_params"]["n_features"], alternate_sign=False, norm=None)
+        if self.sms is not None:
+            self._sms_names = np.array([n.split("__", 1)[1] for n in self.sms["pipe"][0].get_feature_names_out()])
+            self._sms_is_word = np.array([n.startswith("tfidfvectorizer-1__") for n in self.sms["pipe"][0].get_feature_names_out()])
+
+    def available(self, channel):
+        return channel in SCORED and channel not in self.unavailable
 
     # ---- channels ----
     def score_email(self, text, subject="", k=6):
@@ -119,6 +131,7 @@ class Detectors:
         return self._pack("url", p, {"canonical_url": c, "domain_reputation": pop, "top_ngrams_toward_malicious": pos, "top_ngrams_toward_legit": neg})
 
     def score(self, channel, text, subject=""):
+        if channel in self.unavailable: raise ModelUnavailable(f"the {channel} model is not loaded: {self.unavailable[channel]}")
         if channel == "email": return self.score_email(text, subject)
         if channel == "sms": return self.score_sms(text)
         if channel == "url": return self.score_url(text)
