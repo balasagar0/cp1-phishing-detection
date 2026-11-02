@@ -1,8 +1,8 @@
 {
  "run": {
-  "date": "2026-11-02T11:20:24+05:30",
-  "describe": "test-run-20261102-0-11-g44cf209",
-  "commit": "44cf2096c9e1b4c024944287efdf0c559d7163b6",
+  "date": "2026-11-02T11:53:59+05:30",
+  "describe": "test-run-20261102-1-11-ga6ecbd4",
+  "commit": "a6ecbd469c00b9c2ce41bb37670afd9eb67af923",
   "git_user": "balasagar0",
   "via": "in-process (FastAPI TestClient)",
   "python": "3.13.0",
@@ -139,7 +139,7 @@
    "tag": "Ported",
    "why": "",
    "status": "Pass",
-   "actual": "200,000 characters -> malicious 0.9993 in 0.07 s",
+   "actual": "200,000 characters -> malicious 0.9993 in 0.08 s",
    "defect": null
   },
   "EML-09": {
@@ -272,7 +272,7 @@
    "tag": "Ported",
    "why": "",
    "status": "Pass",
-   "actual": "5,000 characters -> malicious 0.8688 in 0.022 s",
+   "actual": "5,000 characters -> malicious 0.8688 in 0.030 s",
    "defect": null
   },
   "URL-10": {
@@ -601,56 +601,56 @@
    "tag": "Ported",
    "why": "",
    "status": "Pass",
-   "actual": "2.0 MB body -> HTTP 200 in 0.72 s",
+   "actual": "2.0 MB body -> HTTP 200 in 0.50 s",
    "defect": null
   },
   "UI-01": {
    "tag": "Replaced",
    "why": "Same check on v2's console, served by FastAPI. Panels: email, SMS and URL inputs and a voice/video line that reads 'not assessed'.",
-   "status": "Not run",
-   "actual": "The console checks run with Playwright in scripts/ui_checks.py (Phase 2.4); reports/ui_checks.json does not exist yet.",
+   "status": "Pass",
+   "actual": "Chrome at http://127.0.0.1:61257/: browser console errors none; channel inputs ['email', 'sms', 'url', 'call', 'video']; 'Voice and video: not assessed (not built)'; health '● connected' Screenshots: reports/screenshots/ui01_console_loaded.png.",
    "defect": null
   },
   "UI-02": {
    "tag": "Ported",
    "why": "Same check: E-P01 and E-L01 through the console, compared with /score.",
-   "status": "Not run",
-   "actual": "The console checks run with Playwright in scripts/ui_checks.py (Phase 2.4); reports/ui_checks.json does not exist yet.",
+   "status": "Pass",
+   "actual": "E-P01: console 99.98%, alerts alone 'yes'; /score 99.98%; E-L01: console 0.22%, alerts alone 'no'; /score 0.22% Screenshots: reports/screenshots/ui02_single_email_EP01.png, reports/screenshots/ui02_single_email_EL01.png.",
    "defect": null
   },
   "UI-03": {
    "tag": "Replaced",
    "why": "Preset scenario 1 = TC-04 (KYC campaign). 'Correlated at or above each single score' is kept.",
-   "status": "Not run",
-   "actual": "The console checks run with Playwright in scripts/ui_checks.py (Phase 2.4); reports/ui_checks.json does not exist yet.",
-   "defect": null
+   "status": "Fail",
+   "actual": "TC-04: single-channel view 'Alert raised', correlated view 'elevated risk · 99.99%', event scores ['100.00%', '99.52%', '99.75%']; correlated 99.99% >= best single 100.00%: False Screenshots: reports/screenshots/ui03_preset_TC04.png.",
+   "defect": "D-18"
   },
   "UI-04": {
    "tag": "Replaced",
    "why": "Preset scenario 2 = TC-06 (weak parcel campaign). 'Correlated at or above each single score' is kept.",
-   "status": "Not run",
-   "actual": "The console checks run with Playwright in scripts/ui_checks.py (Phase 2.4); reports/ui_checks.json does not exist yet.",
-   "defect": null
+   "status": "Pass",
+   "actual": "TC-06: single-channel view 'No alert', correlated view 'elevated risk · 59.5%', event scores ['42.1%', '45.1%', '20.4%']; correlated 59.5% >= best single 45.1%: True Screenshots: reports/screenshots/ui04_preset_TC06.png.",
+   "defect": "D-18"
   },
   "UI-05": {
    "tag": "Replaced",
    "why": "Same check: an email, an SMS and a URL entered by hand; the bundle risk and the shared tokens (v2's evidence) are shown.",
-   "status": "Not run",
-   "actual": "The console checks run with Playwright in scripts/ui_checks.py (Phase 2.4); reports/ui_checks.json does not exist yet.",
+   "status": "Pass",
+   "actual": "custom email + SMS + URL: correlated view shows 'elevated risk · 99.97%' and 'Linked by dom:secure-bank-verify.xyz; window span 2 min.' Screenshots: reports/screenshots/ui05_custom_input.png.",
    "defect": null
   },
   "UI-06": {
    "tag": "Ported",
    "why": "Same check with the API stopped.",
-   "status": "Not run",
-   "actual": "The console checks run with Playwright in scripts/ui_checks.py (Phase 2.4); reports/ui_checks.json does not exist yet.",
+   "status": "Pass",
+   "actual": "API stopped: 'Cannot reach http://127.0.0.1:61257. Start the backend (start_demo.bat, or uvicorn api:app --port 8000) and press Retry.'; page still responds (preset switched, Analyze enabled: True); after the API restarts, Analyze again shows 'low risk · 0.01%' Screenshots: reports/screenshots/ui06_service_down.png.",
    "defect": null
   },
   "UI-07": {
    "tag": "Ported",
    "why": "Same check at 1366x768 and 1920x1080 in Chromium and Edge (Edge only if it is installed).",
-   "status": "Not run",
-   "actual": "The console checks run with Playwright in scripts/ui_checks.py (Phase 2.4); reports/ui_checks.json does not exist yet.",
+   "status": "Pass",
+   "actual": "browsers ['Chrome', 'Edge']; sizes 1366x768 and 1920x1080; no horizontal overflow and no console errors: True; identical results everywhere: True (elevated risk · 99.99%) Screenshots: reports/screenshots/ui07_chrome_1366x768.png, reports/screenshots/ui07_chrome_1920x1080.png, reports/screenshots/ui07_edge_1366x768.png, reports/screenshots/ui07_edge_1920x1080.png.",
    "defect": null
   },
   "SYS-02": {
@@ -748,28 +748,28 @@
    "tag": "Ported",
    "why": "Measured here in-process or over HTTP; scripts/benchmark.py (Phase 4.2) measures 100 requests per channel over real HTTP and its result is used when present.",
    "status": "Pass",
-   "actual": "Median / 95th percentile over 50 requests each (in-process (FastAPI TestClient)): email 27 ms / 35 ms; sms 17 ms / 20 ms; url 12 ms / 14 ms",
+   "actual": "Median / 95th percentile over 50 requests each (in-process (FastAPI TestClient)): email 30 ms / 36 ms; sms 19 ms / 22 ms; url 13 ms / 14 ms",
    "defect": null
   },
   "NFR-02": {
    "tag": "Replaced",
    "why": "S-01 goes to /correlate instead of /analyze.",
    "status": "Pass",
-   "actual": "S-01 through POST /correlate, 5 runs (in-process (FastAPI TestClient)): 57 ms, 57 ms, 57 ms, 56 ms, 56 ms",
+   "actual": "S-01 through POST /correlate, 5 runs (in-process (FastAPI TestClient)): 82 ms, 81 ms, 80 ms, 78 ms, 77 ms",
    "defect": null
   },
   "NFR-03": {
    "tag": "Ported",
    "why": "",
    "status": "Pass",
-   "actual": "errors: 0; median of first 20 = 18 ms, last 20 = 18 ms",
+   "actual": "errors: 0; median of first 20 = 20 ms, last 20 = 19 ms",
    "defect": null
   },
   "NFR-04": {
    "tag": "Ported",
    "why": "Uses scripts/secret_scan.py over the files git tracks or would add.",
    "status": "Pass",
-   "actual": "scanned 73 files: 0 possible secret(s)",
+   "actual": "scanned 112 files: 0 possible secret(s)",
    "defect": null
   },
   "NFR-05": {
@@ -783,7 +783,7 @@
    "tag": "Replaced",
    "why": "The serving code now includes the event store, which may store message text only when CP1_STORE_CONTENT=1. Same intent: a message sent through the API never appears in a log line, and nothing is written to disk unless the event store is used.",
    "status": "Pass",
-   "actual": "marker found in output: nowhere; files changed during the requests: none (holding the marker: none); serving files with log or write calls: none",
+   "actual": "marker found in output: nowhere; in the event store (content storage off): False; files changed during the requests: none (holding the marker: none); serving files with log or write calls: none (allowed: the one-time HMAC key file write in src/event_store.py)",
    "defect": null
   },
   "NFR-07": {

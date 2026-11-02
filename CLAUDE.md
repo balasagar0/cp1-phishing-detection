@@ -35,10 +35,10 @@ Three trained detectors (email, SMS, URL) plus a learned correlation model appli
 | SMS detector | Trained. Three classes: ham, spam, smishing. 5,789 messages |
 | URL detector | Trained. Character n-grams on the URL text, 260,000 URLs. No network lookups |
 | Correlation | A model trained on **simulated** bundles, applied in a 60-minute window |
-| Voice | **Not trained.** No accessible data. Returns HTTP 501 |
-| Video | **Not trained.** Returns HTTP 501 |
-| Event store | **Not built.** `/correlate` scores a bundle you hand it; nothing is persisted |
-| Live-stream grouping | **Not built** |
+| Voice | **Not trained.** No accessible data. `/score` returns HTTP 501; `/correlate` and `/events` mark calls 'not assessed' |
+| Video | **Not trained.** Same as voice |
+| Event store | **Built in Phase 2** (`src/event_store.py`): SQLite, per recipient, campaigns = v2's time windows, one alert per campaign at 0.5. Hashed recipient and tokens |
+| Live-stream grouping | Done by the event store: each `POST /events` regroups the recipient's events. No message queue or streaming source is built |
 
 ## Numbers
 
@@ -76,10 +76,13 @@ python -m venv .venv                                   # the project venv; run_a
 
 On Windows run the `.sh` scripts from Git Bash. The folder path has a space (`Capstone_HTE Project`): quote every path.
 
-- Routes: `GET /health`, `POST /score`, `POST /score/batch`, `POST /correlate`. There is **no `/`** —
-  it returns 404. Use `/docs` or open `console.html`.
-- `console.html` (repo root) is a standalone demo console. No npm. Open it in a browser with the API running.
-- `console/phishing_correlation_console.jsx` is the React version; it needs Vite (see README).
+- Routes: `GET /health`, `POST /score`, `POST /score/batch`, `POST /correlate`, `POST /events`, `GET /campaigns`,
+  `GET /campaigns/{id}`, `GET /alerts`, `POST /alerts/{id}/ack`, `POST /purge`, `GET /presets`.
+- `/` serves the built React console (`console/dist`, committed). `/lite` serves `console.html`. `/docs` and `/redoc`
+  are **off** (they load Swagger UI from a CDN; the demo must run offline); `/openapi.json` stays.
+- `console/phishing_correlation_console.jsx` is the console; rebuild with `npm install` and `npm run build` in `console/`.
+- Start uvicorn with `--no-access-log` for demos: access lines would carry `?recipient=` in clear.
+- `scripts/offline_check.py` (no network at runtime) and `scripts/ui_checks.py` (Playwright, UI-01 to UI-07, screenshots).
 - `RUN_DEMO.bat` and `RUN_TESTS.bat` are Windows double-click wrappers.
 
 ## Tests
