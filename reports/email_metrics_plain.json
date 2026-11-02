@@ -1,0 +1,485 @@
+{
+  "data": {
+    "dedupe": {
+      "rows_before": 83021,
+      "rows_after": 74979,
+      "conflicting_texts_dropped": 0
+    },
+    "counts": {
+      "CEAS_08": {
+        "0": 17197,
+        "1": 18545
+      },
+      "Enron": {
+        "0": 15533,
+        "1": 14464
+      },
+      "FraudEmail": {
+        "0": 5091,
+        "1": 4149
+      }
+    },
+    "split": {
+      "train": 59983,
+      "val": 7498,
+      "test": 7498
+    }
+  },
+  "chosen_C": 16,
+  "validation_by_C": {
+    "1": {
+      "n": 7498,
+      "positives": 3717,
+      "threshold": 0.5,
+      "accuracy": 0.9841,
+      "precision": 0.982,
+      "recall": 0.986,
+      "f1": 0.984,
+      "false_positive_rate": 0.0177,
+      "tn": 3714,
+      "fp": 67,
+      "fn": 52,
+      "tp": 3665,
+      "roc_auc": 0.9988,
+      "pr_auc": 0.9988
+    },
+    "4": {
+      "n": 7498,
+      "positives": 3717,
+      "threshold": 0.5,
+      "accuracy": 0.9876,
+      "precision": 0.9871,
+      "recall": 0.9879,
+      "f1": 0.9875,
+      "false_positive_rate": 0.0127,
+      "tn": 3733,
+      "fp": 48,
+      "fn": 45,
+      "tp": 3672,
+      "roc_auc": 0.9993,
+      "pr_auc": 0.9993
+    },
+    "16": {
+      "n": 7498,
+      "positives": 3717,
+      "threshold": 0.5,
+      "accuracy": 0.9892,
+      "precision": 0.9887,
+      "recall": 0.9895,
+      "f1": 0.9891,
+      "false_positive_rate": 0.0111,
+      "tn": 3739,
+      "fp": 42,
+      "fn": 39,
+      "tp": 3678,
+      "roc_auc": 0.9994,
+      "pr_auc": 0.9994
+    }
+  },
+  "pooled_test": {
+    "n": 7498,
+    "positives": 3715,
+    "threshold": 0.5,
+    "accuracy": 0.9919,
+    "precision": 0.9901,
+    "recall": 0.9935,
+    "f1": 0.9918,
+    "false_positive_rate": 0.0098,
+    "tn": 3746,
+    "fp": 37,
+    "fn": 24,
+    "tp": 3691,
+    "roc_auc": 0.9996,
+    "pr_auc": 0.9996
+  },
+  "pooled_test_ci95": {
+    "precision": [
+      0.9868,
+      0.9929
+    ],
+    "recall": [
+      0.9906,
+      0.9962
+    ],
+    "f1": [
+      0.9896,
+      0.9938
+    ]
+  },
+  "pooled_test_at_1pct_fpr": {
+    "n": 7498,
+    "positives": 3715,
+    "threshold": 0.5262,
+    "accuracy": 0.9919,
+    "precision": 0.9911,
+    "recall": 0.9925,
+    "f1": 0.9918,
+    "false_positive_rate": 0.0087,
+    "tn": 3750,
+    "fp": 33,
+    "fn": 28,
+    "tp": 3687,
+    "roc_auc": 0.9996,
+    "pr_auc": 0.9996
+  },
+  "pooled_test_per_source": {
+    "CEAS_08": {
+      "n": 3574,
+      "positives": 1854,
+      "threshold": 0.5,
+      "accuracy": 0.9955,
+      "precision": 0.993,
+      "recall": 0.9984,
+      "f1": 0.9957,
+      "false_positive_rate": 0.0076,
+      "tn": 1707,
+      "fp": 13,
+      "fn": 3,
+      "tp": 1851,
+      "roc_auc": 0.9999,
+      "pr_auc": 0.9999
+    },
+    "Enron": {
+      "n": 3000,
+      "positives": 1446,
+      "threshold": 0.5,
+      "accuracy": 0.9917,
+      "precision": 0.9951,
+      "recall": 0.9876,
+      "f1": 0.9913,
+      "false_positive_rate": 0.0045,
+      "tn": 1547,
+      "fp": 7,
+      "fn": 18,
+      "tp": 1428,
+      "roc_auc": 0.9997,
+      "pr_auc": 0.9997
+    },
+    "FraudEmail": {
+      "n": 924,
+      "positives": 415,
+      "threshold": 0.5,
+      "accuracy": 0.9784,
+      "precision": 0.9604,
+      "recall": 0.9928,
+      "f1": 0.9763,
+      "false_positive_rate": 0.0334,
+      "tn": 492,
+      "fp": 17,
+      "fn": 3,
+      "tp": 412,
+      "roc_auc": 0.9984,
+      "pr_auc": 0.9981
+    }
+  },
+  "baseline_complement_nb_test": {
+    "n": 7498,
+    "positives": 3715,
+    "threshold": 0.5,
+    "accuracy": 0.9888,
+    "precision": 0.9937,
+    "recall": 0.9836,
+    "f1": 0.9886,
+    "false_positive_rate": 0.0061,
+    "tn": 3760,
+    "fp": 23,
+    "fn": 61,
+    "tp": 3654,
+    "roc_auc": 0.9992,
+    "pr_auc": 0.9993
+  },
+  "leave_one_corpus_out": {
+    "CEAS_08": {
+      "n": 35742,
+      "positives": 18545,
+      "threshold": 0.5,
+      "accuracy": 0.8182,
+      "precision": 0.7438,
+      "recall": 0.9909,
+      "f1": 0.8498,
+      "false_positive_rate": 0.3681,
+      "tn": 10867,
+      "fp": 6330,
+      "fn": 168,
+      "tp": 18377,
+      "roc_auc": 0.9614,
+      "pr_auc": 0.9565
+    },
+    "Enron": {
+      "n": 29997,
+      "positives": 14464,
+      "threshold": 0.5,
+      "accuracy": 0.8038,
+      "precision": 0.955,
+      "recall": 0.6225,
+      "f1": 0.7537,
+      "false_positive_rate": 0.0273,
+      "tn": 15109,
+      "fp": 424,
+      "fn": 5460,
+      "tp": 9004,
+      "roc_auc": 0.9363,
+      "pr_auc": 0.9349
+    },
+    "FraudEmail": {
+      "n": 9240,
+      "positives": 4149,
+      "threshold": 0.5,
+      "accuracy": 0.8694,
+      "precision": 0.7822,
+      "recall": 0.9826,
+      "f1": 0.8711,
+      "false_positive_rate": 0.2229,
+      "tn": 3956,
+      "fp": 1135,
+      "fn": 72,
+      "tp": 4077,
+      "roc_auc": 0.98,
+      "pr_auc": 0.9785
+    }
+  },
+  "top_terms_malicious": [
+    [
+      "your",
+      15.389
+    ],
+    [
+      "!",
+      12.901
+    ],
+    [
+      "2004",
+      10.568
+    ],
+    [
+      "com",
+      10.344
+    ],
+    [
+      "http",
+      10.338
+    ],
+    [
+      "2005",
+      9.287
+    ],
+    [
+      "! http",
+      8.91
+    ],
+    [
+      "here",
+      8.236
+    ],
+    [
+      "our",
+      7.838
+    ],
+    [
+      "men",
+      7.75
+    ],
+    [
+      "life",
+      7.676
+    ],
+    [
+      "man",
+      7.59
+    ],
+    [
+      "bank",
+      7.401
+    ],
+    [
+      "watch",
+      7.326
+    ],
+    [
+      "money",
+      7.137
+    ],
+    [
+      "software",
+      6.973
+    ],
+    [
+      "sex",
+      6.681
+    ],
+    [
+      "site",
+      6.647
+    ],
+    [
+      "meds",
+      6.558
+    ],
+    [
+      "company",
+      6.517
+    ],
+    [
+      "quality",
+      6.491
+    ],
+    [
+      "remove",
+      6.481
+    ],
+    [
+      "love",
+      6.475
+    ],
+    [
+      "mobile",
+      6.406
+    ],
+    [
+      "no",
+      6.372
+    ],
+    [
+      "watches",
+      6.253
+    ],
+    [
+      "online",
+      6.16
+    ],
+    [
+      "viagra",
+      5.983
+    ],
+    [
+      "you will",
+      5.884
+    ],
+    [
+      "girls",
+      5.619
+    ]
+  ],
+  "top_terms_legit": [
+    [
+      "enron",
+      -17.379
+    ],
+    [
+      "thanks",
+      -12.151
+    ],
+    [
+      "wrote",
+      -11.952
+    ],
+    [
+      "to",
+      -10.065
+    ],
+    [
+      "call",
+      -9.862
+    ],
+    [
+      "vince",
+      -9.604
+    ],
+    [
+      "on",
+      -9.55
+    ],
+    [
+      "opensuse",
+      -9.418
+    ],
+    [
+      "2008",
+      -9.393
+    ],
+    [
+      "the",
+      -9.042
+    ],
+    [
+      "2007",
+      -8.59
+    ],
+    [
+      "fyi",
+      -8.542
+    ],
+    [
+      "louise",
+      -8.267
+    ],
+    [
+      "february",
+      -7.532
+    ],
+    [
+      "will",
+      -7.53
+    ],
+    [
+      "uai",
+      -7.332
+    ],
+    [
+      "org",
+      -7.299
+    ],
+    [
+      "2010",
+      -7.266
+    ],
+    [
+      "2001",
+      -7.153
+    ],
+    [
+      "perl",
+      -7.088
+    ],
+    [
+      "tomorrow",
+      -6.917
+    ],
+    [
+      "713",
+      -6.795
+    ],
+    [
+      "thx",
+      -6.783
+    ],
+    [
+      "2009",
+      -6.724
+    ],
+    [
+      "doc",
+      -6.659
+    ],
+    [
+      "at",
+      -6.524
+    ],
+    [
+      "python",
+      -6.29
+    ],
+    [
+      "should",
+      -6.286
+    ],
+    [
+      "pm",
+      -6.272
+    ],
+    [
+      "2000",
+      -6.144
+    ]
+  ]
+}

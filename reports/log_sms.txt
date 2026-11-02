@@ -1,0 +1,10 @@
+[     0s] LSDST after cleaning + dedupe: 5789 {'rows_before': 5970, 'rows_after': 5789, 'conflicting_texts_dropped': 35} {'ham': 4829, 'spam': 433, 'smishing': 527}
+[     5s] C=2: 5-fold macro-F1 on train = 0.9023
+[    10s] C=8: 5-fold macro-F1 on train = 0.9024
+[    16s] C=32: 5-fold macro-F1 on train = 0.902
+[    21s] C=128: 5-fold macro-F1 on train = 0.9051
+[    25s] smishing vs rest (test): {'n': 1158, 'positives': 105, 'threshold': 0.5, 'accuracy': 0.9775, 'precision': 0.9072, 'recall': 0.8381, 'f1': 0.8713, 'false_positive_rate': 0.0085, 'tn': 1044, 'fp': 9, 'fn': 17, 'tp': 88, 'roc_auc': 0.9851, 'pr_auc': 0.9419} {'precision': [0.8491, 0.957], 'recall': [0.7784, 0.8993], 'f1': [0.8226, 0.9171]}
+[    25s] unwanted vs ham (test): {'n': 1158, 'positives': 192, 'threshold': 0.5, 'accuracy': 0.994, 'precision': 0.9947, 'recall': 0.9688, 'f1': 0.9815, 'false_positive_rate': 0.001, 'tn': 965, 'fp': 1, 'fn': 6, 'tp': 186, 'roc_auc': 0.9964, 'pr_auc': 0.9944}
+[    31s] OOF smishing: {'n': 5789, 'positives': 527, 'threshold': 0.5, 'accuracy': 0.9841, 'precision': 0.9191, 'recall': 0.9051, 'f1': 0.912, 'false_positive_rate': 0.008, 'tn': 5220, 'fp': 42, 'fn': 50, 'tp': 477, 'roc_auc': 0.9904, 'pr_auc': 0.9512}
+[    44s] external check: {'n': 65280, 'positives': 26593, 'threshold': 0.5, 'accuracy': 0.8839, 'precision': 0.9587, 'recall': 0.7472, 'f1': 0.8398, 'false_positive_rate': 0.0221, 'tn': 37832, 'fp': 855, 'fn': 6723, 'tp': 19870, 'roc_auc': 0.9769, 'pr_auc': 0.9544}
+[    45s] saved sms model + metrics

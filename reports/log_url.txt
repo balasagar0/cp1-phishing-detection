@@ -1,0 +1,12 @@
+[     0s] popularity list: 10000 registered domains
+[    15s] URLs: 260000 | bad share 0.151 | hosts 101523 | share of URLs on a top-10k domain: good 0.39 bad 0.03
+[    15s] constructed sets: train login URLs 12000 | held-out-domain login URLs 3000 | brand-impersonation probes 2000
+[    33s] a_ngrams_only | F1 0.9031 AUC 0.9905 | login FPR 0.9223 | probe detection 0.9935 | bad-on-top recall {'n': 381, 'recall': 0.4987}
+[    62s] b_plus_popularity_flags | F1 0.9066 AUC 0.9846 | login FPR 0.6877 | probe detection 0.994 | bad-on-top recall {'n': 381, 'recall': 0.3333}
+[    87s] c_plus_login_training_urls_FINAL | F1 0.9044 AUC 0.9848 | login FPR 0.0 | probe detection 0.953 | bad-on-top recall {'n': 381, 'recall': 0.3071}
+[   141s] probes: {'https://www.google.com/search?q=weather': 0.0, 'https://github.com/anthropics': 0.001, 'https://www.paypal.com/signin': 0.235, 'https://en.wikipedia.org/wiki/Phishing': 0.0, 'https://www.amazon.in/gp/your-account': 0.051, 'https://accounts.google.com/signin': 0.001, 'https://login.microsoftonline.com/common/oauth2/authorize': 0.034, 'http://paypal-secure-login.verify-account.xyz/signin': 0.998, 'http://192.168.4.7/login/index.php': 0.997, 'http://sbi-kyc-update.top/verify-now.php': 0.995, 'https://secure-appleid.apple.com.account-verify.ml/login': 0.988, 'http://bit.ly/3xZk9Q': 0.973}
+[   142s] saved deployed URL model
+[   151s] HGB all_features: {'n': 17440, 'positives': 6098, 'threshold': 0.5, 'accuracy': 0.9678, 'precision': 0.9538, 'recall': 0.9542, 'f1': 0.954, 'false_positive_rate': 0.0249, 'tn': 11060, 'fp': 282, 'fn': 279, 'tp': 5819, 'roc_auc': 0.9943, 'pr_auc': 0.99}
+[   159s] HGB lexical_only: {'n': 17440, 'positives': 6098, 'threshold': 0.5, 'accuracy': 0.937, 'precision': 0.926, 'recall': 0.8911, 'f1': 0.9082, 'false_positive_rate': 0.0383, 'tn': 10908, 'fp': 434, 'fn': 664, 'tp': 5434, 'roc_auc': 0.9805, 'pr_auc': 0.9687}
+[   170s] RF all: {'n': 17440, 'positives': 6098, 'threshold': 0.5, 'accuracy': 0.9671, 'precision': 0.9523, 'recall': 0.9536, 'f1': 0.953, 'false_positive_rate': 0.0257, 'tn': 11051, 'fp': 291, 'fn': 283, 'tp': 5815, 'roc_auc': 0.9938, 'pr_auc': 0.9891}
+[   170s] saved url models + metrics

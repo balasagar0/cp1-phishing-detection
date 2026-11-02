@@ -1,0 +1,86 @@
+[
+ {
+  "channel": "url",
+  "truth": "legit",
+  "input": "https://www.paypal.com/signin",
+  "score": 0.2353
+ },
+ {
+  "channel": "url",
+  "truth": "legit",
+  "input": "https://www.amazon.in/gp/your-account",
+  "score": 0.0507
+ },
+ {
+  "channel": "url",
+  "truth": "legit",
+  "input": "https://accounts.google.com/signin",
+  "score": 0.0014
+ },
+ {
+  "channel": "url",
+  "truth": "legit",
+  "input": "https://en.wikipedia.org/wiki/Phishing",
+  "score": 0.0
+ },
+ {
+  "channel": "url",
+  "truth": "legit",
+  "input": "https://docs.google.com/document/d/1AbCdEf/edit",
+  "score": 0.9877
+ },
+ {
+  "channel": "url",
+  "truth": "malicious",
+  "input": "http://paypal-secure-login.verify-account.xyz/signin",
+  "score": 0.9976
+ },
+ {
+  "channel": "url",
+  "truth": "malicious",
+  "input": "https://secure-appleid.apple.com.account-verify.ml/login",
+  "score": 0.9875
+ },
+ {
+  "channel": "url",
+  "truth": "malicious",
+  "input": "http://sbi-kyc-update.top/verify-now.php",
+  "score": 0.9952
+ },
+ {
+  "channel": "url",
+  "truth": "malicious",
+  "input": "http://192.168.4.7/login/index.php",
+  "score": 0.9972
+ },
+ {
+  "channel": "sms",
+  "truth": "legit",
+  "input": "Your package will arrive tomorrow between 10 and 2. Track it at https://www.fedex.com/en-in/tracking.html",
+  "score": 0.838
+ },
+ {
+  "channel": "sms",
+  "truth": "legit",
+  "input": "Hey, can we move our project meeting to 4 pm tomorrow?",
+  "score": 0.0019
+ },
+ {
+  "channel": "sms",
+  "truth": "malicious",
+  "input": "Dear customer, your SBI account will be blocked today. Update your KYC now at http://sbi-kyc-update.top/verify-now.php",
+  "score": 0.9995
+ },
+ {
+  "channel": "email",
+  "truth": "legit",
+  "input": "Thanks for confirming. I wrote up the notes from yesterday. Call me tomorrow if anything changes.",
+  "score": 0.0
+ },
+ {
+  "channel": "email",
+  "truth": "malicious",
+  "input": "Dear customer, your bank account has been suspended. Verify your password within 24 hours at http://sbi-kyc-update.top/verify-now.php",
+  "score": 0.9951
+ }
+]
