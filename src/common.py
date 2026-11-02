@@ -11,7 +11,9 @@ RAW, MODELS, REPORTS = ROOT / "data" / "raw", ROOT / "models", ROOT / "reports"
 MODELS.mkdir(exist_ok=True, parents=True); REPORTS.mkdir(exist_ok=True, parents=True)
 SEED = 42
 
-_TAG = re.compile(r"<[^>]{0,500}>")
+_TAG = re.compile(r"<[a-zA-Z/!?][^>]{0,500}>")                                               # a tag starts with a letter, / or !; "a < b" is text
+_SCRIPT = re.compile(r"<(script|style|head|title)\b[^>]{0,500}>.*?</\1\s*>", re.I | re.S)          # tag AND its content: code and CSS are not message text
+_HREF = re.compile(r"<a\b[^>]{0,500}?\bhref\s*=\s*[\"']?([^\"'\s>]+)[\"']?[^>]{0,500}>", re.I)      # keep a link's target as a URL in the text
 _QP = re.compile(r"=([0-9A-Fa-f]{2})")
 _WS = re.compile(r"\s+")
 _ZW = re.compile("[\u200b\u200c\u200d\u2060\ufeff]")
@@ -26,11 +28,14 @@ def _qp_decode(m):
 
 
 def clean_text(t, max_chars=2500, mask_numbers=False):
-    """Email text cleaner. Strips HTML, decodes =3A style escapes (an artifact that
-    only the fraud corpus carries, so it would leak the label), normalises spacing."""
-    if t is None or (isinstance(t, float) and np.isnan(t)):
+    """Email text cleaner. Drops <script>/<style> blocks with their content, keeps link targets (href) as URLs,
+    strips the remaining HTML tags, decodes =3A style escapes (an artifact that only the fraud corpus carries,
+    so it would leak the label), normalises spacing. Anything that is not text gives an empty string."""
+    if not isinstance(t, str):
         return ""
-    t = _TAG.sub(" ", str(t))
+    t = _SCRIPT.sub(" ", t)
+    t = _HREF.sub(lambda m: f" {m.group(1)} ", t)
+    t = _TAG.sub(" ", t)
     t = _QP.sub(_qp_decode, t)
     t = _TAG.sub(" ", t)
     t = html.unescape(t)
