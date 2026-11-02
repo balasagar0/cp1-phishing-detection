@@ -40,3 +40,33 @@ CASES = {
 def case(cid):
     """A deep copy of one case, so callers can change it freely."""
     return copy.deepcopy(CASES[cid])
+
+
+# Four Indian stories for the console (R3-13). HAND-WRITTEN, NOT A TEST SET: written the way a real sender would write them, run once, and
+# kept with whatever they score (rule 2). The hosts are made up; do not open them. IN-04 is a legitimate order that should stay quiet.
+STORIES = {
+    "IN-01": {"name": "KYC freeze (SMS, link, call)", "note": "A bank KYC freeze threat by SMS, its link, then a caller asking for the OTP. The call is not assessed.", "events": [
+        dict(channel="sms", text="Dear Customer, Your SBI YONO account will be blocked today. Please update your PAN card immediately. Click here http://yono-sbi-kyc.co.in/pan-update", identity="VM-SBIUPD", time="0"),
+        dict(channel="url", text="http://yono-sbi-kyc.co.in/pan-update", time="3"),
+        dict(channel="call", text="Caller said he is from SBI head office and asked me to share the OTP to complete my KYC.", identity="+91 82104 66391", time="20")]},
+    "IN-02": {"name": "Courier customs fee (SMS, email, link)", "note": "A small customs fee by SMS and a larger one by email, both pointing to the same payment page.", "events": [
+        dict(channel="sms", text="India Post: Your parcel is held at customs due to unpaid duty of Rs 48. Pay within 24 hrs or it will be returned: https://indiapost-customs-fee.top/pay", identity="+91 74285 51902", time="0"),
+        dict(channel="email", subject="Customs clearance pending for your international shipment",
+             text="Dear customer, your shipment from abroad has arrived at Mumbai customs. A clearance fee of Rs 2,499 must be paid before delivery. Pay securely at https://indiapost-customs-fee.top/pay. For help call +91 7428551902.", time="25"),
+        dict(channel="url", text="https://indiapost-customs-fee.top/pay", time="27")]},
+    "IN-03": {"name": "Work-from-home task scam (SMS, email)", "note": "A part-time 'like videos' job by SMS, then an email asking for a deposit to withdraw earnings. Linked by the WhatsApp number.", "events": [
+        dict(channel="sms", text="Hi, I am Priya from Amazon HR team. Earn Rs 3000-8000 daily from home by liking YouTube videos. Part time job, no investment. Reply on WhatsApp +91 98123 45670", time="0"),
+        dict(channel="email", subject="Your task payment is ready",
+             text="Congratulations! You completed 3 tasks and earned Rs 450. To unlock the premium task group and withdraw your earnings, deposit Rs 2,000 to start. Contact your mentor on WhatsApp: +91 98123 45670", time="40")]},
+    "IN-04": {"name": "Legitimate order (should stay quiet)", "note": "A real-looking shipping SMS, its order email and the order page. Nothing here should alert.", "events": [
+        dict(channel="sms", text="Shipped: Your Amazon order for boAt Rockerz 450 will be delivered by Thursday. Track: https://amzn.in/d/2bX9Kq1", identity="AX-AMAZON", time="0"),
+        dict(channel="email", subject="Your Amazon.in order #403-5523718-2265912 has shipped",
+             text="Hello, your package has been shipped and is on the way. Arriving Thursday. You can track your package from Your Orders on Amazon.in. Thank you for shopping with us.", time="2"),
+        dict(channel="url", text="https://www.amazon.in/gp/your-account/order-history", time="5")]},
+}
+
+
+def presets():
+    """Everything the console offers as one-click presets, each marked hand-written."""
+    return [{"id": k, **copy.deepcopy(v), "kind": "demo case" if k.startswith("TC") else "Indian story", "label": "hand-written, not a test set"}
+            for k, v in list(CASES.items()) + list(STORIES.items())]
