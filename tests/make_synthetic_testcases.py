@@ -25,5 +25,5 @@ for b in range(n):
         rows.append([f"S{b:04d}", f"S{b:04d}-{j+1}", ch, t.isoformat(), ident, "", pick(ch, mal), "malicious" if mal else "benign", f"SC{b}" if mal else "", "example", "", f"synthetic {typ}", ""])
     if typ == "attack_linked" and rng.random() < .1:
         rows.append([f"S{b:04d}", f"S{b:04d}-c", "call", (ts[-1] + pd.Timedelta(minutes=10)).isoformat(), "", "", "tester note: caller pressed for an OTP", "malicious", f"SC{b}", "example", "", "synthetic call", ""])
-with open(out, "w", newline="") as f: w = csv.writer(f); w.writerow(COLS); w.writerows(rows)
+with open(out, "w", newline="", encoding="utf-8") as f: w = csv.writer(f); w.writerow(COLS); w.writerows(rows)
 print(f"wrote {out}: {n} bundles, {len(rows)} events")

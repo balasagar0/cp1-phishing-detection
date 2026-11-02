@@ -1,0 +1,2372 @@
+{
+ "source": "Test_Cases_and_Test_Data.xlsx",
+ "note": "Copied by scripts/extract_workbook_cases.py. Hand-written evaluation material: not a test set, never train on it.",
+ "email": [
+  {
+   "ID": "E-P01",
+   "Group": "Standard",
+   "Category": "Credential harvest (bank)",
+   "Subject": "Urgent: your account will be suspended",
+   "Body": "Dear customer, we detected unusual activity on your account. To avoid suspension, verify your identity within 24 hours. Click here: http://secure-bank-verify.example/login and enter your net banking ID and password. If you do not act, your account will be locked. Online Security Team",
+   "Expected label": "Phishing"
+  },
+  {
+   "ID": "E-P02",
+   "Group": "Standard",
+   "Category": "Payroll update scam",
+   "Subject": "Action required: update your salary account details",
+   "Body": "Hello, HR is updating payroll records for this month. Please confirm your bank account number and PAN using the form at http://hr-payroll-update.example/form. Late replies may delay your salary.",
+   "Expected label": "Phishing"
+  },
+  {
+   "ID": "E-P03",
+   "Group": "Standard",
+   "Category": "Password expiry",
+   "Subject": "Your email password expires today",
+   "Body": "Your mailbox password will expire in 2 hours. To keep the same password, sign in here: http://mail-portal-signin.example/owa. IT Helpdesk",
+   "Expected label": "Phishing"
+  },
+  {
+   "ID": "E-P04",
+   "Group": "Standard",
+   "Category": "Advance-fee fraud",
+   "Subject": "Confidential business proposal",
+   "Body": "I am a lawyer handling the estate of a late client. He left USD 8.5 million with no known relatives. I need a foreign partner to receive the funds. You will get 30 percent. Reply with your full name, phone number and bank details to begin. Strictly confidential.",
+   "Expected label": "Phishing"
+  },
+  {
+   "ID": "E-P05",
+   "Group": "Standard",
+   "Category": "Lottery scam",
+   "Subject": "You have won 500,000 in the international email lottery",
+   "Body": "Congratulations. Your email address was picked in our monthly draw. To release your prize, pay the processing fee of USD 150 and send your passport copy and address to claims-office@lottery-winner.example.",
+   "Expected label": "Phishing"
+  },
+  {
+   "ID": "E-P06",
+   "Group": "Standard",
+   "Category": "Fake invoice with attachment",
+   "Subject": "Invoice 88213 overdue - open attached file",
+   "Body": "Please find the attached invoice. Payment is overdue. Open the attachment and enable content to view the details. If the amount is not paid within 48 hours, we will start legal action.",
+   "Expected label": "Phishing"
+  },
+  {
+   "ID": "E-P07",
+   "Group": "Standard",
+   "Category": "CEO fraud (BEC)",
+   "Subject": "Quick favour needed",
+   "Body": "Are you at your desk? I am in a meeting and cannot take calls. I need you to buy 5 gift cards of Rs 5000 each for a client today. Send me the card codes by reply. I will reimburse you this evening. Sent from my phone",
+   "Expected label": "Phishing"
+  },
+  {
+   "ID": "E-P08",
+   "Group": "Standard",
+   "Category": "Delivery fee scam",
+   "Subject": "Your parcel could not be delivered",
+   "Body": "We tried to deliver your parcel today but nobody was home. Pay a small customs fee of Rs 49 to reschedule delivery: http://parcel-redelivery.example/pay. Your parcel will be returned in 24 hours.",
+   "Expected label": "Phishing"
+  },
+  {
+   "ID": "E-P09",
+   "Group": "Standard",
+   "Category": "Fake job offer",
+   "Subject": "Offer letter - work from home",
+   "Body": "Congratulations. You are selected for a data entry job. Salary is Rs 40,000 per month. Pay a refundable registration fee of Rs 1,500 to confirm your seat: http://jobs-onboard.example/register",
+   "Expected label": "Phishing"
+  },
+  {
+   "ID": "E-P10",
+   "Group": "Standard",
+   "Category": "Tax refund scam",
+   "Subject": "Income tax refund pending",
+   "Body": "You are eligible for a tax refund of Rs 24,560. Submit your card number and expiry date at http://tax-refund-claim.example to receive the amount in your account today.",
+   "Expected label": "Phishing"
+  },
+  {
+   "ID": "E-P11",
+   "Group": "Standard",
+   "Category": "Account takeover alert",
+   "Subject": "Someone tried to sign in to your account",
+   "Body": "We noticed a sign-in attempt from a new device in another country. Secure your account now: http://account-recover.example/secure. If you do not respond in 12 hours, your account will be disabled.",
+   "Expected label": "Phishing"
+  },
+  {
+   "ID": "E-H01",
+   "Group": "Hard case",
+   "Category": "Subtle document-share lure",
+   "Subject": "Re: documents",
+   "Body": "Hi, as discussed, the revised agreement is on the shared portal. Sign in with your work email to view it: http://doc-share-portal.example/agreement. Thanks.",
+   "Expected label": "Phishing"
+  },
+  {
+   "ID": "E-H02",
+   "Group": "Hard case",
+   "Category": "Targeted scholarship lure",
+   "Subject": "Scholarship verification for final year students",
+   "Body": "Dear student, as part of the annual verification, the scholarship cell needs you to confirm your enrolment and bank details. Please complete the short form by Friday: http://scholarship-verify.example/form. Thank you for your cooperation.",
+   "Expected label": "Phishing"
+  },
+  {
+   "ID": "E-H03",
+   "Group": "Hard case",
+   "Category": "Roman-script Hindi KYC lure",
+   "Subject": "KYC update pending",
+   "Body": "Aapka bank account KYC pending hai. Kripya aaj hi is link par click karke update karein: http://kyc-update-now.example. Warna aapka account band ho jayega.",
+   "Expected label": "Phishing"
+  },
+  {
+   "ID": "E-L01",
+   "Group": "Standard",
+   "Category": "Meeting invite",
+   "Subject": "Project review on Thursday",
+   "Body": "Hi team, let us meet on Thursday at 3 pm in the seminar hall to review progress. Please bring your updated slides. Thanks, Priya",
+   "Expected label": "Legitimate"
+  },
+  {
+   "ID": "E-L02",
+   "Group": "Standard",
+   "Category": "Order confirmation",
+   "Subject": "Your order 4471 has been placed",
+   "Body": "Thanks for your order. Item: 1 keyboard. Estimated delivery: Friday. You can track your order from the Orders page in the app. This is an automated message.",
+   "Expected label": "Legitimate"
+  },
+  {
+   "ID": "E-L03",
+   "Group": "Standard",
+   "Category": "Newsletter",
+   "Subject": "This week in tech",
+   "Body": "Here are this week's top stories: new chip announcements, a cloud outage summary and a short guide to Git branching. You can unsubscribe any time from your account settings.",
+   "Expected label": "Legitimate"
+  },
+  {
+   "ID": "E-L04",
+   "Group": "Standard",
+   "Category": "College notice",
+   "Subject": "Lab timetable for next week",
+   "Body": "Dear students, the revised lab timetable for the coming week is attached. Please check your batch and report on time. Regards, Department Office",
+   "Expected label": "Legitimate"
+  },
+  {
+   "ID": "E-L05",
+   "Group": "Standard",
+   "Category": "Assignment reminder",
+   "Subject": "Assignment 3 due Monday",
+   "Body": "This is a reminder that Assignment 3 is due on Monday at 11:59 pm. Please submit through the course portal. Office hours are on Friday from 2 to 4 pm.",
+   "Expected label": "Legitimate"
+  },
+  {
+   "ID": "E-L06",
+   "Group": "Standard",
+   "Category": "Personal message",
+   "Subject": "Photos from the trip",
+   "Body": "Hey, I uploaded the photos from last weekend to our shared album. Have a look when you are free. The sunset ones came out great.",
+   "Expected label": "Legitimate"
+  },
+  {
+   "ID": "E-L07",
+   "Group": "Standard",
+   "Category": "Interview scheduling",
+   "Subject": "Interview slot confirmed",
+   "Body": "Hello, your technical interview is scheduled for Wednesday at 10:30 am. Please join using the meeting link in the calendar invite and keep a photo ID ready. Good luck.",
+   "Expected label": "Legitimate"
+  },
+  {
+   "ID": "E-L08",
+   "Group": "Standard",
+   "Category": "Payment receipt",
+   "Subject": "Payment received - thank you",
+   "Body": "We have received your payment of Rs 899 for the broadband plan. Your next bill date is the 5th. You can download the receipt from the app.",
+   "Expected label": "Legitimate"
+  },
+  {
+   "ID": "E-L09",
+   "Group": "Standard",
+   "Category": "Code review notification",
+   "Subject": "Pull request #42 merged",
+   "Body": "Your pull request 'Add URL feature extractor' was merged into main by a teammate. You can view the commit history on the repository page.",
+   "Expected label": "Legitimate"
+  },
+  {
+   "ID": "E-L10",
+   "Group": "Standard",
+   "Category": "Event registration",
+   "Subject": "Registration confirmed for the cyber security workshop",
+   "Body": "You are registered for the workshop on Saturday at 10 am in Block C. Please carry your laptop and ID card. Lunch will be provided.",
+   "Expected label": "Legitimate"
+  },
+  {
+   "ID": "E-L11",
+   "Group": "Standard",
+   "Category": "Library notice",
+   "Subject": "Book due date reminder",
+   "Body": "Dear member, the book 'Computer Networks' is due on 3 October. You can renew it at the library counter or through your library account.",
+   "Expected label": "Legitimate"
+  },
+  {
+   "ID": "E-H04",
+   "Group": "Hard case",
+   "Category": "Security alert without a link",
+   "Subject": "Security alert: new sign-in to your account",
+   "Body": "We noticed a new sign-in from a Windows laptop in Vijayawada. If this was you, no action is needed. If it was not you, review the activity from your account's security page. You can also ignore this message.",
+   "Expected label": "Legitimate"
+  },
+  {
+   "ID": "E-H05",
+   "Group": "Hard case",
+   "Category": "Deadline reminder with urgency",
+   "Subject": "Last day to register: campus hackathon",
+   "Body": "Registrations for the campus hackathon close at 11:59 pm tonight. Register on the club page: https://www.kluniversity.in/. Teams of up to four are allowed.",
+   "Expected label": "Legitimate"
+  },
+  {
+   "ID": "E-H06",
+   "Group": "Hard case",
+   "Category": "Bank statement notice",
+   "Subject": "Your monthly statement is ready",
+   "Body": "Your statement for September is now available in net banking. We never ask for your password or OTP by email. Please log in through the official app to view it.",
+   "Expected label": "Legitimate"
+  }
+ ],
+ "sms": [
+  {
+   "ID": "S-P01",
+   "Group": "Standard",
+   "Category": "Bank block threat",
+   "Message": "Dear customer, your bank account will be blocked today. Update your PAN now: http://bank-kyc-update.example",
+   "Expected label": "Phishing"
+  },
+  {
+   "ID": "S-P02",
+   "Group": "Standard",
+   "Category": "KYC expiry",
+   "Message": "URGENT: Your KYC has expired. Click http://kyc-verify-now.example within 24 hrs to avoid account suspension.",
+   "Expected label": "Phishing"
+  },
+  {
+   "ID": "S-P03",
+   "Group": "Standard",
+   "Category": "Utility disconnection",
+   "Message": "Your electricity connection will be disconnected tonight due to an unpaid bill. Call 90000 00000 immediately.",
+   "Expected label": "Phishing"
+  },
+  {
+   "ID": "S-P04",
+   "Group": "Standard",
+   "Category": "Lucky draw",
+   "Message": "Congratulations! You won Rs 25,00,000 in the mobile lucky draw. Claim now: http://lucky-draw-claim.example",
+   "Expected label": "Phishing"
+  },
+  {
+   "ID": "S-P05",
+   "Group": "Standard",
+   "Category": "Parcel fee",
+   "Message": "Your parcel is on hold. Pay Rs 30 delivery fee to release it: http://parcel-fee-pay.example",
+   "Expected label": "Phishing"
+  },
+  {
+   "ID": "S-P06",
+   "Group": "Standard",
+   "Category": "UPI refund",
+   "Message": "We could not process your UPI refund of Rs 1,850. Confirm your UPI PIN here: http://upi-refund-help.example",
+   "Expected label": "Phishing"
+  },
+  {
+   "ID": "S-P07",
+   "Group": "Standard",
+   "Category": "Tax refund",
+   "Message": "Income tax dept: refund of Rs 15,420 approved. Verify bank details at http://it-refund-verify.example",
+   "Expected label": "Phishing"
+  },
+  {
+   "ID": "S-P08",
+   "Group": "Standard",
+   "Category": "Job scam",
+   "Message": "Hiring part-time online workers. Earn Rs 5000 daily. Message us on WhatsApp now: http://wa-job-earn.example",
+   "Expected label": "Phishing"
+  },
+  {
+   "ID": "S-P09",
+   "Group": "Standard",
+   "Category": "SIM deactivation",
+   "Message": "Your SIM will be deactivated in 2 hours. Complete re-verification: http://sim-reverify.example",
+   "Expected label": "Phishing"
+  },
+  {
+   "ID": "S-P10",
+   "Group": "Standard",
+   "Category": "Reward points",
+   "Message": "Credit card reward points worth Rs 4,999 will expire today. Redeem now: http://reward-redeem-now.example",
+   "Expected label": "Phishing"
+  },
+  {
+   "ID": "S-P11",
+   "Group": "Standard",
+   "Category": "Fake e-challan",
+   "Message": "Traffic e-challan of Rs 500 is pending for your vehicle. Pay now to avoid penalty: http://echallan-pay-now.example",
+   "Expected label": "Phishing"
+  },
+  {
+   "ID": "S-P12",
+   "Group": "Standard",
+   "Category": "Account lock",
+   "Message": "Your account has been locked due to a suspicious login. Unlock immediately: http://acct-unlock-secure.example",
+   "Expected label": "Phishing"
+  },
+  {
+   "ID": "S-H01",
+   "Group": "Hard case",
+   "Category": "Callback lure (no link)",
+   "Message": "Hi, this is Ravi from the bank. Please call me back on 90000 00000 about your card.",
+   "Expected label": "Phishing"
+  },
+  {
+   "ID": "S-H02",
+   "Group": "Hard case",
+   "Category": "Address confirmation (no link)",
+   "Message": "Package 7781 needs address confirmation. Reply Y to continue.",
+   "Expected label": "Phishing"
+  },
+  {
+   "ID": "S-H03",
+   "Group": "Hard case",
+   "Category": "Plausible statement link",
+   "Message": "Dear user, your account statement is ready: http://stmt-view.example/d/8Uq",
+   "Expected label": "Phishing"
+  },
+  {
+   "ID": "S-H04",
+   "Group": "Hard case",
+   "Category": "Roman-script Hindi lure",
+   "Message": "Aapke account mein Rs 5000 credit hone wale hain. Ise lene ke liye link kholiye: http://claim-credit-now.example",
+   "Expected label": "Phishing"
+  },
+  {
+   "ID": "S-L01",
+   "Group": "Standard",
+   "Category": "One-time password",
+   "Message": "Your OTP for login is 482913. It is valid for 5 minutes. Do not share it with anyone.",
+   "Expected label": "Legitimate"
+  },
+  {
+   "ID": "S-L02",
+   "Group": "Standard",
+   "Category": "Shipping update",
+   "Message": "Your order has been shipped and will arrive by Friday. Track it in the app.",
+   "Expected label": "Legitimate"
+  },
+  {
+   "ID": "S-L03",
+   "Group": "Standard",
+   "Category": "Appointment reminder",
+   "Message": "Reminder: your dentist appointment is tomorrow at 5 pm. Reply YES to confirm.",
+   "Expected label": "Legitimate"
+  },
+  {
+   "ID": "S-L04",
+   "Group": "Standard",
+   "Category": "Personal message",
+   "Message": "Hey, running 10 minutes late. Start without me!",
+   "Expected label": "Legitimate"
+  },
+  {
+   "ID": "S-L05",
+   "Group": "Standard",
+   "Category": "Credit alert",
+   "Message": "Rs 2,400 has been credited to your account ending 4521 on 27-Sep. Available balance Rs 18,930.",
+   "Expected label": "Legitimate"
+  },
+  {
+   "ID": "S-L06",
+   "Group": "Standard",
+   "Category": "College notice",
+   "Message": "Your class is moved to Room 204 tomorrow. - Dept Office",
+   "Expected label": "Legitimate"
+  },
+  {
+   "ID": "S-L07",
+   "Group": "Standard",
+   "Category": "Receipt",
+   "Message": "Thanks for visiting. Your bill of Rs 340 is paid. Have a great day!",
+   "Expected label": "Legitimate"
+  },
+  {
+   "ID": "S-L08",
+   "Group": "Standard",
+   "Category": "Travel confirmation",
+   "Message": "Your train ticket is confirmed. Coach S4, seat 23. Happy journey.",
+   "Expected label": "Legitimate"
+  },
+  {
+   "ID": "S-L09",
+   "Group": "Standard",
+   "Category": "Family message",
+   "Message": "Call me when you reach the hostel.",
+   "Expected label": "Legitimate"
+  },
+  {
+   "ID": "S-L10",
+   "Group": "Standard",
+   "Category": "Cab update",
+   "Message": "Your cab is arriving in 3 minutes. Driver: Ravi, white hatchback.",
+   "Expected label": "Legitimate"
+  },
+  {
+   "ID": "S-L11",
+   "Group": "Standard",
+   "Category": "Interview reminder",
+   "Message": "Interview scheduled for Wednesday 10:30 am. Please carry your ID card. - HR Team",
+   "Expected label": "Legitimate"
+  },
+  {
+   "ID": "S-L12",
+   "Group": "Standard",
+   "Category": "Plan renewal",
+   "Message": "Your internet plan will renew on 5 Oct. No action is needed.",
+   "Expected label": "Legitimate"
+  },
+  {
+   "ID": "S-H05",
+   "Group": "Hard case",
+   "Category": "Card use alert",
+   "Message": "BANK: Your card ending 1234 was used for Rs 999 at an online store. If this was not you, call the number on the back of your card.",
+   "Expected label": "Legitimate"
+  },
+  {
+   "ID": "S-H06",
+   "Group": "Hard case",
+   "Category": "OTP with warning",
+   "Message": "Your OTP is 771204. Never share this code. Banks never call to ask for it.",
+   "Expected label": "Legitimate"
+  },
+  {
+   "ID": "S-H07",
+   "Group": "Hard case",
+   "Category": "Fee deadline",
+   "Message": "Reminder: fee payment last date is 30 Sep. Please pay only through the official university portal.",
+   "Expected label": "Legitimate"
+  },
+  {
+   "ID": "S-H08",
+   "Group": "Hard case",
+   "Category": "Bill due date",
+   "Message": "Your electricity bill of Rs 1,120 is due on 3 Oct. Pay via the official app or at the office counter.",
+   "Expected label": "Legitimate"
+  }
+ ],
+ "url": [
+  {
+   "ID": "U-P01",
+   "Group": "Standard",
+   "Category": "IP address host",
+   "URL": "http://192.0.2.45/secure/login.php?user=verify&session=8841",
+   "Expected label": "Phishing"
+  },
+  {
+   "ID": "U-P02",
+   "Group": "Standard",
+   "Category": "IP address host",
+   "URL": "http://198.51.100.17/bank/update-account.html",
+   "Expected label": "Phishing"
+  },
+  {
+   "ID": "U-P03",
+   "Group": "Standard",
+   "Category": "@ trick with IP",
+   "URL": "http://www.google.com@203.0.113.9/login",
+   "Expected label": "Phishing"
+  },
+  {
+   "ID": "U-P04",
+   "Group": "Standard",
+   "Category": "Long subdomain chain",
+   "URL": "http://secure-login.account-verify.update-info.example/signin",
+   "Expected label": "Phishing"
+  },
+  {
+   "ID": "U-P05",
+   "Group": "Standard",
+   "Category": "Brand as subdomain",
+   "URL": "http://paypal.com.account-security-check.example/webscr?cmd=login",
+   "Expected label": "Phishing"
+  },
+  {
+   "ID": "U-P06",
+   "Group": "Standard",
+   "Category": "Keyword-heavy domain",
+   "URL": "http://bank-kyc-update.example/verify/customer?id=5541&token=a91f",
+   "Expected label": "Phishing"
+  },
+  {
+   "ID": "U-P07",
+   "Group": "Standard",
+   "Category": "Prize lure",
+   "URL": "http://free-gift-claim-now.example/win/prize.html",
+   "Expected label": "Phishing"
+  },
+  {
+   "ID": "U-P08",
+   "Group": "Standard",
+   "Category": "Brand lookalike",
+   "URL": "http://login-microsoft-online.example/common/oauth2/authorize",
+   "Expected label": "Phishing"
+  },
+  {
+   "ID": "U-P09",
+   "Group": "Standard",
+   "Category": "Password reset lure",
+   "URL": "http://update-your-password-now.example/reset?email=user%40mail.test",
+   "Expected label": "Phishing"
+  },
+  {
+   "ID": "U-P10",
+   "Group": "Standard",
+   "Category": "Fake payment page",
+   "URL": "http://www.secure-payment-portal.example/checkout/confirm-card-details",
+   "Expected label": "Phishing"
+  },
+  {
+   "ID": "U-P11",
+   "Group": "Standard",
+   "Category": "Punycode lookalike",
+   "URL": "http://xn--pypal-4ve.example/signin",
+   "Expected label": "Phishing"
+  },
+  {
+   "ID": "U-P12",
+   "Group": "Standard",
+   "Category": "Brand plus IP in query",
+   "URL": "http://amazon-order-verify.example/ap/signin?openid.return_to=http%3A%2F%2F198.51.100.17",
+   "Expected label": "Phishing"
+  },
+  {
+   "ID": "U-P13",
+   "Group": "Standard",
+   "Category": "Fake webmail upgrade",
+   "URL": "http://webmail-helpdesk-upgrade.example/form/index.html",
+   "Expected label": "Phishing"
+  },
+  {
+   "ID": "U-H01",
+   "Group": "Hard case",
+   "Category": "Hex-encoded IP host",
+   "URL": "http://0xC0000201/verify/account",
+   "Expected label": "Phishing"
+  },
+  {
+   "ID": "U-H02",
+   "Group": "Hard case",
+   "Category": "Legit-looking domain in path",
+   "URL": "https://secure.example-bank.com.verify-session.login.update.example/auth/index.php?redirect=https://www.example-bank.com",
+   "Expected label": "Phishing"
+  },
+  {
+   "ID": "U-H03",
+   "Group": "Hard case",
+   "Category": "HTTPS lookalike",
+   "URL": "https://accounts-google.signin-check.example/ServiceLogin",
+   "Expected label": "Phishing"
+  },
+  {
+   "ID": "U-H04",
+   "Group": "Hard case",
+   "Category": "Redirect to IP",
+   "URL": "http://example.test/redirect.php?url=http://198.51.100.17/login",
+   "Expected label": "Phishing"
+  },
+  {
+   "ID": "U-H05",
+   "Group": "Hard case",
+   "Category": "Digit substitution",
+   "URL": "http://www.faceb00k-login.example/index.php",
+   "Expected label": "Phishing"
+  },
+  {
+   "ID": "U-L01",
+   "Group": "Standard",
+   "Category": "Popular site",
+   "URL": "https://www.google.com/",
+   "Expected label": "Legitimate"
+  },
+  {
+   "ID": "U-L02",
+   "Group": "Standard",
+   "Category": "Code hosting",
+   "URL": "https://github.com/",
+   "Expected label": "Legitimate"
+  },
+  {
+   "ID": "U-L03",
+   "Group": "Standard",
+   "Category": "Encyclopedia article",
+   "URL": "https://en.wikipedia.org/wiki/Phishing",
+   "Expected label": "Legitimate"
+  },
+  {
+   "ID": "U-L04",
+   "Group": "Standard",
+   "Category": "University site",
+   "URL": "https://www.kluniversity.in/",
+   "Expected label": "Legitimate"
+  },
+  {
+   "ID": "U-L05",
+   "Group": "Standard",
+   "Category": "Software downloads",
+   "URL": "https://www.python.org/downloads/",
+   "Expected label": "Legitimate"
+  },
+  {
+   "ID": "U-L06",
+   "Group": "Standard",
+   "Category": "Documentation",
+   "URL": "https://docs.python.org/3/library/re.html",
+   "Expected label": "Legitimate"
+  },
+  {
+   "ID": "U-L07",
+   "Group": "Standard",
+   "Category": "Company site",
+   "URL": "https://www.microsoft.com/en-in/",
+   "Expected label": "Legitimate"
+  },
+  {
+   "ID": "U-L08",
+   "Group": "Standard",
+   "Category": "Q&A site with tag path",
+   "URL": "https://stackoverflow.com/questions/tagged/python",
+   "Expected label": "Legitimate"
+  },
+  {
+   "ID": "U-L09",
+   "Group": "Standard",
+   "Category": "News site",
+   "URL": "https://www.bbc.com/news",
+   "Expected label": "Legitimate"
+  },
+  {
+   "ID": "U-L10",
+   "Group": "Standard",
+   "Category": "Booking site",
+   "URL": "https://www.irctc.co.in/nget/train-search",
+   "Expected label": "Legitimate"
+  },
+  {
+   "ID": "U-L11",
+   "Group": "Standard",
+   "Category": "Professional network",
+   "URL": "https://www.linkedin.com/in/",
+   "Expected label": "Legitimate"
+  },
+  {
+   "ID": "U-L12",
+   "Group": "Standard",
+   "Category": "Library documentation",
+   "URL": "https://scikit-learn.org/stable/modules/ensemble.html",
+   "Expected label": "Legitimate"
+  },
+  {
+   "ID": "U-L13",
+   "Group": "Standard",
+   "Category": "Shopping site",
+   "URL": "https://www.amazon.in/",
+   "Expected label": "Legitimate"
+  },
+  {
+   "ID": "U-H06",
+   "Group": "Hard case",
+   "Category": "Real login page, long query",
+   "URL": "https://accounts.google.com/signin/v2/identifier?service=mail&continue=https%3A%2F%2Fmail.google.com",
+   "Expected label": "Legitimate"
+  },
+  {
+   "ID": "U-H07",
+   "Group": "Hard case",
+   "Category": "Real login page",
+   "URL": "https://github.com/login?return_to=%2Flogin%2Foauth%2Fauthorize",
+   "Expected label": "Legitimate"
+  },
+  {
+   "ID": "U-H08",
+   "Group": "Hard case",
+   "Category": "Long URL, many parameters",
+   "URL": "https://www.google.com/search?q=how+to+detect+phishing+emails&oq=how+to+detect+phishing+emails&sourceid=chrome&ie=UTF-8",
+   "Expected label": "Legitimate"
+  },
+  {
+   "ID": "U-H09",
+   "Group": "Hard case",
+   "Category": "Real login subdomain",
+   "URL": "https://login.microsoftonline.com/common/oauth2/v2.0/authorize",
+   "Expected label": "Legitimate"
+  },
+  {
+   "ID": "U-H10",
+   "Group": "Hard case",
+   "Category": "Security terms and hyphens in path",
+   "URL": "https://en.wikipedia.org/wiki/Cross-site_scripting",
+   "Expected label": "Legitimate"
+  }
+ ],
+ "scenarios": [
+  {
+   "Scenario": "S-01",
+   "Name": "Coordinated bank-impersonation attack",
+   "Purpose": "Demo scenario 1: email, SMS and URL share one suspicious link.",
+   "Case sent to /analyze": "Email: \"URGENT: Your account will be suspended in 24 hours\" Dear Customer, We detected unusual sign-in activity on your account from an unrecognised device. To avoid permanent suspension, verify your identity immediately using the secure link below. Verify Now: bit.ly/3xK9verify Failure to verify within 24 hours will result in account suspension.\nSMS: SecureBank Alert: Unusual login detected on your account. Verify now to avoid suspension: bit.ly/3xK9verify Reply STOP to opt out.\nURL: bit.ly/3xK9verify",
+   "Channels": "email, sms, url",
+   "Expected outcome": "HIGH RISK. Correlation evidence includes the shared link."
+  },
+  {
+   "Scenario": "S-02",
+   "Name": "Credential harvest on one link",
+   "Purpose": "Same attack with a .xyz link in all three channels.",
+   "Case sent to /analyze": "Email: \"Urgent: your account will be suspended\" Dear customer, we detected unusual activity on your account. Verify your identity within 24 hours at secure-bank-verify.xyz/login and enter your net banking ID and password or your account will be locked.\nSMS: URGENT! Your bank account is suspended. Verify now at secure-bank-verify.xyz/login to avoid permanent closure. Txt STOP to opt out\nURL: secure-bank-verify.xyz/login",
+   "Channels": "email, sms, url",
+   "Expected outcome": "HIGH RISK. Correlation evidence includes the shared link."
+  },
+  {
+   "Scenario": "S-03",
+   "Name": "Borderline signals lifted by correlation",
+   "Purpose": "Each channel is only just phishing (fixed scores 55, 52, 58). Correlation should lift the verdict from SUSPICIOUS to HIGH RISK. Uses fixed scores because the real models rarely score in this band.",
+   "Case sent to /analyze": "Email: \"Verify now\" Click bit.ly/xyz to verify your account\nSMS: Verify your account now: bit.ly/xyz\nURL: bit.ly/xyz\nDetector scores fixed at: email 55.0, sms 52.0, url 58.0",
+   "Channels": "email, sms, url",
+   "Expected outcome": "Best single channel: SUSPICIOUS. Combined: HIGH RISK."
+  },
+  {
+   "Scenario": "S-04",
+   "Name": "Normal order, all three channels",
+   "Purpose": "Ordinary, consistent legitimate messages must not raise an alert.",
+   "Case sent to /analyze": "Email: \"Your order 4471 has been placed\" Thanks for your order. Estimated delivery: Friday. Track your order on shop.example.com/orders. This is an automated message.\nSMS: Your order has been shipped and will arrive by Friday. Track it in the app.\nURL: www.amazon.in",
+   "Channels": "email, sms, url",
+   "Expected outcome": "SAFE. No correlation evidence."
+  },
+  {
+   "Scenario": "S-05",
+   "Name": "Attack on one channel only",
+   "Purpose": "One phishing email, nothing else.",
+   "Case sent to /analyze": "Email: \"Urgent: your account will be suspended\" Dear customer, we detected unusual activity on your account. Verify your identity within 24 hours at secure-bank-verify.xyz/login and enter your net banking ID and password or your account will be locked.",
+   "Channels": "email",
+   "Expected outcome": "HIGH RISK from the email alone. No correlation evidence."
+  },
+  {
+   "Scenario": "S-06",
+   "Name": "Attack email with harmless SMS and URL",
+   "Purpose": "Calm channels must not dilute a strong one (fusion is max-based).",
+   "Case sent to /analyze": "Email: \"Urgent: your account will be suspended\" Dear customer, we detected unusual activity on your account. Verify your identity within 24 hours at secure-bank-verify.xyz/login and enter your net banking ID and password or your account will be locked.\nSMS: Hey, running 10 minutes late. Start without me!\nURL: www.python.org",
+   "Channels": "email, sms, url",
+   "Expected outcome": "HIGH RISK. No correlation evidence."
+  },
+  {
+   "Scenario": "S-07",
+   "Name": "Voice/video transcript included (stub)",
+   "Purpose": "The video channel is a stub. It must show as unavailable and stay out of the evidence.",
+   "Case sent to /analyze": "Email: \"Urgent: your account will be suspended\" Dear customer, we detected unusual activity on your account. Verify your identity within 24 hours at secure-bank-verify.xyz/login and enter your net banking ID and password or your account will be locked.\nSMS: URGENT! Your bank account is suspended. Verify now at secure-bank-verify.xyz/login to avoid permanent closure. Txt STOP to opt out\nVideo transcript: This is your bank manager. Verify your account now or it will be suspended.",
+   "Channels": "email, sms, video",
+   "Expected outcome": "HIGH RISK. Video is 'unavailable' and is not named in any evidence."
+  },
+  {
+   "Scenario": "S-08",
+   "Name": "Video/voice channel only",
+   "Purpose": "A case that only the stub can 'analyse' must not be reported as safe.",
+   "Case sent to /analyze": "Video transcript: Please verify your account now",
+   "Channels": "video",
+   "Expected outcome": "Anything except SAFE (for example 'cannot assess')."
+  },
+  {
+   "Scenario": "S-09",
+   "Name": "Events three days apart",
+   "Purpose": "Timestamps 0, +3 days, +6 days. Far-apart events should not count as close in time.",
+   "Case sent to /analyze": "Email: \"Urgent: your account will be suspended\" Dear customer, we detected unusual activity on your account. Verify your identity within 24 hours at secure-bank-verify.xyz/login and enter your net banking ID and password or your account will be locked.\nSMS: URGENT! Your bank account is suspended. Verify now at secure-bank-verify.xyz/login to avoid permanent closure. Txt STOP to opt out\nURL: secure-bank-verify.xyz/login\nTimestamps (seconds): email 0, sms 259200, url 518400",
+   "Channels": "email, sms, url",
+   "Expected outcome": "HIGH RISK. No time-proximity evidence."
+  },
+  {
+   "Scenario": "S-10",
+   "Name": "Events 90 seconds apart",
+   "Purpose": "Timestamps 0, 60 s, 90 s. Time-proximity evidence is expected.",
+   "Case sent to /analyze": "Email: \"Urgent: your account will be suspended\" Dear customer, we detected unusual activity on your account. Verify your identity within 24 hours at secure-bank-verify.xyz/login and enter your net banking ID and password or your account will be locked.\nSMS: URGENT! Your bank account is suspended. Verify now at secure-bank-verify.xyz/login to avoid permanent closure. Txt STOP to opt out\nURL: secure-bank-verify.xyz/login\nTimestamps (seconds): email 0, sms 60, url 90",
+   "Channels": "email, sms, url",
+   "Expected outcome": "HIGH RISK. Time-proximity evidence is present."
+  },
+  {
+   "Scenario": "S-11",
+   "Name": "Shared link on an unlisted TLD",
+   "Purpose": "The same suspicious link on a .online host in email, SMS and URL.",
+   "Case sent to /analyze": "Email: \"Verify\" Verify your account now at secure-bank-verify.online/login immediately or it will be suspended.\nSMS: URGENT! Verify your account now at secure-bank-verify.online/login immediately. Txt STOP to opt out\nURL: secure-bank-verify.online/login",
+   "Channels": "email, sms, url",
+   "Expected outcome": "HIGH RISK. Shared-link evidence is present."
+  },
+  {
+   "Scenario": "S-12",
+   "Name": "Empty case",
+   "Purpose": "Nothing to analyse.",
+   "Case sent to /analyze": "(empty case: {})",
+   "Channels": "none",
+   "Expected outcome": "Rejected (HTTP 4xx). Not reported as SAFE."
+  },
+  {
+   "Scenario": "S-13",
+   "Name": "Harmless case with an https:// link",
+   "Purpose": "A normal message and a normal https link.",
+   "Case sent to /analyze": "Email: \"Python download reminder\" Hi, the Python installer for the lab is on the official downloads page. Please install it before Monday.\nSMS: Lab reminder: install Python before Monday.\nURL: https://www.python.org/downloads/",
+   "Channels": "email, sms, url",
+   "Expected outcome": "SAFE. No correlation evidence."
+  }
+ ],
+ "test_cases": [
+  {
+   "TC ID": "PRE-01",
+   "Module": "Preprocessing",
+   "Level": "Unit",
+   "Req ID": "FR-01",
+   "Test scenario": "HTML is stripped from an email body",
+   "Preconditions / notes": "",
+   "Input / steps": "Pass \"<html><body><p>Verify <b>now</b></p><script>track()</script></body></html>\" to clean_text().",
+   "Expected result": "Output is \"Verify now\". No tags and no script text remain.",
+   "Data ref": "Inline",
+   "Priority": "Medium",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "PRE-02",
+   "Module": "Preprocessing",
+   "Level": "Unit",
+   "Req ID": "FR-01; FR-02",
+   "Test scenario": "URLs and email addresses are tokenised",
+   "Preconditions / notes": "",
+   "Input / steps": "Pass \"Visit https://a.example/x or mail me@x.com now\" to clean_text().",
+   "Expected result": "Output is \"Visit URLTOKEN or mail EMAILTOKEN now\".",
+   "Data ref": "Inline",
+   "Priority": "High",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "PRE-03",
+   "Module": "Preprocessing",
+   "Level": "Unit",
+   "Req ID": "FR-07",
+   "Test scenario": "Non-text input gives an empty string",
+   "Preconditions / notes": "",
+   "Input / steps": "Pass None and 123 to clean_text().",
+   "Expected result": "Both return an empty string. No exception.",
+   "Data ref": "Inline",
+   "Priority": "Medium",
+   "Category": "Negative"
+  },
+  {
+   "TC ID": "PRE-04",
+   "Module": "Preprocessing",
+   "Level": "Unit",
+   "Req ID": "FR-01",
+   "Test scenario": "Emoji, symbols and mixed scripts",
+   "Preconditions / notes": "",
+   "Input / steps": "Pass \"Your account 🔒 will be blocked ⚠️ आज ही update करें\" twice.",
+   "Expected result": "No exception. Both runs give the same output and keep the word 'account'.",
+   "Data ref": "Inline",
+   "Priority": "Medium",
+   "Category": "Robustness"
+  },
+  {
+   "TC ID": "PRE-05",
+   "Module": "Preprocessing",
+   "Level": "Unit",
+   "Req ID": "FR-03",
+   "Test scenario": "URL feature vector is complete and repeatable",
+   "Preconditions / notes": "",
+   "Input / steps": "Extract features for U-P01 twice.",
+   "Expected result": "Both vectors are identical and hold exactly the 30 trained features. domain_in_ip = 1.",
+   "Data ref": "U-P01",
+   "Priority": "High",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "PRE-06",
+   "Module": "Preprocessing",
+   "Level": "Unit",
+   "Req ID": "FR-07",
+   "Test scenario": "URL features handle odd input",
+   "Preconditions / notes": "",
+   "Input / steps": "Extract features for \"\", spaces, \"htp:/bad url\", a 5,000-character string and \"http://[::1\".",
+   "Expected result": "All 30 features come back each time. No exception.",
+   "Data ref": "Inline",
+   "Priority": "Medium",
+   "Category": "Robustness"
+  },
+  {
+   "TC ID": "PRE-07",
+   "Module": "Preprocessing",
+   "Level": "Unit",
+   "Req ID": "FR-03",
+   "Test scenario": "Host case does not change URL features",
+   "Preconditions / notes": "",
+   "Input / steps": "Extract features for \"HTTPS://WWW.GOOGLE.COM/\" and \"https://www.google.com/\".",
+   "Expected result": "The two feature vectors are identical.",
+   "Data ref": "Inline",
+   "Priority": "Low",
+   "Category": "Robustness"
+  },
+  {
+   "TC ID": "EML-01",
+   "Module": "Email classifier",
+   "Level": "Unit",
+   "Req ID": "FR-01",
+   "Test scenario": "Standard phishing emails are flagged",
+   "Preconditions / notes": "Email model is loaded.",
+   "Input / steps": "Run every Data-Email row with Group = Standard and Expected = Phishing.",
+   "Expected result": "At least 90% are predicted phishing.",
+   "Data ref": "E-P01 to E-P11",
+   "Priority": "High",
+   "Category": "Model evaluation"
+  },
+  {
+   "TC ID": "EML-02",
+   "Module": "Email classifier",
+   "Level": "Unit",
+   "Req ID": "FR-01",
+   "Test scenario": "Standard legitimate emails are not flagged",
+   "Preconditions / notes": "Email model is loaded.",
+   "Input / steps": "Run every Data-Email row with Group = Standard and Expected = Legitimate.",
+   "Expected result": "At least 90% are predicted legitimate.",
+   "Data ref": "E-L01 to E-L11",
+   "Priority": "High",
+   "Category": "Model evaluation"
+  },
+  {
+   "TC ID": "EML-03",
+   "Module": "Email classifier",
+   "Level": "Unit",
+   "Req ID": "FR-01",
+   "Test scenario": "Hard-case emails",
+   "Preconditions / notes": "Email model is loaded.",
+   "Input / steps": "Run every Data-Email row with Group = Hard case.",
+   "Expected result": "At least 70% correct for each label.",
+   "Data ref": "E-H01 to E-H06",
+   "Priority": "Medium",
+   "Category": "Model evaluation"
+  },
+  {
+   "TC ID": "EML-04",
+   "Module": "Email classifier",
+   "Level": "Unit",
+   "Req ID": "FR-01",
+   "Test scenario": "Result has label, score and confidence",
+   "Preconditions / notes": "",
+   "Input / steps": "Run E-P01 and E-L01.",
+   "Expected result": "Each score is between 0 and 100 and each confidence between 0 and 1. E-P01 scores higher than E-L01.",
+   "Data ref": "E-P01, E-L01",
+   "Priority": "Medium",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "EML-05",
+   "Module": "Email classifier",
+   "Level": "Unit",
+   "Req ID": "NFR-02",
+   "Test scenario": "Letter case and spacing do not change the label",
+   "Preconditions / notes": "",
+   "Input / steps": "Run E-P01 as written, in upper case, and with extra spaces and blank lines.",
+   "Expected result": "All three give the same label.",
+   "Data ref": "E-P01",
+   "Priority": "Medium",
+   "Category": "Robustness"
+  },
+  {
+   "TC ID": "EML-06",
+   "Module": "Email classifier",
+   "Level": "Unit",
+   "Req ID": "NFR-02",
+   "Test scenario": "Benign padding does not hide a phishing email",
+   "Preconditions / notes": "",
+   "Input / steps": "Add three copies of the E-L03 body to the end of E-P01 and run it.",
+   "Expected result": "The label stays phishing.",
+   "Data ref": "E-P01, E-L03",
+   "Priority": "Medium",
+   "Category": "Robustness"
+  },
+  {
+   "TC ID": "EML-07",
+   "Module": "Email classifier",
+   "Level": "Unit",
+   "Req ID": "FR-07",
+   "Test scenario": "Empty email is rejected",
+   "Preconditions / notes": "Service is running.",
+   "Input / steps": "POST {} to /analyze/email.",
+   "Expected result": "HTTP 4xx with a clear message. No score is produced.",
+   "Data ref": "Inline",
+   "Priority": "Medium",
+   "Category": "Negative"
+  },
+  {
+   "TC ID": "EML-08",
+   "Module": "Email classifier",
+   "Level": "Unit",
+   "Req ID": "NFR-02",
+   "Test scenario": "Very long email is handled",
+   "Preconditions / notes": "",
+   "Input / steps": "Run a 200,000-character body made by repeating E-P01.",
+   "Expected result": "A result within 5 s. No crash.",
+   "Data ref": "E-P01",
+   "Priority": "Medium",
+   "Category": "Boundary"
+  },
+  {
+   "TC ID": "EML-09",
+   "Module": "Email classifier",
+   "Level": "Unit",
+   "Req ID": "FR-01",
+   "Test scenario": "Cross-corpus generalisation",
+   "Preconditions / notes": "Model retrained with one email corpus held out (for example SpamAssassin or CEAS_08). Raw data must be re-fetched first.",
+   "Input / steps": "Evaluate on the held-out corpus and compare its F1 with the normal test F1.",
+   "Expected result": "F1 on the held-out corpus is within 10 percentage points of the normal test F1. If not, record it as a limitation.",
+   "Data ref": "Held-out corpus",
+   "Priority": "High",
+   "Category": "Model evaluation"
+  },
+  {
+   "TC ID": "EML-10",
+   "Module": "Email classifier",
+   "Level": "Unit",
+   "Req ID": "FR-01",
+   "Test scenario": "Held-out test split metrics",
+   "Preconditions / notes": "",
+   "Input / steps": "Read models/email_metrics.json (accuracy, precision, recall, F1, confusion matrix).",
+   "Expected result": "F1 is 0.90 or higher.",
+   "Data ref": "models/email_metrics.json",
+   "Priority": "High",
+   "Category": "Model evaluation"
+  },
+  {
+   "TC ID": "SMS-01",
+   "Module": "SMS classifier",
+   "Level": "Unit",
+   "Req ID": "FR-02",
+   "Test scenario": "Standard phishing SMS are flagged",
+   "Preconditions / notes": "SMS model is loaded.",
+   "Input / steps": "Run every Data-SMS row with Group = Standard and Expected = Phishing.",
+   "Expected result": "At least 90% are predicted phishing.",
+   "Data ref": "S-P01 to S-P12",
+   "Priority": "High",
+   "Category": "Model evaluation"
+  },
+  {
+   "TC ID": "SMS-02",
+   "Module": "SMS classifier",
+   "Level": "Unit",
+   "Req ID": "FR-02",
+   "Test scenario": "Standard legitimate SMS are not flagged",
+   "Preconditions / notes": "SMS model is loaded.",
+   "Input / steps": "Run every Data-SMS row with Group = Standard and Expected = Legitimate.",
+   "Expected result": "At least 90% are predicted legitimate.",
+   "Data ref": "S-L01 to S-L12",
+   "Priority": "High",
+   "Category": "Model evaluation"
+  },
+  {
+   "TC ID": "SMS-03",
+   "Module": "SMS classifier",
+   "Level": "Unit",
+   "Req ID": "FR-02",
+   "Test scenario": "Hard-case SMS",
+   "Preconditions / notes": "SMS model is loaded.",
+   "Input / steps": "Run every Data-SMS row with Group = Hard case.",
+   "Expected result": "At least 70% correct for each label.",
+   "Data ref": "S-H01 to S-H08",
+   "Priority": "Medium",
+   "Category": "Model evaluation"
+  },
+  {
+   "TC ID": "SMS-04",
+   "Module": "SMS classifier",
+   "Level": "Unit",
+   "Req ID": "FR-02",
+   "Test scenario": "OTP messages are not flagged",
+   "Preconditions / notes": "",
+   "Input / steps": "Run S-L01 and S-H06.",
+   "Expected result": "Both are labelled legitimate.",
+   "Data ref": "S-L01, S-H06",
+   "Priority": "High",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "SMS-05",
+   "Module": "SMS classifier",
+   "Level": "Unit",
+   "Req ID": "NFR-02",
+   "Test scenario": "Very short and very long messages",
+   "Preconditions / notes": "",
+   "Input / steps": "Run \"Hi\", then a 1,284-character message made by repeating S-P04.",
+   "Expected result": "\"Hi\" is legitimate. The long message is still phishing. No error.",
+   "Data ref": "S-P04",
+   "Priority": "Medium",
+   "Category": "Boundary"
+  },
+  {
+   "TC ID": "SMS-06",
+   "Module": "SMS classifier",
+   "Level": "Unit",
+   "Req ID": "NFR-02",
+   "Test scenario": "Upper case, emoji and Roman-script Hindi",
+   "Preconditions / notes": "",
+   "Input / steps": "Run S-P04 in upper case, S-P04 with three emoji added, and S-H04.",
+   "Expected result": "The upper-case and emoji versions stay phishing. No error. Record the label for S-H04.",
+   "Data ref": "S-P04, S-H04",
+   "Priority": "Medium",
+   "Category": "Robustness"
+  },
+  {
+   "TC ID": "SMS-07",
+   "Module": "SMS classifier",
+   "Level": "Unit",
+   "Req ID": "FR-07",
+   "Test scenario": "Empty SMS is rejected",
+   "Preconditions / notes": "Service is running.",
+   "Input / steps": "POST {} to /analyze/sms.",
+   "Expected result": "HTTP 4xx with a clear message. No score is produced.",
+   "Data ref": "Inline",
+   "Priority": "Medium",
+   "Category": "Negative"
+  },
+  {
+   "TC ID": "SMS-08",
+   "Module": "SMS classifier",
+   "Level": "Unit",
+   "Req ID": "FR-02",
+   "Test scenario": "Held-out test split metrics",
+   "Preconditions / notes": "",
+   "Input / steps": "Read models/sms_metrics.json.",
+   "Expected result": "F1 for the spam class is 0.90 or higher.",
+   "Data ref": "models/sms_metrics.json",
+   "Priority": "High",
+   "Category": "Model evaluation"
+  },
+  {
+   "TC ID": "URL-01",
+   "Module": "URL classifier",
+   "Level": "Unit",
+   "Req ID": "FR-03",
+   "Test scenario": "Standard phishing URLs are flagged",
+   "Preconditions / notes": "URL model is loaded.",
+   "Input / steps": "Run every Data-URL row with Group = Standard and Expected = Phishing.",
+   "Expected result": "At least 90% are predicted phishing.",
+   "Data ref": "U-P01 to U-P13",
+   "Priority": "High",
+   "Category": "Model evaluation"
+  },
+  {
+   "TC ID": "URL-02",
+   "Module": "URL classifier",
+   "Level": "Unit",
+   "Req ID": "FR-03",
+   "Test scenario": "Standard legitimate URLs are not flagged",
+   "Preconditions / notes": "URL model is loaded.",
+   "Input / steps": "Run every Data-URL row with Group = Standard and Expected = Legitimate.",
+   "Expected result": "At least 90% are predicted legitimate.",
+   "Data ref": "U-L01 to U-L13",
+   "Priority": "High",
+   "Category": "Model evaluation"
+  },
+  {
+   "TC ID": "URL-03",
+   "Module": "URL classifier",
+   "Level": "Unit",
+   "Req ID": "FR-03",
+   "Test scenario": "Hard-case URLs",
+   "Preconditions / notes": "URL model is loaded.",
+   "Input / steps": "Run every Data-URL row with Group = Hard case.",
+   "Expected result": "At least 70% correct for each label.",
+   "Data ref": "U-H01 to U-H10",
+   "Priority": "Medium",
+   "Category": "Model evaluation"
+  },
+  {
+   "TC ID": "URL-04",
+   "Module": "URL classifier",
+   "Level": "Unit",
+   "Req ID": "FR-03",
+   "Test scenario": "IP-address hosts and the @ trick are flagged",
+   "Preconditions / notes": "",
+   "Input / steps": "Run U-P01, U-P02 and U-P03.",
+   "Expected result": "All three are labelled phishing.",
+   "Data ref": "U-P01, U-P02, U-P03",
+   "Priority": "High",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "URL-05",
+   "Module": "URL classifier",
+   "Level": "Unit",
+   "Req ID": "FR-03",
+   "Test scenario": "The https:// prefix does not flip the label",
+   "Preconditions / notes": "",
+   "Input / steps": "Run github.com, en.wikipedia.org/wiki/Phishing and www.kluniversity.in with and without https://.",
+   "Expected result": "The label is the same with and without the prefix.",
+   "Data ref": "Inline",
+   "Priority": "High",
+   "Category": "Robustness"
+  },
+  {
+   "TC ID": "URL-06",
+   "Module": "URL classifier",
+   "Level": "Unit",
+   "Req ID": "FR-03",
+   "Test scenario": "A trailing slash does not flip the label",
+   "Preconditions / notes": "",
+   "Input / steps": "Run https://www.google.com and https://www.google.com/.",
+   "Expected result": "Both give the same label.",
+   "Data ref": "Inline",
+   "Priority": "Medium",
+   "Category": "Robustness"
+  },
+  {
+   "TC ID": "URL-07",
+   "Module": "URL classifier",
+   "Level": "Unit",
+   "Req ID": "FR-03",
+   "Test scenario": "Real login pages and long queries are not flagged",
+   "Preconditions / notes": "",
+   "Input / steps": "Run U-H06 and U-H08.",
+   "Expected result": "Both are labelled legitimate.",
+   "Data ref": "U-H06, U-H08",
+   "Priority": "Medium",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "URL-08",
+   "Module": "URL classifier",
+   "Level": "Unit",
+   "Req ID": "FR-07",
+   "Test scenario": "Invalid URL is rejected",
+   "Preconditions / notes": "Service is running.",
+   "Input / steps": "POST \"htp:/bad url\" and \"\" to /analyze/url.",
+   "Expected result": "HTTP 4xx each time. No score is produced.",
+   "Data ref": "Inline",
+   "Priority": "Medium",
+   "Category": "Negative"
+  },
+  {
+   "TC ID": "URL-09",
+   "Module": "URL classifier",
+   "Level": "Unit",
+   "Req ID": "NFR-02",
+   "Test scenario": "Very long URL is handled",
+   "Preconditions / notes": "",
+   "Input / steps": "Run a 5,000-character URL.",
+   "Expected result": "A result within 5 s. No crash.",
+   "Data ref": "Inline",
+   "Priority": "Medium",
+   "Category": "Boundary"
+  },
+  {
+   "TC ID": "URL-10",
+   "Module": "URL classifier",
+   "Level": "Unit",
+   "Req ID": "FR-03",
+   "Test scenario": "Held-out test split metrics",
+   "Preconditions / notes": "",
+   "Input / steps": "Read models/url_metrics.json.",
+   "Expected result": "F1 is 0.90 or higher.",
+   "Data ref": "models/url_metrics.json",
+   "Priority": "High",
+   "Category": "Model evaluation"
+  },
+  {
+   "TC ID": "URL-11",
+   "Module": "URL classifier",
+   "Level": "Unit",
+   "Req ID": "NFR-02",
+   "Test scenario": "Works without a network",
+   "Preconditions / notes": "",
+   "Input / steps": "Disable sockets, then run github.com and 192.0.2.45/login.",
+   "Expected result": "Both return a result. The URL model needs no network.",
+   "Data ref": "Inline",
+   "Priority": "Low",
+   "Category": "Robustness"
+  },
+  {
+   "TC ID": "VV-01",
+   "Module": "Voice/Video module",
+   "Level": "Unit",
+   "Req ID": "FR-04",
+   "Test scenario": "Stub reports 'unavailable'",
+   "Preconditions / notes": "The stub is active.",
+   "Input / steps": "Call VideoDetector.predict() and is_ready().",
+   "Expected result": "is_ready() is False. Label is 'unavailable' and score is 0.",
+   "Data ref": "Inline",
+   "Priority": "High",
+   "Category": "Negative"
+  },
+  {
+   "TC ID": "VV-02",
+   "Module": "Voice/Video module",
+   "Level": "Unit",
+   "Req ID": "FR-04",
+   "Test scenario": "Stub does not raise on odd input",
+   "Preconditions / notes": "",
+   "Input / steps": "Call predict() with None, {}, a string and a 100,000-character transcript.",
+   "Expected result": "'unavailable' each time. No exception.",
+   "Data ref": "Inline",
+   "Priority": "Medium",
+   "Category": "Robustness"
+  },
+  {
+   "TC ID": "VV-03",
+   "Module": "Voice/Video module",
+   "Level": "Unit",
+   "Req ID": "FR-04",
+   "Test scenario": "Other channels are still scored beside a video channel",
+   "Preconditions / notes": "",
+   "Input / steps": "Analyse a case with an email and a video transcript.",
+   "Expected result": "Email is scored. Video is shown as 'unavailable'.",
+   "Data ref": "S-07",
+   "Priority": "High",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "VV-04",
+   "Module": "Voice/Video module",
+   "Level": "Unit",
+   "Req ID": "FR-04; FR-05",
+   "Test scenario": "Unavailable channel is never risky",
+   "Preconditions / notes": "",
+   "Input / steps": "Correlate an email (score 80) with an unavailable video result.",
+   "Expected result": "No evidence names the video channel.",
+   "Data ref": "Inline",
+   "Priority": "High",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "VV-05",
+   "Module": "Voice/Video module",
+   "Level": "Unit",
+   "Req ID": "FR-04",
+   "Test scenario": "A video-only case is not reported SAFE",
+   "Preconditions / notes": "",
+   "Input / steps": "Analyse a case that has only a video transcript.",
+   "Expected result": "The verdict is not SAFE (for example 'cannot assess').",
+   "Data ref": "S-08",
+   "Priority": "High",
+   "Category": "Negative"
+  },
+  {
+   "TC ID": "VV-06",
+   "Module": "Voice/Video module",
+   "Level": "Unit",
+   "Req ID": "FR-04",
+   "Test scenario": "Genuine voice and face are not flagged",
+   "Preconditions / notes": "A real detector and a media-file input exist. Files are listed in the Media Files sheet.",
+   "Input / steps": "See the Media Files sheet for the file and the expected outcome.",
+   "Expected result": "Expected outcomes are in the Media Files sheet. Benchmark subset: accuracy 80% or higher.",
+   "Data ref": "Media Files",
+   "Priority": "Low",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "VV-07",
+   "Module": "Voice/Video module",
+   "Level": "Unit",
+   "Req ID": "FR-04",
+   "Test scenario": "Synthetic and cloned voice are flagged",
+   "Preconditions / notes": "A real detector and a media-file input exist. Files are listed in the Media Files sheet.",
+   "Input / steps": "See the Media Files sheet for the file and the expected outcome.",
+   "Expected result": "Expected outcomes are in the Media Files sheet. Benchmark subset: accuracy 80% or higher.",
+   "Data ref": "Media Files",
+   "Priority": "Low",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "VV-08",
+   "Module": "Voice/Video module",
+   "Level": "Unit",
+   "Req ID": "FR-04",
+   "Test scenario": "Face-swap and synthetic image are flagged",
+   "Preconditions / notes": "A real detector and a media-file input exist. Files are listed in the Media Files sheet.",
+   "Input / steps": "See the Media Files sheet for the file and the expected outcome.",
+   "Expected result": "Expected outcomes are in the Media Files sheet. Benchmark subset: accuracy 80% or higher.",
+   "Data ref": "Media Files",
+   "Priority": "Low",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "VV-09",
+   "Module": "Voice/Video module",
+   "Level": "Unit",
+   "Req ID": "FR-04",
+   "Test scenario": "Invalid media files are rejected",
+   "Preconditions / notes": "A real detector and a media-file input exist. Files are listed in the Media Files sheet.",
+   "Input / steps": "See the Media Files sheet for the file and the expected outcome.",
+   "Expected result": "Expected outcomes are in the Media Files sheet. Benchmark subset: accuracy 80% or higher.",
+   "Data ref": "Media Files",
+   "Priority": "Low",
+   "Category": "Negative"
+  },
+  {
+   "TC ID": "VV-10",
+   "Module": "Voice/Video module",
+   "Level": "Unit",
+   "Req ID": "FR-04",
+   "Test scenario": "Public benchmark subset",
+   "Preconditions / notes": "A real detector and a media-file input exist. Files are listed in the Media Files sheet.",
+   "Input / steps": "See the Media Files sheet for the file and the expected outcome.",
+   "Expected result": "Expected outcomes are in the Media Files sheet. Benchmark subset: accuracy 80% or higher.",
+   "Data ref": "Media Files",
+   "Priority": "Low",
+   "Category": "Model evaluation"
+  },
+  {
+   "TC ID": "COR-01",
+   "Module": "Correlation engine",
+   "Level": "Unit",
+   "Req ID": "FR-05",
+   "Test scenario": "Shared link in email and SMS",
+   "Preconditions / notes": "Uses fixed detector scores, so the engine is tested on its own.",
+   "Input / steps": "Email, SMS and URL all carry bit.ly/xyz. Scores 70, 65, 95, all phishing.",
+   "Expected result": "Evidence \"same suspicious link\" is present and the bonus is above 0.",
+   "Data ref": "Inline",
+   "Priority": "High",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "COR-02",
+   "Module": "Correlation engine",
+   "Level": "Unit",
+   "Req ID": "FR-05",
+   "Test scenario": "URL embedded in the email",
+   "Preconditions / notes": "Uses fixed detector scores, so the engine is tested on its own.",
+   "Input / steps": "Email carries the flagged URL. Email 70, SMS 10 (legitimate), URL 95.",
+   "Expected result": "Evidence \"embedded directly in the Email\" is present.",
+   "Data ref": "Inline",
+   "Priority": "High",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "COR-03",
+   "Module": "Correlation engine",
+   "Level": "Unit",
+   "Req ID": "FR-05",
+   "Test scenario": "URL also sent by SMS",
+   "Preconditions / notes": "Uses fixed detector scores, so the engine is tested on its own.",
+   "Input / steps": "SMS carries the flagged URL. Email 10 (legitimate), SMS 65, URL 95.",
+   "Expected result": "Evidence \"also sent via SMS\" is present.",
+   "Data ref": "Inline",
+   "Priority": "High",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "COR-04",
+   "Module": "Correlation engine",
+   "Level": "Unit",
+   "Req ID": "FR-05",
+   "Test scenario": "No evidence when all channels are legitimate",
+   "Preconditions / notes": "Uses fixed detector scores, so the engine is tested on its own.",
+   "Input / steps": "Same link and brand in email, SMS and URL, but all three are legitimate.",
+   "Expected result": "No evidence and a bonus of 0.",
+   "Data ref": "Inline",
+   "Priority": "High",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "COR-05",
+   "Module": "Correlation engine",
+   "Level": "Unit",
+   "Req ID": "FR-05",
+   "Test scenario": "Shared link needs a risky URL channel",
+   "Preconditions / notes": "Uses fixed detector scores, so the engine is tested on its own.",
+   "Input / steps": "Email 80 and SMS 80 (phishing) share a link. URL is legitimate.",
+   "Expected result": "No link evidence.",
+   "Data ref": "Inline",
+   "Priority": "Medium",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "COR-06",
+   "Module": "Correlation engine",
+   "Level": "Unit",
+   "Req ID": "FR-05",
+   "Test scenario": "Identity evidence needs both email and SMS risky",
+   "Preconditions / notes": "Uses fixed detector scores, so the engine is tested on its own.",
+   "Input / steps": "Both mention SecureBank. Email 80 (phishing), SMS 10 (legitimate).",
+   "Expected result": "No evidence.",
+   "Data ref": "Inline",
+   "Priority": "Medium",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "COR-07",
+   "Module": "Correlation engine",
+   "Level": "Unit",
+   "Req ID": "FR-05",
+   "Test scenario": "Generic words are not treated as an identity",
+   "Preconditions / notes": "Uses fixed detector scores, so the engine is tested on its own.",
+   "Input / steps": "Email and SMS are both phishing and share only the words \"urgent\", \"request\" and \"verify\".",
+   "Expected result": "No \"same claimed identity\" evidence.",
+   "Data ref": "Inline",
+   "Priority": "Medium",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "COR-08",
+   "Module": "Correlation engine",
+   "Level": "Unit",
+   "Req ID": "FR-05",
+   "Test scenario": "Bonus is capped",
+   "Preconditions / notes": "Uses fixed detector scores, so the engine is tested on its own.",
+   "Input / steps": "Four risky channels sharing a link, a name and close timestamps.",
+   "Expected result": "The bonus is at most 25 (MAX_BONUS).",
+   "Data ref": "Inline",
+   "Priority": "High",
+   "Category": "Boundary"
+  },
+  {
+   "TC ID": "COR-09",
+   "Module": "Correlation engine",
+   "Level": "Unit",
+   "Req ID": "FR-04; FR-05",
+   "Test scenario": "Unavailable channel never contributes",
+   "Preconditions / notes": "Uses fixed detector scores, so the engine is tested on its own.",
+   "Input / steps": "Email 80 (phishing) and an unavailable video result.",
+   "Expected result": "No evidence names the video channel.",
+   "Data ref": "Inline",
+   "Priority": "Medium",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "COR-10",
+   "Module": "Correlation engine",
+   "Level": "Unit",
+   "Req ID": "FR-05; FR-06",
+   "Test scenario": "Correlation lifts a borderline case",
+   "Preconditions / notes": "Uses fixed detector scores, so the engine is tested on its own.",
+   "Input / steps": "Email 55, SMS 52 and URL 58, all phishing, sharing bit.ly/xyz (scenario S-03).",
+   "Expected result": "Best single channel is SUSPICIOUS. Combined score is HIGH RISK.",
+   "Data ref": "S-03",
+   "Priority": "High",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "COR-11",
+   "Module": "Correlation engine",
+   "Level": "Unit",
+   "Req ID": "FR-05",
+   "Test scenario": "Time evidence needs email, SMS and URL timestamps",
+   "Preconditions / notes": "Uses fixed detector scores, so the engine is tested on its own.",
+   "Input / steps": "Three risky channels. Run once with 2 timestamps and once with 3.",
+   "Expected result": "No time evidence with 2 timestamps. Time evidence with 3.",
+   "Data ref": "Inline",
+   "Priority": "Medium",
+   "Category": "Boundary"
+  },
+  {
+   "TC ID": "COR-12",
+   "Module": "Correlation engine",
+   "Level": "Unit",
+   "Req ID": "FR-05",
+   "Test scenario": "Time evidence only for events close in time",
+   "Preconditions / notes": "Uses fixed detector scores, so the engine is tested on its own.",
+   "Input / steps": "Three risky channels with timestamps 0, +3 days and +6 days.",
+   "Expected result": "No time-proximity evidence.",
+   "Data ref": "S-09",
+   "Priority": "High",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "COR-13",
+   "Module": "Correlation engine",
+   "Level": "Unit",
+   "Req ID": "FR-05",
+   "Test scenario": "Time evidence reports the real span",
+   "Preconditions / notes": "Uses fixed detector scores, so the engine is tested on its own.",
+   "Input / steps": "Timestamps 0, +60 s and +90 s.",
+   "Expected result": "The evidence text says a 2-minute window.",
+   "Data ref": "S-10",
+   "Priority": "Medium",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "COR-14",
+   "Module": "Correlation engine",
+   "Level": "Unit",
+   "Req ID": "FR-05",
+   "Test scenario": "Shared link is matched on any domain ending",
+   "Preconditions / notes": "Uses fixed detector scores, so the engine is tested on its own.",
+   "Input / steps": "Email, SMS and URL carry secure-bank-verify.online/login. All risky.",
+   "Expected result": "\"Same suspicious link\" evidence is present.",
+   "Data ref": "S-11",
+   "Priority": "High",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "COR-15",
+   "Module": "Correlation engine",
+   "Level": "Unit",
+   "Req ID": "NFR-03",
+   "Test scenario": "Same input, same output",
+   "Preconditions / notes": "Uses fixed detector scores, so the engine is tested on its own.",
+   "Input / steps": "Correlate the same case twice.",
+   "Expected result": "The two results are identical.",
+   "Data ref": "Inline",
+   "Priority": "Medium",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "COR-16",
+   "Module": "Correlation engine",
+   "Level": "Unit",
+   "Req ID": "FR-05",
+   "Test scenario": "Phishing label below the risk threshold is not risky",
+   "Preconditions / notes": "Uses fixed detector scores, so the engine is tested on its own.",
+   "Input / steps": "All three channels score 15 (threshold is 20) with a phishing label.",
+   "Expected result": "No evidence.",
+   "Data ref": "Inline",
+   "Priority": "Low",
+   "Category": "Boundary"
+  },
+  {
+   "TC ID": "COR-17",
+   "Module": "Correlation engine",
+   "Level": "Unit",
+   "Req ID": "FR-07",
+   "Test scenario": "Missing channel content does not crash",
+   "Preconditions / notes": "Uses fixed detector scores, so the engine is tested on its own.",
+   "Input / steps": "Pass None for email, sms, url and video, with no results.",
+   "Expected result": "A bonus of 0. No exception.",
+   "Data ref": "Inline",
+   "Priority": "Medium",
+   "Category": "Negative"
+  },
+  {
+   "TC ID": "SCO-01",
+   "Module": "Scoring and verdict",
+   "Level": "Unit",
+   "Req ID": "FR-06",
+   "Test scenario": "Verdict thresholds",
+   "Preconditions / notes": "",
+   "Input / steps": "Call verdict_for() with 0, 30, 31, 60, 61 and 100.",
+   "Expected result": "SAFE, SAFE, SUSPICIOUS, SUSPICIOUS, HIGH RISK, HIGH RISK.",
+   "Data ref": "Inline",
+   "Priority": "High",
+   "Category": "Boundary"
+  },
+  {
+   "TC ID": "SCO-02",
+   "Module": "Scoring and verdict",
+   "Level": "Unit",
+   "Req ID": "FR-06",
+   "Test scenario": "Combined score is best plus bonus, capped at 100",
+   "Preconditions / notes": "",
+   "Input / steps": "Analyse S-01, S-02 and S-05.",
+   "Expected result": "Combined = min(100, best channel score + bonus) and is never below the best channel score.",
+   "Data ref": "S-01, S-02, S-05",
+   "Priority": "High",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "SCO-03",
+   "Module": "Scoring and verdict",
+   "Level": "Unit",
+   "Req ID": "FR-06",
+   "Test scenario": "Correlation delta matches",
+   "Preconditions / notes": "",
+   "Input / steps": "Analyse S-01.",
+   "Expected result": "correlation_delta = combined score minus best single-channel score.",
+   "Data ref": "S-01",
+   "Priority": "Medium",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "SCO-04",
+   "Module": "Scoring and verdict",
+   "Level": "Unit",
+   "Req ID": "FR-06",
+   "Test scenario": "Scores stay between 0 and 100",
+   "Preconditions / notes": "",
+   "Input / steps": "Score all hand-written samples.",
+   "Expected result": "Every score is a number from 0 to 100.",
+   "Data ref": "All samples",
+   "Priority": "Medium",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "SCO-05",
+   "Module": "Scoring and verdict",
+   "Level": "Unit",
+   "Req ID": "FR-06",
+   "Test scenario": "Only provided channels are analysed",
+   "Preconditions / notes": "",
+   "Input / steps": "Analyse a case with only a URL.",
+   "Expected result": "Only the url channel appears in the result.",
+   "Data ref": "Inline",
+   "Priority": "Medium",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "SCO-06",
+   "Module": "Scoring and verdict",
+   "Level": "Unit",
+   "Req ID": "FR-07",
+   "Test scenario": "An empty case is not reported SAFE",
+   "Preconditions / notes": "",
+   "Input / steps": "Call analyze({}).",
+   "Expected result": "The case is rejected or reported as 'nothing to assess'. It is not SAFE.",
+   "Data ref": "S-12",
+   "Priority": "High",
+   "Category": "Negative"
+  },
+  {
+   "TC ID": "SCO-07",
+   "Module": "Scoring and verdict",
+   "Level": "Unit",
+   "Req ID": "NFR-03",
+   "Test scenario": "Same input, same output",
+   "Preconditions / notes": "",
+   "Input / steps": "Run S-01 and single-channel samples five times.",
+   "Expected result": "Identical scores every time.",
+   "Data ref": "S-01, E-P01, S-P04, U-P01",
+   "Priority": "Medium",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "SCO-08",
+   "Module": "Scoring and verdict",
+   "Level": "Unit",
+   "Req ID": "FR-06",
+   "Test scenario": "Calm channels do not dilute a strong one",
+   "Preconditions / notes": "",
+   "Input / steps": "Analyse S-06 (phishing email with harmless SMS and URL).",
+   "Expected result": "Combined score is at least the email score.",
+   "Data ref": "S-06",
+   "Priority": "High",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "API-01",
+   "Module": "Service (API)",
+   "Level": "Integration",
+   "Req ID": "FR-08",
+   "Test scenario": "Health endpoint reports channel readiness",
+   "Preconditions / notes": "",
+   "Input / steps": "GET /health.",
+   "Expected result": "HTTP 200. Email, SMS and URL ready. Video not ready.",
+   "Data ref": "Inline",
+   "Priority": "High",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "API-02",
+   "Module": "Service (API)",
+   "Level": "Integration",
+   "Req ID": "FR-08",
+   "Test scenario": "Email endpoint",
+   "Preconditions / notes": "",
+   "Input / steps": "POST E-P01 to /analyze/email.",
+   "Expected result": "HTTP 200 with score, label, confidence and top_signals. Label is phishing.",
+   "Data ref": "E-P01",
+   "Priority": "High",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "API-03",
+   "Module": "Service (API)",
+   "Level": "Integration",
+   "Req ID": "FR-08",
+   "Test scenario": "SMS endpoint",
+   "Preconditions / notes": "",
+   "Input / steps": "POST S-P04 to /analyze/sms.",
+   "Expected result": "HTTP 200. Label is phishing.",
+   "Data ref": "S-P04",
+   "Priority": "Medium",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "API-04",
+   "Module": "Service (API)",
+   "Level": "Integration",
+   "Req ID": "FR-08",
+   "Test scenario": "URL endpoint",
+   "Preconditions / notes": "",
+   "Input / steps": "POST U-P01 to /analyze/url.",
+   "Expected result": "HTTP 200. Label is phishing.",
+   "Data ref": "U-P01",
+   "Priority": "Medium",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "API-05",
+   "Module": "Service (API)",
+   "Level": "Integration",
+   "Req ID": "FR-08; FR-05",
+   "Test scenario": "Analyze endpoint returns correlation",
+   "Preconditions / notes": "",
+   "Input / steps": "POST the S-01 case to /analyze.",
+   "Expected result": "HTTP 200 with channels, correlation, combined_score, verdict and correlation_delta.",
+   "Data ref": "S-01",
+   "Priority": "High",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "API-06",
+   "Module": "Service (API)",
+   "Level": "Integration",
+   "Req ID": "FR-07",
+   "Test scenario": "Malformed JSON is rejected",
+   "Preconditions / notes": "",
+   "Input / steps": "POST '{\"subject\": ' to /analyze/email.",
+   "Expected result": "HTTP 400 or 422. The service keeps running.",
+   "Data ref": "Inline",
+   "Priority": "Medium",
+   "Category": "Negative"
+  },
+  {
+   "TC ID": "API-07",
+   "Module": "Service (API)",
+   "Level": "Integration",
+   "Req ID": "FR-07",
+   "Test scenario": "Wrong field type is rejected",
+   "Preconditions / notes": "",
+   "Input / steps": "POST text = 12345 to /analyze/sms and subject = a list to /analyze/email.",
+   "Expected result": "HTTP 422 each time.",
+   "Data ref": "Inline",
+   "Priority": "Medium",
+   "Category": "Negative"
+  },
+  {
+   "TC ID": "API-08",
+   "Module": "Service (API)",
+   "Level": "Integration",
+   "Req ID": "FR-07",
+   "Test scenario": "Non-numeric timestamps are rejected cleanly",
+   "Preconditions / notes": "",
+   "Input / steps": "POST the S-01 case with timestamps {\"email\":\"a\",\"sms\":\"b\",\"url\":\"c\"}.",
+   "Expected result": "HTTP 4xx with a clear message, not 500.",
+   "Data ref": "S-01",
+   "Priority": "Low",
+   "Category": "Negative"
+  },
+  {
+   "TC ID": "API-09",
+   "Module": "Service (API)",
+   "Level": "Integration",
+   "Req ID": "NFR-02",
+   "Test scenario": "Missing model gives degraded mode",
+   "Preconditions / notes": "",
+   "Input / steps": "Point the SMS detector at a missing file and analyse S-01.",
+   "Expected result": "SMS shows 'unavailable'. Email and URL are still scored.",
+   "Data ref": "S-01",
+   "Priority": "High",
+   "Category": "Robustness"
+  },
+  {
+   "TC ID": "API-10",
+   "Module": "Service (API)",
+   "Level": "Integration",
+   "Req ID": "NFR-02",
+   "Test scenario": "Twenty parallel requests",
+   "Preconditions / notes": "Service is running.",
+   "Input / steps": "Send 20 mixed requests at once from 8 threads.",
+   "Expected result": "All return 200 and each matches its own serial result.",
+   "Data ref": "Inline",
+   "Priority": "Medium",
+   "Category": "Robustness"
+  },
+  {
+   "TC ID": "API-11",
+   "Module": "Service (API)",
+   "Level": "Integration",
+   "Req ID": "NFR-04",
+   "Test scenario": "Hostile strings are treated as data",
+   "Preconditions / notes": "Service is running.",
+   "Input / steps": "Send <script>alert(1)</script>, '; DROP TABLE users;-- and ../../etc/passwd to the three single-channel endpoints.",
+   "Expected result": "HTTP 200 and JSON each time. Nothing is executed.",
+   "Data ref": "Inline",
+   "Priority": "High",
+   "Category": "Security"
+  },
+  {
+   "TC ID": "API-12",
+   "Module": "Service (API)",
+   "Level": "Integration",
+   "Req ID": "FR-09; FR-08",
+   "Test scenario": "A browser console on another origin can call the API",
+   "Preconditions / notes": "Console runs on a different port, for example :5173.",
+   "Input / steps": "GET /health and OPTIONS /analyze with an Origin header.",
+   "Expected result": "An Access-Control-Allow-Origin header is returned and the preflight succeeds.",
+   "Data ref": "Inline",
+   "Priority": "High",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "API-13",
+   "Module": "Service (API)",
+   "Level": "Integration",
+   "Req ID": "NFR-02",
+   "Test scenario": "Very large request is handled",
+   "Preconditions / notes": "",
+   "Input / steps": "POST a 2 MB email body.",
+   "Expected result": "A response within 5 s (200, or 413 if a limit is set).",
+   "Data ref": "Inline",
+   "Priority": "Low",
+   "Category": "Boundary"
+  },
+  {
+   "TC ID": "UI-01",
+   "Module": "Console (UI)",
+   "Level": "System",
+   "Req ID": "FR-09",
+   "Test scenario": "Console loads cleanly",
+   "Preconditions / notes": "The React console is connected to the API.",
+   "Input / steps": "Open the console in Chrome.",
+   "Expected result": "No errors in the browser console. Panels for email, SMS, URL and voice/video are visible.",
+   "Data ref": "Inline",
+   "Priority": "High",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "UI-02",
+   "Module": "Console (UI)",
+   "Level": "System",
+   "Req ID": "FR-09",
+   "Test scenario": "Single-channel check through the API",
+   "Preconditions / notes": "The React console is connected to the API.",
+   "Input / steps": "Submit E-P01, then E-L01, in the email panel.",
+   "Expected result": "E-P01 shows phishing and E-L01 shows legitimate. Values match the API.",
+   "Data ref": "Inline",
+   "Priority": "High",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "UI-03",
+   "Module": "Console (UI)",
+   "Level": "System",
+   "Req ID": "FR-09",
+   "Test scenario": "Preset scenario 1",
+   "Preconditions / notes": "The React console is connected to the API.",
+   "Input / steps": "Run preset scenario 1.",
+   "Expected result": "Single-channel and correlated scores are both shown. Correlated is at or above each single-channel score.",
+   "Data ref": "Inline",
+   "Priority": "High",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "UI-04",
+   "Module": "Console (UI)",
+   "Level": "System",
+   "Req ID": "FR-09",
+   "Test scenario": "Preset scenario 2",
+   "Preconditions / notes": "The React console is connected to the API.",
+   "Input / steps": "Run preset scenario 2.",
+   "Expected result": "Same as preset 1.",
+   "Data ref": "Inline",
+   "Priority": "High",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "UI-05",
+   "Module": "Console (UI)",
+   "Level": "System",
+   "Req ID": "FR-09",
+   "Test scenario": "Custom input mode",
+   "Preconditions / notes": "The React console is connected to the API.",
+   "Input / steps": "Enter an email, an SMS and a URL in custom mode and run.",
+   "Expected result": "The correlated result and evidence are shown.",
+   "Data ref": "Inline",
+   "Priority": "Medium",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "UI-06",
+   "Module": "Console (UI)",
+   "Level": "System",
+   "Req ID": "FR-09",
+   "Test scenario": "Service down shows an error",
+   "Preconditions / notes": "The React console is connected to the API.",
+   "Input / steps": "Stop the service and click Run.",
+   "Expected result": "A clear error and a way to retry. The page does not freeze.",
+   "Data ref": "Inline",
+   "Priority": "Medium",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "UI-07",
+   "Module": "Console (UI)",
+   "Level": "System",
+   "Req ID": "FR-09",
+   "Test scenario": "Screen sizes and browsers",
+   "Preconditions / notes": "The React console is connected to the API.",
+   "Input / steps": "Open at 1366x768 and 1920x1080 in Chrome and Edge.",
+   "Expected result": "No clipped content. Same results in both browsers.",
+   "Data ref": "Inline",
+   "Priority": "Low",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "SYS-01",
+   "Module": "End-to-end cases",
+   "Level": "System",
+   "Req ID": "FR-05; FR-06",
+   "Test scenario": "Scenario S-01: Coordinated bank-impersonation attack",
+   "Preconditions / notes": "",
+   "Input / steps": "POST the case for S-01 to /analyze (contents are in the Scenarios sheet).",
+   "Expected result": "HIGH RISK. Correlation evidence includes the shared link.",
+   "Data ref": "S-01",
+   "Priority": "High",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "SYS-02",
+   "Module": "End-to-end cases",
+   "Level": "System",
+   "Req ID": "FR-05; FR-06",
+   "Test scenario": "Scenario S-02: Credential harvest on one link",
+   "Preconditions / notes": "",
+   "Input / steps": "POST the case for S-02 to /analyze (contents are in the Scenarios sheet).",
+   "Expected result": "HIGH RISK. Correlation evidence includes the shared link.",
+   "Data ref": "S-02",
+   "Priority": "High",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "SYS-03",
+   "Module": "End-to-end cases",
+   "Level": "System",
+   "Req ID": "FR-05; FR-06",
+   "Test scenario": "Scenario S-03: Borderline signals lifted by correlation",
+   "Preconditions / notes": "Detector scores are fixed at 55, 52 and 58, because the real models rarely score in this band.",
+   "Input / steps": "POST the case for S-03 to /analyze (contents are in the Scenarios sheet).",
+   "Expected result": "Best single channel: SUSPICIOUS. Combined: HIGH RISK.",
+   "Data ref": "S-03",
+   "Priority": "High",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "SYS-04",
+   "Module": "End-to-end cases",
+   "Level": "System",
+   "Req ID": "FR-05; FR-06",
+   "Test scenario": "Scenario S-04: Normal order, all three channels",
+   "Preconditions / notes": "",
+   "Input / steps": "POST the case for S-04 to /analyze (contents are in the Scenarios sheet).",
+   "Expected result": "SAFE. No correlation evidence.",
+   "Data ref": "S-04",
+   "Priority": "High",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "SYS-05",
+   "Module": "End-to-end cases",
+   "Level": "System",
+   "Req ID": "FR-01; FR-06",
+   "Test scenario": "Scenario S-05: Attack on one channel only",
+   "Preconditions / notes": "",
+   "Input / steps": "POST the case for S-05 to /analyze (contents are in the Scenarios sheet).",
+   "Expected result": "HIGH RISK from the email alone. No correlation evidence.",
+   "Data ref": "S-05",
+   "Priority": "Medium",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "SYS-06",
+   "Module": "End-to-end cases",
+   "Level": "System",
+   "Req ID": "FR-05; FR-06",
+   "Test scenario": "Scenario S-06: Attack email with harmless SMS and URL",
+   "Preconditions / notes": "",
+   "Input / steps": "POST the case for S-06 to /analyze (contents are in the Scenarios sheet).",
+   "Expected result": "HIGH RISK. No correlation evidence.",
+   "Data ref": "S-06",
+   "Priority": "Medium",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "SYS-07",
+   "Module": "End-to-end cases",
+   "Level": "System",
+   "Req ID": "FR-04; NFR-02",
+   "Test scenario": "Scenario S-07: Voice/video transcript included (stub)",
+   "Preconditions / notes": "The video channel is the stub.",
+   "Input / steps": "POST the case for S-07 to /analyze (contents are in the Scenarios sheet).",
+   "Expected result": "HIGH RISK. Video is 'unavailable' and is not named in any evidence.",
+   "Data ref": "S-07",
+   "Priority": "Medium",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "SYS-08",
+   "Module": "End-to-end cases",
+   "Level": "System",
+   "Req ID": "FR-04; FR-07",
+   "Test scenario": "Scenario S-08: Video/voice channel only",
+   "Preconditions / notes": "",
+   "Input / steps": "POST the case for S-08 to /analyze (contents are in the Scenarios sheet).",
+   "Expected result": "Anything except SAFE (for example 'cannot assess').",
+   "Data ref": "S-08",
+   "Priority": "High",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "SYS-09",
+   "Module": "End-to-end cases",
+   "Level": "System",
+   "Req ID": "FR-05",
+   "Test scenario": "Scenario S-09: Events three days apart",
+   "Preconditions / notes": "",
+   "Input / steps": "POST the case for S-09 to /analyze (contents are in the Scenarios sheet).",
+   "Expected result": "HIGH RISK. No time-proximity evidence.",
+   "Data ref": "S-09",
+   "Priority": "High",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "SYS-10",
+   "Module": "End-to-end cases",
+   "Level": "System",
+   "Req ID": "FR-05",
+   "Test scenario": "Scenario S-10: Events 90 seconds apart",
+   "Preconditions / notes": "",
+   "Input / steps": "POST the case for S-10 to /analyze (contents are in the Scenarios sheet).",
+   "Expected result": "HIGH RISK. Time-proximity evidence is present.",
+   "Data ref": "S-10",
+   "Priority": "Medium",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "SYS-11",
+   "Module": "End-to-end cases",
+   "Level": "System",
+   "Req ID": "FR-05",
+   "Test scenario": "Scenario S-11: Shared link on an unlisted TLD",
+   "Preconditions / notes": "",
+   "Input / steps": "POST the case for S-11 to /analyze (contents are in the Scenarios sheet).",
+   "Expected result": "HIGH RISK. Shared-link evidence is present.",
+   "Data ref": "S-11",
+   "Priority": "High",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "SYS-12",
+   "Module": "End-to-end cases",
+   "Level": "System",
+   "Req ID": "FR-07",
+   "Test scenario": "Scenario S-12: Empty case",
+   "Preconditions / notes": "",
+   "Input / steps": "POST the case for S-12 to /analyze (contents are in the Scenarios sheet).",
+   "Expected result": "Rejected (HTTP 4xx). Not reported as SAFE.",
+   "Data ref": "S-12",
+   "Priority": "High",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "SYS-13",
+   "Module": "End-to-end cases",
+   "Level": "System",
+   "Req ID": "FR-03; FR-06",
+   "Test scenario": "Scenario S-13: Harmless case with an https:// link",
+   "Preconditions / notes": "",
+   "Input / steps": "POST the case for S-13 to /analyze (contents are in the Scenarios sheet).",
+   "Expected result": "SAFE. No correlation evidence.",
+   "Data ref": "S-13",
+   "Priority": "High",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "SYS-14",
+   "Module": "End-to-end cases",
+   "Level": "System",
+   "Req ID": "FR-05; FR-06",
+   "Test scenario": "Correlation changes the verdict with real model scores",
+   "Preconditions / notes": "Scenarios S-01, S-02 and S-11 have been run.",
+   "Input / steps": "For S-01, S-02 and S-11 compare the best single-channel verdict with the final verdict.",
+   "Expected result": "At least one of the three ends at a higher verdict than its best channel alone.",
+   "Data ref": "S-01, S-02, S-11",
+   "Priority": "High",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "NFR-01",
+   "Module": "Non-functional",
+   "Level": "Non-functional",
+   "Req ID": "NFR-01",
+   "Test scenario": "Single-channel latency",
+   "Preconditions / notes": "Service is running on the demo laptop.",
+   "Input / steps": "Send 50 requests to each single-channel endpoint, one at a time. Record the median and 95th percentile.",
+   "Expected result": "Median is 2 s or less for each channel.",
+   "Data ref": "E-P01, S-P04, U-P01",
+   "Priority": "High",
+   "Category": "Performance"
+  },
+  {
+   "TC ID": "NFR-02",
+   "Module": "Non-functional",
+   "Level": "Non-functional",
+   "Req ID": "NFR-01",
+   "Test scenario": "Time for a full case",
+   "Preconditions / notes": "Service is running.",
+   "Input / steps": "Send S-01 to /analyze five times.",
+   "Expected result": "Every run finishes within 5 s.",
+   "Data ref": "S-01",
+   "Priority": "Medium",
+   "Category": "Performance"
+  },
+  {
+   "TC ID": "NFR-03",
+   "Module": "Non-functional",
+   "Level": "Non-functional",
+   "Req ID": "NFR-02",
+   "Test scenario": "100 requests in a row",
+   "Preconditions / notes": "Service is running.",
+   "Input / steps": "Send 100 mixed requests one after another.",
+   "Expected result": "No errors. The median of the last 20 is no more than 1.5 times the median of the first 20 (plus 5 ms).",
+   "Data ref": "Inline",
+   "Priority": "Medium",
+   "Category": "Robustness"
+  },
+  {
+   "TC ID": "NFR-04",
+   "Module": "Non-functional",
+   "Level": "Non-functional",
+   "Req ID": "NFR-04",
+   "Test scenario": "No secrets in the repository",
+   "Preconditions / notes": "",
+   "Input / steps": "Scan the working tree for keys, tokens and passwords.",
+   "Expected result": "Nothing is found.",
+   "Data ref": "Repository",
+   "Priority": "High",
+   "Category": "Security"
+  },
+  {
+   "TC ID": "NFR-05",
+   "Module": "Non-functional",
+   "Level": "Non-functional",
+   "Req ID": "NFR-03",
+   "Test scenario": "Fresh clone runs from the README",
+   "Preconditions / notes": "A clean machine or fresh environment.",
+   "Input / steps": "Clone the repository, follow only the README, and run pytest.",
+   "Expected result": "The API starts and the tests pass. No undocumented step is needed.",
+   "Data ref": "Repository",
+   "Priority": "High",
+   "Category": "Functional"
+  },
+  {
+   "TC ID": "NFR-06",
+   "Module": "Non-functional",
+   "Level": "Non-functional",
+   "Req ID": "NFR-04",
+   "Test scenario": "Serving code does not log or store messages",
+   "Preconditions / notes": "",
+   "Input / steps": "Search the serving code for logging and file writes.",
+   "Expected result": "None found.",
+   "Data ref": "src/",
+   "Priority": "Medium",
+   "Category": "Security"
+  },
+  {
+   "TC ID": "NFR-07",
+   "Module": "Non-functional",
+   "Level": "Non-functional",
+   "Req ID": "NFR-03",
+   "Test scenario": "Regression after the last change",
+   "Preconditions / notes": "The final code change is committed.",
+   "Input / steps": "Run the whole suite again.",
+   "Expected result": "Results match the earlier run. No new failures.",
+   "Data ref": "All",
+   "Priority": "High",
+   "Category": "Functional"
+  }
+ ],
+ "defects": [
+  {
+   "Defect ID": "D-01",
+   "Test case(s)": "URL-02, URL-03, URL-05, URL-06, URL-07, SYS-13",
+   "Module": "URL classifier",
+   "Description": "The URL model flags legitimate URLs as phishing when they start with https:// or end with a slash. github.com scores 0.3 (legitimate) but https://github.com scores 89.4 (phishing). 12 of 13 standard legitimate sample URLs and 5 of 5 hard-case legitimate URLs were flagged. In a test only, stripping the scheme turned 8 of the 12 back to legitimate. The 30 features count characters and slashes in the whole string, so 'https://' adds 8 characters and 2 slashes. This extends the URL path-length limit already noted in data/README.md. The held-out matrix shows the same weakness: 419 of 2,159 legitimate test URLs were flagged (19.4%).",
+   "Steps to reproduce": "POST {\"value\":\"github.com\"} and then {\"value\":\"https://github.com\"} to /analyze/url. Compare the labels.",
+   "Severity": "High"
+  },
+  {
+   "Defect ID": "D-02",
+   "Test case(s)": "EML-07, SMS-07, URL-08",
+   "Module": "Service (API)",
+   "Description": "The API accepts empty or invalid input and returns a score. POST {} to /analyze/email returns 'phishing' 73.2. POST {} to /analyze/sms returns 'legitimate' 11.2. POST 'htp:/bad url' to /analyze/url returns 'phishing' 98.5. Every field defaults to an empty string and nothing checks the content.",
+   "Steps to reproduce": "POST {} to /analyze/email. POST {\"value\":\"htp:/bad url\"} to /analyze/url.",
+   "Severity": "Medium"
+  },
+  {
+   "Defect ID": "D-03",
+   "Test case(s)": "SCO-06, VV-05, SYS-08, SYS-12",
+   "Module": "Scoring and verdict",
+   "Description": "A case with nothing to assess is reported SAFE. POST {} to /analyze returns combined score 0 and 'LOW RISK'. A case with only a video transcript (the stub says 'unavailable') is also SAFE. A caller cannot tell 'checked and safe' from 'not checked'.",
+   "Steps to reproduce": "POST {} to /analyze. POST {\"video\":{\"transcript\":\"verify now\"}} to /analyze.",
+   "Severity": "Medium"
+  },
+  {
+   "Defect ID": "D-04",
+   "Test case(s)": "COR-12, SYS-09",
+   "Module": "Correlation engine",
+   "Description": "Time-proximity evidence has no maximum window. The engine works out the span between the email, SMS and URL timestamps but never compares it with a limit. Events 6 days apart still add +6 and the text says 'active within a 8640-minute window'. This is the open item 'the time-clustering window needs a concrete value'.",
+   "Steps to reproduce": "POST the S-01 case with timestamps {\"email\":0,\"sms\":259200,\"url\":518400} to /analyze. Read the evidence list.",
+   "Severity": "High"
+  },
+  {
+   "Defect ID": "D-05",
+   "Test case(s)": "COR-14, SYS-11",
+   "Module": "Correlation engine",
+   "Description": "Shared-link matching only recognises links that end in one of 12 listed endings (com, net, org, tk, xyz, top, club, info, biz, ly, click, gq, ml). The same link on secure-bank-verify.online/login is not matched. In S-11 the link evidence did not fire; only identity and time evidence did (bonus 12).",
+   "Steps to reproduce": "Run scenario S-11 (see the Scenarios sheet). Look for 'same suspicious link' in the evidence.",
+   "Severity": "Medium"
+  },
+  {
+   "Defect ID": "D-06",
+   "Test case(s)": "API-12",
+   "Module": "Service (API)",
+   "Description": "No CORS settings. A browser page on another origin (for example the React console on http://localhost:5173) is blocked: GET /health returns no Access-Control-Allow-Origin header and OPTIONS /analyze returns 405.",
+   "Steps to reproduce": "Send GET /health and OPTIONS /analyze with the header Origin: http://localhost:5173.",
+   "Severity": "High"
+  },
+  {
+   "Defect ID": "D-07",
+   "Test case(s)": "API-08",
+   "Module": "Service (API)",
+   "Description": "Non-numeric timestamps cause HTTP 500. timestamps is an untyped dict. When two or more channels are flagged and email, SMS and URL all have timestamps, the engine subtracts the values and raises a TypeError.",
+   "Steps to reproduce": "POST the S-01 case with timestamps {\"email\":\"a\",\"sms\":\"b\",\"url\":\"c\"} to /analyze.",
+   "Severity": "Low"
+  },
+  {
+   "Defect ID": "D-08",
+   "Test case(s)": "COR-07",
+   "Module": "Correlation engine",
+   "Description": "Ordinary words count as a 'claimed identity'. The engine takes the first shared word of 4 or more letters that is not in a 16-word stop list. In the demo scenario the 'identity' is 'detected'. In S-02 it is 'urgent'. Both are generic, so the evidence text and its +6 or +9 weight mean little.",
+   "Steps to reproduce": "Run scenario S-01 and read the 'Same claimed identity' evidence.",
+   "Severity": "Medium"
+  },
+  {
+   "Defect ID": "D-09",
+   "Test case(s)": "SMS-01, SMS-03",
+   "Module": "SMS classifier",
+   "Description": "The SMS model misses most phishing-style messages. Only 1 of 12 standard phishing SMS was flagged (bank, KYC, UPI, e-challan and parcel-fee lures) and 2 of 4 hard cases. All 12 standard legitimate SMS were correct. The cause is documented in data/README.md: the model was trained on the general UCI spam set, not on smishing.",
+   "Steps to reproduce": "Run the Data-SMS sheet, Standard group, Expected = Phishing.",
+   "Severity": "High"
+  },
+  {
+   "Defect ID": "D-10",
+   "Test case(s)": "EML-02, EML-03",
+   "Module": "Email classifier",
+   "Description": "The email model flags some legitimate consumer-style mail: payment receipt E-L08 scored 82.4, statement notice E-H06 73.5, security alert E-H04 96.0, personal photo message E-L06 56.8. Standard legitimate emails: 9 of 11 correct. Hard-case legitimate: 1 of 3. One subtle phishing email (E-H01, 21.1) was missed. The consumer-notification gap is documented in data/README.md.",
+   "Steps to reproduce": "Run the Data-Email sheet, Expected = Legitimate.",
+   "Severity": "Medium"
+  },
+  {
+   "Defect ID": "D-11",
+   "Test case(s)": "PRE-01",
+   "Module": "Preprocessing",
+   "Description": "clean_text() does not remove HTML. Tags and script text stay in what the model sees. The effect on accuracy was not measured.",
+   "Steps to reproduce": "Call clean_text() on \"<html><body><p>Verify <b>now</b></p><script>track()</script></body></html>\".",
+   "Severity": "Low"
+  },
+  {
+   "Defect ID": "D-12",
+   "Test case(s)": "SYS-14",
+   "Module": "End-to-end cases",
+   "Description": "With the real models, correlation never changes the verdict on the test cases. Email, SMS and URL each score 88 or more on their own, so the best channel is already HIGH RISK and the bonus only lifts it to 100 (S-01: 99.9 to 100.0). In a small search for borderline text the models scored either above 90 or below 20. The project's main claim, that a coordinated attack under every channel's threshold is caught by correlation, is shown only with fixed scores (COR-10, SYS-03).",
+   "Steps to reproduce": "Run scenarios S-01, S-02 and S-11 and compare 'best single channel' with 'combined'.",
+   "Severity": "Medium"
+  }
+ ]
+}
