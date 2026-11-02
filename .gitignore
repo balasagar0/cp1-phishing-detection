@@ -1,0 +1,34 @@
+# Python environment and caches
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Raw and derived data (fetched by download_data.sh, rebuilt by run_all.sh; never committed)
+data/
+
+# Backup of the v2 models and reports as received
+_baseline_v2/
+
+# Team inputs: test plan workbook, diary, patent spec (private until the patent is filed)
+docs/inputs/
+
+# Console build tooling
+node_modules/
+console/app/node_modules/
+
+# Event store database and its keys
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+*.db-wal
+*.db-shm
+.cp1_hmac_key
+*.key
+.env
+.env.*
+
+# Scratch worktrees and local tool output
+_worktrees/
+*.log

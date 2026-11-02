@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>Cross-channel correlation console</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font:15px/1.5 "Segoe UI",system-ui,sans-serif;background:#f7f7f5;color:#1a1f28;padding:26px 30px;max-width:1200px;margin:0 auto}
+h1{font-size:23px;font-weight:600}
+.sub{color:#5b6472;font-size:13.5px;margin:4px 0 16px}
+.health{display:inline-block;font-size:12.5px;background:#ebebe7;border-radius:6px;padding:4px 11px;margin-left:8px;color:#2e3642;font-weight:400}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:13px}
+button{font:inherit;padding:8px 14px;border:1px solid #c9ccd2;background:#fff;border-radius:6px;cursor:pointer}
+button:hover{border-color:#1a1f28}
+button.on{background:#1a1f28;color:#fff;border-color:#1a1f28}
+button.go{background:#9c4228;color:#fff;border-color:#9c4228;font-weight:600;padding:8px 26px}
+input[type=number]{font:inherit;width:72px;padding:7px 9px;border:1px solid #c9ccd2;border-radius:6px}
+.ev{background:#fff;border:1px solid #dcdad3;border-radius:8px;padding:11px 14px;margin-bottom:8px;display:grid;grid-template-columns:76px 1fr 100px;gap:12px;align-items:start}
+.ev.out{opacity:.5;border-style:dashed}
+.ch{font-weight:600;text-transform:uppercase;font-size:11.5px;letter-spacing:.6px;color:#2f6f8f;padding-top:3px}
+.tx{font-size:13.5px;color:#2e3642;word-break:break-word}
+.id{font-size:12px;color:#5b6472;margin-top:4px}
+.tok{display:inline-block;background:#ebebe7;border-radius:4px;padding:1px 6px;margin:2px 3px 0 0;font-size:11.5px;color:#2e3642}
+.sc{text-align:right;font-size:22px;font-weight:600;font-variant-numeric:tabular-nums}
+.sc small{display:block;font-size:11px;font-weight:400;color:#5b6472;letter-spacing:.3px}
+.hi{color:#9c4228}.lo{color:#2f6f8f}
+.verdict{margin-top:15px;padding:19px 23px;border-radius:10px;background:#1a1f28;color:#f7f7f5;display:flex;align-items:flex-start;gap:30px;flex-wrap:wrap}
+.vn{font-size:42px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1}
+.lbl{font-size:11.5px;letter-spacing:1.1px;text-transform:uppercase;color:#aeb6c2;margin-bottom:4px}
+.msg{flex:1;min-width:260px;font-size:14.5px;color:#dde1e6}
+.alert{color:#e08a5f;font-weight:600}
+.err{background:#9c4228;color:#fff;padding:13px 17px;border-radius:8px;margin-top:13px;font-size:14px}
+.meta{font-size:12.5px;color:#5b6472;margin-top:10px;line-height:1.55}
+h2{font-size:13px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;color:#5b6472;margin:18px 0 8px}
+</style></head><body>
+
+<h1>Cross-channel correlation console<span class="health" id="health">checking API</span></h1>
+<div class="sub">Scores each event with its channel detector, then scores the bundle. Events are linked by identity tokens (registered domains, phone numbers, the optional identity field) within a time window.</div>
+
+<h2>Bundle</h2>
+<div class="bar" id="presets"></div>
+<div class="bar">
+  <label>Window (minutes): <input type="number" id="win" value="60" min="1" max="10080"></label>
+  <button class="go" id="run">Correlate</button>
+  <span id="status" style="color:#5b6472;font-size:13.5px"></span>
+</div>
+
+<h2>Events</h2>
+<div id="events"></div>
+<div id="out"></div>
+
+<script>
+var API="http://127.0.0.1:8000";
+
+var KYC=[{channel:"sms",text:"Dear customer, your SBI account will be blocked today. Update your KYC now at http://sbi-kyc-update.top/verify-now.php or call 9876543210",identity:"+91 98765 43210",time:"0"},
+{channel:"url",text:"http://sbi-kyc-update.top/verify-now.php",time:"4"},
+{channel:"email",subject:"Urgent: account suspended",text:"Dear customer, your bank account has been suspended. Verify your password within 24 hours at http://sbi-kyc-update.top/verify-now.php or your account will be closed.",time:"12"}];
+
+var BENIGN=[{channel:"sms",text:"Hey, can we move our project meeting to 4 pm tomorrow? I will email you the notes and an article on planning.",identity:"+91 90000 11111",time:"0"},
+{channel:"email",subject:"Re: project meeting",text:"Thanks for confirming. I wrote up the notes from yesterday. The article I mentioned is at https://en.wikipedia.org/wiki/Project_management if you want to read it. Call me tomorrow if anything changes.",time:"6"},
+{channel:"url",text:"https://en.wikipedia.org/wiki/Project_management",time:"10"}];
+
+var WEAK=[{channel:"sms",text:"Hello, there is a problem with your delivery address. Update it at parcel-redelivery.info/confirm today",time:"0"},
+{channel:"url",text:"http://parcel-redelivery.info/track?id=88213",time:"7"},
+{channel:"email",subject:"Delivery problem with your parcel",text:"Hello, we could not deliver your parcel today because the address on the label is incomplete. Please confirm your address at http://parcel-redelivery.info/confirm so we can try again. Thank you.",time:"15"}];
+
+var COURIER=[{channel:"sms",text:"Your package will arrive tomorrow between 10 and 2. Track it at https://www.fedex.com/fedextrack/?trknbr=123456789012",identity:"FedEx",time:"0"},
+{channel:"email",subject:"Your shipment is on the way",text:"Hi, your FedEx shipment 123456789012 is on its way and will arrive tomorrow. You can follow it at https://www.fedex.com/fedextrack/?trknbr=123456789012. Thanks for shipping with us.",time:"10"}];
+
+function spread(ev,t){return ev.map(function(e,i){var c=JSON.parse(JSON.stringify(e));c.time=String(t[i]);return c;});}
+
+var PRESETS=[
+ {id:"weak",name:"Weak parcel campaign (15 min)",ev:WEAK,msg:"No event reaches the alert line on its own."},
+ {id:"weak3",name:"Same messages, 3 days apart",ev:spread(WEAK,[0,4320,8640]),msg:"Same event scores. Separate windows, so nothing is linked. The bundle takes the highest single event."},
+ {id:"benign",name:"Colleague's article (10 min)",ev:BENIGN,msg:"Linked by a shared domain and a phone number, but still low risk."},
+ {id:"kyc",name:"KYC attack, one domain (12 min)",ev:KYC,msg:"Every event alerts on its own. Correlation groups them into one campaign."},
+ {id:"courier",name:"Real courier SMS and email",ev:COURIER,msg:"A detector false positive stays a false positive. The tracking number is not read as a phone number."}
+];
+
+var cur=PRESETS[0];
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;");}
+function f3(x){return (typeof x==="number")?x.toFixed(3):"n/a";}
+
+function drawPresets(){
+ document.getElementById("presets").innerHTML=PRESETS.map(function(p){
+   return '<button class="'+(p.id===cur.id?"on":"")+'" data-id="'+p.id+'">'+p.name+'</button>';}).join("");
+ Array.prototype.forEach.call(document.querySelectorAll("#presets button"),function(b){
+   b.onclick=function(){cur=PRESETS.filter(function(p){return p.id===b.dataset.id;})[0];
+     drawPresets();drawEvents(null);document.getElementById("out").innerHTML="";};});}
+
+function drawEvents(res){
+ document.getElementById("events").innerHTML=cur.ev.map(function(e,i){
+  var r=res?res[i]:null, s=r?r.score:null;
+  var inw=r?r.in_window:true;
+  var toks=(r&&r.identity_tokens&&r.identity_tokens.length)?r.identity_tokens.map(function(t){return '<span class="tok">'+esc(t)+'</span>';}).join(""):"";
+  return '<div class="ev'+(inw?"":" out")+'"><div class="ch">'+e.channel+'</div><div><div class="tx">'+
+   (e.subject?'<b>'+esc(e.subject)+'</b>: ':'')+esc(e.text)+'</div><div class="id">t = '+e.time+' min'+
+   (e.identity?', identity: '+esc(e.identity):'')+(inw?'':', <b>outside window</b>')+'</div>'+toks+'</div>'+
+   '<div class="sc '+(s===null?"":(s>=0.5?"hi":"lo"))+'">'+f3(s)+
+   '<small>'+(s===null?'not scored':(s>=0.5?'alerts':'below line'))+'</small></div></div>';}).join("");}
+
+fetch(API+"/health").then(function(r){return r.json();}).then(function(h){
+ document.getElementById("health").textContent="API ok. trained: "+h.channels.join(", ")+
+  ". not trained: "+h.not_trained.join(", ")+". window "+h.window_minutes+" min. fusion trained on "+h.fusion_trained_on+".";
+}).catch(function(){document.getElementById("health").textContent="API not reachable. Start RUN_DEMO.bat.";});
+
+document.getElementById("run").onclick=function(){
+ var st=document.getElementById("status");st.textContent="scoring...";
+ document.getElementById("out").innerHTML="";
+ var body={events:cur.ev,window_minutes:parseFloat(document.getElementById("win").value)};
+ fetch(API+"/correlate",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)})
+ .then(function(r){if(!r.ok){return r.text().then(function(t){throw new Error("HTTP "+r.status+": "+t);});}return r.json();})
+ .then(function(d){
+   st.textContent="";
+   drawEvents(d.events);
+   var risk=d.bundle_risk, base=d.bundle_risk_without_correlation;
+   var alone=d.single_channel_alert, alerts=risk>=d.alert_threshold;
+   var line=cur.msg;
+   if(alerts&&!alone){line='<span class="alert">No single event alerts, but the bundle does.</span>';}
+   var toks=(d.shared_identity_tokens&&d.shared_identity_tokens.length)
+     ? d.shared_identity_tokens.map(function(t){return '<span class="tok">'+esc(t)+'</span>';}).join("")
+     : '<i>none</i>';
+   document.getElementById("out").innerHTML=
+    '<div class="verdict">'+
+      '<div><div class="lbl">Bundle risk</div><div class="vn">'+f3(risk)+'</div></div>'+
+      '<div><div class="lbl">Without correlation</div><div class="vn" style="color:#aeb6c2">'+f3(base)+'</div></div>'+
+      '<div><div class="lbl">Verdict</div><div class="vn" style="font-size:24px;padding-top:9px">'+esc(d.bundle_label)+'</div></div>'+
+      '<div class="msg">'+line+'<br><br><span class="lbl">Shared identity tokens</span><br>'+toks+'</div>'+
+    '</div>'+
+    '<div class="meta">Single-channel alert: <b>'+(alone?"yes":"no")+'</b>. Alert line '+d.alert_threshold+
+    '. Window '+d.window_minutes+' min, <b>'+d.n_windows+'</b> window(s). Scored window spans '+d.window_time_span_minutes+
+    ' min of a '+d.time_span_minutes+' min bundle.<br>'+esc(d.note)+
+    '. The risk is not a calibrated probability; the 0.5 line is tied to the assumed mix in the simulation.</div>';
+ })
+ .catch(function(e){st.textContent="";
+  document.getElementById("out").innerHTML='<div class="err"><b>Could not reach the API.</b><br>'+esc(e.message)+
+  '<br><br>Start RUN_DEMO.bat and leave that window open.</div>';});};
+
+drawPresets();drawEvents(null);
+</script></body></html>
