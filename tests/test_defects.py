@@ -39,6 +39,25 @@ def test_D15_non_text_input_gives_an_empty_string():
     assert [clean_text(None), clean_text(123), clean_text(float("nan")), clean_text(["x"])] == ["", "", "", ""]
 
 
+# ---------- url: D-02 (R2-06), the URL shape check ----------
+def test_D02_malformed_urls_are_recognised():
+    from url_features import check_url
+    for bad in ("htp:/bad url", "", "   ", "http://[::1", "<script>alert(1)</script>", "../../etc/passwd", "javascript:alert(1)", "mailto:a@b.com",
+                "hxxp://evil[.]com", "http://999.1.1.1/a", "nodot", "http://example.123/x"):
+        assert check_url(bad), bad
+
+
+def test_D02_real_url_shapes_are_accepted():
+    import json
+    from url_features import check_url
+    from demo_cases import CASES
+    good = ["bit.ly/xyz", "localhost:8000/x", "http://0xC0000201/verify", "http://192.0.2.45/login", "http://www.google.com@203.0.113.9/login",
+            "https://münchen.de/x", "http://[2001:db8::1]/a", "xn--pypal-4ve.example/signin", "a.b.co.in:8080/path?q=1#f"]
+    good += [r["URL"] for r in json.loads((ROOT / "tests" / "data" / "workbook_cases.json").read_text(encoding="utf-8"))["url"]]
+    good += [e["text"] for c in CASES.values() for e in c["events"] if e["channel"] == "url"]
+    assert [u for u in good if check_url(u)] == []
+
+
 if __name__ == "__main__":
     ok = True
     for name, fn in sorted((n, f) for n, f in globals().items() if n.startswith("test_") and callable(f)):
