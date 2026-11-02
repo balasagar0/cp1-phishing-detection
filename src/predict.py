@@ -67,6 +67,10 @@ def extract_ids(channel, text, identity=""):
     return sorted(ids)
 
 
+SCORED = ("email", "sms", "url")
+NOT_ASSESSED = ("call", "voice", "video")      # accepted as events, never scored: no detector is built for them
+
+
 class Detectors:
     def __init__(self, models_dir=MODELS, threshold=0.5):
         d = Path(models_dir); self.threshold = threshold

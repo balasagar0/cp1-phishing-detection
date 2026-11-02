@@ -154,7 +154,7 @@ def test_bad_input_is_rejected():
     for name, body, code in [("empty text", {"events": [dict(channel="sms", text="")]}, 422), ("time is a word", {"events": [dict(ok, time="tomorrow")]}, 422),
                              ("time is nan", {"events": [dict(ok, time="nan")]}, 422), ("window 0", {"events": [ok], "window_minutes": 0}, 422),
                              ("window negative", {"events": [ok], "window_minutes": -5}, 422), ("window above a week", {"events": [ok], "window_minutes": 99999}, 422),
-                             ("no events", {"events": []}, 422), ("voice is not trained", {"events": [dict(channel="voice", text="hi")]}, 501)]:
+                             ("no events", {"events": []}, 422), ("voice alone: CANNOT_ASSESS since R2-07 (was 501)", {"events": [dict(channel="voice", text="hi")]}, 200)]:
         r = c.post("/correlate", json=body); assert r.status_code == code, (name, r.status_code, r.text[:120])
 
 
