@@ -5,7 +5,7 @@ __pycache__/
 .pytest_cache/
 
 # Raw and derived data (fetched by download_data.sh, rebuilt by run_all.sh; never committed)
-data/
+/data/
 
 # Backup of the v2 models and reports as received
 _baseline_v2/
