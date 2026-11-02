@@ -58,6 +58,52 @@ def test_D02_real_url_shapes_are_accepted():
     assert [u for u in good if check_url(u)] == []
 
 
+# ---------- correlation: D-03, D-13 (R2-07); D-04, D-05, D-08 stay fixed ----------
+KYC_EMAIL = dict(channel="email", text="Dear customer, your bank account has been suspended. Verify your password within 24 hours at http://sbi-kyc-update.top/verify-now.php or your account will be closed.",
+                 subject="Urgent: account suspended", time="0")
+
+
+def test_D03_nothing_assessable_is_cannot_assess_not_safe():
+    for ch in ("call", "voice", "video"):
+        r = client().post("/correlate", json={"events": [dict(channel=ch, text="Please verify your account now", time="0")]}); j = r.json()
+        assert r.status_code == 200 and j["status"] == "CANNOT_ASSESS" and j["bundle_risk"] is None and j["single_channel_alert"] is None, (ch, j)
+        assert j["bundle_label"] == "cannot assess" and j["not_assessed"][0]["channel"] == ch, j
+    assert client().post("/correlate", json={"events": []}).status_code == 422 and client().post("/correlate", json={}).status_code == 422
+
+
+def test_D13_a_call_or_video_does_not_block_or_change_the_bundle():
+    alone = client().post("/correlate", json={"events": [KYC_EMAIL]}).json()
+    for ch in ("call", "video"):
+        r = client().post("/correlate", json={"events": [KYC_EMAIL, dict(channel=ch, text="Verify your account at sbi-kyc-update.top now", time="2")]}); j = r.json()
+        assert r.status_code == 200 and j["status"] == "ASSESSED", (ch, r.status_code, r.text[:200])
+        assert j["bundle_risk"] == alone["bundle_risk"] and j["features"] == alone["features"], (ch, j["bundle_risk"], alone["bundle_risk"])
+        assert j["events"][1]["assessed"] is False and j["events"][1]["score"] is None and not j["events"][1]["in_window"], j["events"][1]
+        assert j["shared_identity_tokens"] == [] and j["window_event_indices"] == [0], j        # the call names the same domain, but is not linked
+
+
+def test_D13_window_indices_point_at_the_request_events():
+    ev = [dict(channel="video", text="hello", time="0"), KYC_EMAIL | {"time": "1"}, dict(channel="url", text="http://sbi-kyc-update.top/verify-now.php", time="3")]
+    j = client().post("/correlate", json={"events": ev}).json()
+    assert j["window_event_indices"] == [1, 2] and [e["in_window"] for e in j["events"]] == [False, True, True], j
+
+
+def test_D04_events_days_apart_are_not_combined():
+    ev = [KYC_EMAIL | {"time": "0"}, dict(channel="url", text="http://sbi-kyc-update.top/verify-now.php", time="4320")]
+    j = client().post("/correlate", json={"events": ev}).json()
+    assert j["n_windows"] == 2 and j["shared_identity_tokens"] == [] and j["window_minutes"] == 60.0, j
+
+
+def test_D05_any_public_suffix_links_events():
+    from predict import extract_ids
+    assert extract_ids("sms", "Verify at secure-bank-verify.online/login") == ["dom:secure-bank-verify.online"]
+    assert extract_ids("sms", "see login.secure-bank.co.in") == ["dom:secure-bank.co.in"]
+
+
+def test_D08_ordinary_words_are_not_identities():
+    from predict import extract_ids
+    assert extract_ids("email", "Urgent request: please verify the attached form today.") == [] and extract_ids("sms", "Urgent request. Verify today.") == []
+
+
 if __name__ == "__main__":
     ok = True
     for name, fn in sorted((n, f) for n, f in globals().items() if n.startswith("test_") and callable(f)):
