@@ -1,0 +1,336 @@
+{
+ "date": "2026-11-02T12:25:47+05:30",
+ "rows": [
+  {
+   "id": "S-P01",
+   "group": "Standard",
+   "lure": "Bank block threat",
+   "expected": "Phishing",
+   "score": 0.9996,
+   "smishing_probability": 0.9994,
+   "predicted": "Phishing",
+   "right": true
+  },
+  {
+   "id": "S-P02",
+   "group": "Standard",
+   "lure": "KYC expiry",
+   "expected": "Phishing",
+   "score": 0.9999,
+   "smishing_probability": 0.9999,
+   "predicted": "Phishing",
+   "right": true
+  },
+  {
+   "id": "S-P03",
+   "group": "Standard",
+   "lure": "Utility disconnection",
+   "expected": "Phishing",
+   "score": 0.957,
+   "smishing_probability": 0.7261,
+   "predicted": "Phishing",
+   "right": true
+  },
+  {
+   "id": "S-P04",
+   "group": "Standard",
+   "lure": "Lucky draw",
+   "expected": "Phishing",
+   "score": 1.0,
+   "smishing_probability": 1.0,
+   "predicted": "Phishing",
+   "right": true
+  },
+  {
+   "id": "S-P05",
+   "group": "Standard",
+   "lure": "Parcel fee",
+   "expected": "Phishing",
+   "score": 0.9936,
+   "smishing_probability": 0.9917,
+   "predicted": "Phishing",
+   "right": true
+  },
+  {
+   "id": "S-P06",
+   "group": "Standard",
+   "lure": "UPI refund",
+   "expected": "Phishing",
+   "score": 0.95,
+   "smishing_probability": 0.9036,
+   "predicted": "Phishing",
+   "right": true
+  },
+  {
+   "id": "S-P07",
+   "group": "Standard",
+   "lure": "Tax refund",
+   "expected": "Phishing",
+   "score": 0.9659,
+   "smishing_probability": 0.9556,
+   "predicted": "Phishing",
+   "right": true
+  },
+  {
+   "id": "S-P08",
+   "group": "Standard",
+   "lure": "Job scam",
+   "expected": "Phishing",
+   "score": 0.8905,
+   "smishing_probability": 0.6987,
+   "predicted": "Phishing",
+   "right": true
+  },
+  {
+   "id": "S-P09",
+   "group": "Standard",
+   "lure": "SIM deactivation",
+   "expected": "Phishing",
+   "score": 0.9713,
+   "smishing_probability": 0.9398,
+   "predicted": "Phishing",
+   "right": true
+  },
+  {
+   "id": "S-P10",
+   "group": "Standard",
+   "lure": "Reward points",
+   "expected": "Phishing",
+   "score": 0.9926,
+   "smishing_probability": 0.9881,
+   "predicted": "Phishing",
+   "right": true
+  },
+  {
+   "id": "S-P11",
+   "group": "Standard",
+   "lure": "Fake e-challan",
+   "expected": "Phishing",
+   "score": 0.9915,
+   "smishing_probability": 0.896,
+   "predicted": "Phishing",
+   "right": true
+  },
+  {
+   "id": "S-P12",
+   "group": "Standard",
+   "lure": "Account lock",
+   "expected": "Phishing",
+   "score": 0.998,
+   "smishing_probability": 0.998,
+   "predicted": "Phishing",
+   "right": true
+  },
+  {
+   "id": "S-H01",
+   "group": "Hard case",
+   "lure": "Callback lure (no link)",
+   "expected": "Phishing",
+   "score": 0.8942,
+   "smishing_probability": 0.8143,
+   "predicted": "Phishing",
+   "right": true
+  },
+  {
+   "id": "S-H02",
+   "group": "Hard case",
+   "lure": "Address confirmation (no link)",
+   "expected": "Phishing",
+   "score": 0.3968,
+   "smishing_probability": 0.1707,
+   "predicted": "Legitimate",
+   "right": false
+  },
+  {
+   "id": "S-H03",
+   "group": "Hard case",
+   "lure": "Plausible statement link",
+   "expected": "Phishing",
+   "score": 0.956,
+   "smishing_probability": 0.9225,
+   "predicted": "Phishing",
+   "right": true
+  },
+  {
+   "id": "S-H04",
+   "group": "Hard case",
+   "lure": "Roman-script Hindi lure",
+   "expected": "Phishing",
+   "score": 0.9955,
+   "smishing_probability": 0.9912,
+   "predicted": "Phishing",
+   "right": true
+  },
+  {
+   "id": "S-L01",
+   "group": "Standard",
+   "lure": "One-time password",
+   "expected": "Legitimate",
+   "score": 0.2041,
+   "smishing_probability": 0.0228,
+   "predicted": "Legitimate",
+   "right": true
+  },
+  {
+   "id": "S-L02",
+   "group": "Standard",
+   "lure": "Shipping update",
+   "expected": "Legitimate",
+   "score": 0.0417,
+   "smishing_probability": 0.0033,
+   "predicted": "Legitimate",
+   "right": true
+  },
+  {
+   "id": "S-L03",
+   "group": "Standard",
+   "lure": "Appointment reminder",
+   "expected": "Legitimate",
+   "score": 0.1017,
+   "smishing_probability": 0.0558,
+   "predicted": "Legitimate",
+   "right": true
+  },
+  {
+   "id": "S-L04",
+   "group": "Standard",
+   "lure": "Personal message",
+   "expected": "Legitimate",
+   "score": 0.1942,
+   "smishing_probability": 0.0001,
+   "predicted": "Legitimate",
+   "right": true
+  },
+  {
+   "id": "S-L05",
+   "group": "Standard",
+   "lure": "Credit alert",
+   "expected": "Legitimate",
+   "score": 0.788,
+   "smishing_probability": 0.7521,
+   "predicted": "Phishing",
+   "right": false
+  },
+  {
+   "id": "S-L06",
+   "group": "Standard",
+   "lure": "College notice",
+   "expected": "Legitimate",
+   "score": 0.0364,
+   "smishing_probability": 0.021,
+   "predicted": "Legitimate",
+   "right": true
+  },
+  {
+   "id": "S-L07",
+   "group": "Standard",
+   "lure": "Receipt",
+   "expected": "Legitimate",
+   "score": 0.0437,
+   "smishing_probability": 0.0121,
+   "predicted": "Legitimate",
+   "right": true
+  },
+  {
+   "id": "S-L08",
+   "group": "Standard",
+   "lure": "Travel confirmation",
+   "expected": "Legitimate",
+   "score": 0.0016,
+   "smishing_probability": 0.0005,
+   "predicted": "Legitimate",
+   "right": true
+  },
+  {
+   "id": "S-L09",
+   "group": "Standard",
+   "lure": "Family message",
+   "expected": "Legitimate",
+   "score": 0.0002,
+   "smishing_probability": 0.0001,
+   "predicted": "Legitimate",
+   "right": true
+  },
+  {
+   "id": "S-L10",
+   "group": "Standard",
+   "lure": "Cab update",
+   "expected": "Legitimate",
+   "score": 0.1043,
+   "smishing_probability": 0.0001,
+   "predicted": "Legitimate",
+   "right": true
+  },
+  {
+   "id": "S-L11",
+   "group": "Standard",
+   "lure": "Interview reminder",
+   "expected": "Legitimate",
+   "score": 0.1566,
+   "smishing_probability": 0.1209,
+   "predicted": "Legitimate",
+   "right": true
+  },
+  {
+   "id": "S-L12",
+   "group": "Standard",
+   "lure": "Plan renewal",
+   "expected": "Legitimate",
+   "score": 0.0629,
+   "smishing_probability": 0.0024,
+   "predicted": "Legitimate",
+   "right": true
+  },
+  {
+   "id": "S-H05",
+   "group": "Hard case",
+   "lure": "Card use alert",
+   "expected": "Legitimate",
+   "score": 0.8582,
+   "smishing_probability": 0.8306,
+   "predicted": "Phishing",
+   "right": false
+  },
+  {
+   "id": "S-H06",
+   "group": "Hard case",
+   "lure": "OTP with warning",
+   "expected": "Legitimate",
+   "score": 0.3472,
+   "smishing_probability": 0.3159,
+   "predicted": "Legitimate",
+   "right": true
+  },
+  {
+   "id": "S-H07",
+   "group": "Hard case",
+   "lure": "Fee deadline",
+   "expected": "Legitimate",
+   "score": 0.2401,
+   "smishing_probability": 0.2157,
+   "predicted": "Legitimate",
+   "right": true
+  },
+  {
+   "id": "S-H08",
+   "group": "Hard case",
+   "lure": "Bill due date",
+   "expected": "Legitimate",
+   "score": 0.8507,
+   "smishing_probability": 0.1612,
+   "predicted": "Phishing",
+   "right": false
+  }
+ ],
+ "missed_phishing": [
+  "S-H02"
+ ],
+ "flagged_legitimate": [
+  "S-L05",
+  "S-H05",
+  "S-H08"
+ ],
+ "n_phishing": 16,
+ "n_legitimate": 16,
+ "data_search": "No SMS retrain. The brief allows one only with real smishing data whose source and licence can be checked. The SMS data v2 already uses (LSDST, 5,971 raw messages) is the Mishra and Soni 'SMS Phishing Dataset for Machine Learning and Pattern Recognition' (Mendeley Data, DOI 10.17632/f45bkkt8pr.1, CC BY 4.0): same row and class counts. A search for a public set of legitimate transactional SMS (bank alerts, bills), which is what D-16 needs, found none with a stated licence. So D-09 and D-16 stay open."
+}

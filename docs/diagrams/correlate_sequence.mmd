@@ -1,0 +1,29 @@
+%% As built (R2-14): POST /correlate (api.py correlate, _assess; src/fusion.py)
+sequenceDiagram
+  autonumber
+  participant C as Console
+  participant A as api.py
+  participant D as Detectors (predict.py)
+  participant F as Fusion (fusion.py)
+  C->>A: POST /correlate {events[], window_minutes?}
+  A->>A: no events? -> 422
+  loop each event
+    A->>A: _check: channel known, URL well formed (else 422)
+    A->>D: extract_ids(channel, text, identity)
+    A->>A: _minutes(time) (bad time -> 422)
+    alt email / sms / url, model loaded
+      A->>D: score(channel, text, subject)
+      D-->>A: score, label, top terms
+    else call / voice / video, or model missing
+      A->>A: mark "not assessed" (kept out of the risk)
+    end
+  end
+  alt nothing assessable
+    A-->>C: status CANNOT_ASSESS, bundle_risk null
+  else
+    A->>F: risk(assessed events, window)
+    F->>F: time_windows: split into 60-minute windows
+    F->>F: window_risks: bundle_features per window, model.predict_proba (one event = its detector score)
+    F-->>A: highest window risk, its events, features
+    A-->>C: per-event scores, single_channel_alert, bundle_risk, shared tokens, windows
+  end

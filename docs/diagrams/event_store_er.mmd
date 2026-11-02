@@ -1,0 +1,43 @@
+%% As built (R2-14): event-store tables (SCHEMA in src/event_store.py). Recipient and tokens are HMAC-SHA256 hashes.
+erDiagram
+  EVENTS {
+    int id PK
+    text recipient_h "HMAC of the recipient"
+    text channel "email, sms, url, call, voice, video"
+    real t_minutes
+    int assessed "0 for call and video"
+    real score "null when not assessed"
+    text label
+    text model_version "model file and hash prefix"
+    text tokens_h "JSON list of hashed identity tokens"
+    text content "null unless CP1_STORE_CONTENT=1"
+    text subject "null unless CP1_STORE_CONTENT=1"
+    real stored_at "for the retention purge"
+  }
+  CAMPAIGNS {
+    int id PK
+    text recipient_h
+    int start_event_id "first event of the window"
+    text event_ids "JSON list"
+    real first_t
+    real last_t
+    real risk
+    int n_events
+    text shared_tokens_h "JSON list"
+    int active "0 when absorbed by a larger window"
+    int alerted
+    real updated_at
+  }
+  ALERTS {
+    int id PK
+    int campaign_id FK
+    text recipient_h
+    real risk
+    text event_ids "JSON list"
+    text shared_tokens_h "JSON list"
+    text reason
+    real raised_at
+    real acked_at "null until acknowledged"
+  }
+  EVENTS }o--o{ CAMPAIGNS : "grouped by time window (event_ids)"
+  CAMPAIGNS ||--o| ALERTS : "one alert when risk first reaches 0.5"

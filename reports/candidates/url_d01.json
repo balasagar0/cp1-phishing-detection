@@ -1,0 +1,408 @@
+{
+ "date": "2026-11-02T12:24:26+05:30",
+ "urls": 43,
+ "variants_scored": 444,
+ "urls_whose_label_flips": [],
+ "training_and_serving_use_canon": true,
+ "rows": [
+  {
+   "id": "U-P01",
+   "url": "http://192.0.2.45/secure/login.php?user=verify&session=8841",
+   "expected": "Phishing",
+   "variants": 6,
+   "min": 0.9363,
+   "max": 0.9363,
+   "same_score": true
+  },
+  {
+   "id": "U-P02",
+   "url": "http://198.51.100.17/bank/update-account.html",
+   "expected": "Phishing",
+   "variants": 12,
+   "min": 0.9885,
+   "max": 0.9885,
+   "same_score": true
+  },
+  {
+   "id": "U-P03",
+   "url": "http://www.google.com@203.0.113.9/login",
+   "expected": "Phishing",
+   "variants": 12,
+   "min": 0.8097,
+   "max": 0.8097,
+   "same_score": true
+  },
+  {
+   "id": "U-P04",
+   "url": "http://secure-login.account-verify.update-info.example/signin",
+   "expected": "Phishing",
+   "variants": 12,
+   "min": 0.9971,
+   "max": 0.9971,
+   "same_score": true
+  },
+  {
+   "id": "U-P05",
+   "url": "http://paypal.com.account-security-check.example/webscr?cmd=login",
+   "expected": "Phishing",
+   "variants": 6,
+   "min": 0.9998,
+   "max": 0.9998,
+   "same_score": true
+  },
+  {
+   "id": "U-P06",
+   "url": "http://bank-kyc-update.example/verify/customer?id=5541&token=a91f",
+   "expected": "Phishing",
+   "variants": 6,
+   "min": 0.9888,
+   "max": 0.9888,
+   "same_score": true
+  },
+  {
+   "id": "U-P07",
+   "url": "http://free-gift-claim-now.example/win/prize.html",
+   "expected": "Phishing",
+   "variants": 12,
+   "min": 0.6054,
+   "max": 0.6054,
+   "same_score": true
+  },
+  {
+   "id": "U-P08",
+   "url": "http://login-microsoft-online.example/common/oauth2/authorize",
+   "expected": "Phishing",
+   "variants": 12,
+   "min": 0.9604,
+   "max": 0.9604,
+   "same_score": true
+  },
+  {
+   "id": "U-P09",
+   "url": "http://update-your-password-now.example/reset?email=user%40mail.test",
+   "expected": "Phishing",
+   "variants": 6,
+   "min": 0.9928,
+   "max": 0.9928,
+   "same_score": true
+  },
+  {
+   "id": "U-P10",
+   "url": "http://www.secure-payment-portal.example/checkout/confirm-card-details",
+   "expected": "Phishing",
+   "variants": 12,
+   "min": 0.9703,
+   "max": 0.9703,
+   "same_score": true
+  },
+  {
+   "id": "U-P11",
+   "url": "http://xn--pypal-4ve.example/signin",
+   "expected": "Phishing",
+   "variants": 12,
+   "min": 0.9481,
+   "max": 0.9481,
+   "same_score": true
+  },
+  {
+   "id": "U-P12",
+   "url": "http://amazon-order-verify.example/ap/signin?openid.return_to=http%3A%2F%2F198.51.100.17",
+   "expected": "Phishing",
+   "variants": 6,
+   "min": 0.9907,
+   "max": 0.9907,
+   "same_score": true
+  },
+  {
+   "id": "U-P13",
+   "url": "http://webmail-helpdesk-upgrade.example/form/index.html",
+   "expected": "Phishing",
+   "variants": 12,
+   "min": 0.9993,
+   "max": 0.9993,
+   "same_score": true
+  },
+  {
+   "id": "U-H01",
+   "url": "http://0xC0000201/verify/account",
+   "expected": "Phishing",
+   "variants": 12,
+   "min": 0.5687,
+   "max": 0.5687,
+   "same_score": true
+  },
+  {
+   "id": "U-H02",
+   "url": "https://secure.example-bank.com.verify-session.login.update.example/auth/index.php?redirect=https://www.example-bank.com",
+   "expected": "Phishing",
+   "variants": 6,
+   "min": 0.9986,
+   "max": 0.9986,
+   "same_score": true
+  },
+  {
+   "id": "U-H03",
+   "url": "https://accounts-google.signin-check.example/ServiceLogin",
+   "expected": "Phishing",
+   "variants": 12,
+   "min": 0.9743,
+   "max": 0.9743,
+   "same_score": true
+  },
+  {
+   "id": "U-H04",
+   "url": "http://example.test/redirect.php?url=http://198.51.100.17/login",
+   "expected": "Phishing",
+   "variants": 6,
+   "min": 0.9985,
+   "max": 0.9985,
+   "same_score": true
+  },
+  {
+   "id": "U-H05",
+   "url": "http://www.faceb00k-login.example/index.php",
+   "expected": "Phishing",
+   "variants": 12,
+   "min": 0.9968,
+   "max": 0.9968,
+   "same_score": true
+  },
+  {
+   "id": "U-L01",
+   "url": "https://www.google.com/",
+   "expected": "Legitimate",
+   "variants": 12,
+   "min": 0.0043,
+   "max": 0.0043,
+   "same_score": true
+  },
+  {
+   "id": "U-L02",
+   "url": "https://github.com/",
+   "expected": "Legitimate",
+   "variants": 12,
+   "min": 0.0013,
+   "max": 0.0013,
+   "same_score": true
+  },
+  {
+   "id": "U-L03",
+   "url": "https://en.wikipedia.org/wiki/Phishing",
+   "expected": "Legitimate",
+   "variants": 12,
+   "min": 0.0,
+   "max": 0.0,
+   "same_score": true
+  },
+  {
+   "id": "U-L04",
+   "url": "https://www.kluniversity.in/",
+   "expected": "Legitimate",
+   "variants": 12,
+   "min": 0.089,
+   "max": 0.089,
+   "same_score": true
+  },
+  {
+   "id": "U-L05",
+   "url": "https://www.python.org/downloads/",
+   "expected": "Legitimate",
+   "variants": 12,
+   "min": 0.0979,
+   "max": 0.0979,
+   "same_score": true
+  },
+  {
+   "id": "U-L06",
+   "url": "https://docs.python.org/3/library/re.html",
+   "expected": "Legitimate",
+   "variants": 12,
+   "min": 0.1464,
+   "max": 0.1464,
+   "same_score": true
+  },
+  {
+   "id": "U-L07",
+   "url": "https://www.microsoft.com/en-in/",
+   "expected": "Legitimate",
+   "variants": 12,
+   "min": 0.0098,
+   "max": 0.0098,
+   "same_score": true
+  },
+  {
+   "id": "U-L08",
+   "url": "https://stackoverflow.com/questions/tagged/python",
+   "expected": "Legitimate",
+   "variants": 12,
+   "min": 0.0013,
+   "max": 0.0013,
+   "same_score": true
+  },
+  {
+   "id": "U-L09",
+   "url": "https://www.bbc.com/news",
+   "expected": "Legitimate",
+   "variants": 12,
+   "min": 0.0004,
+   "max": 0.0004,
+   "same_score": true
+  },
+  {
+   "id": "U-L10",
+   "url": "https://www.irctc.co.in/nget/train-search",
+   "expected": "Legitimate",
+   "variants": 12,
+   "min": 0.0055,
+   "max": 0.0055,
+   "same_score": true
+  },
+  {
+   "id": "U-L11",
+   "url": "https://www.linkedin.com/in/",
+   "expected": "Legitimate",
+   "variants": 12,
+   "min": 0.0003,
+   "max": 0.0003,
+   "same_score": true
+  },
+  {
+   "id": "U-L12",
+   "url": "https://scikit-learn.org/stable/modules/ensemble.html",
+   "expected": "Legitimate",
+   "variants": 12,
+   "min": 0.1986,
+   "max": 0.1986,
+   "same_score": true
+  },
+  {
+   "id": "U-L13",
+   "url": "https://www.amazon.in/",
+   "expected": "Legitimate",
+   "variants": 12,
+   "min": 0.0175,
+   "max": 0.0175,
+   "same_score": true
+  },
+  {
+   "id": "U-H06",
+   "url": "https://accounts.google.com/signin/v2/identifier?service=mail&continue=https%3A%2F%2Fmail.google.com",
+   "expected": "Legitimate",
+   "variants": 6,
+   "min": 0.7605,
+   "max": 0.7605,
+   "same_score": true
+  },
+  {
+   "id": "U-H07",
+   "url": "https://github.com/login?return_to=%2Flogin%2Foauth%2Fauthorize",
+   "expected": "Legitimate",
+   "variants": 6,
+   "min": 0.0155,
+   "max": 0.0155,
+   "same_score": true
+  },
+  {
+   "id": "U-H08",
+   "url": "https://www.google.com/search?q=how+to+detect+phishing+emails&oq=how+to+detect+phishing+emails&sourceid=chrome&ie=UTF-8",
+   "expected": "Legitimate",
+   "variants": 6,
+   "min": 0.0096,
+   "max": 0.0096,
+   "same_score": true
+  },
+  {
+   "id": "U-H09",
+   "url": "https://login.microsoftonline.com/common/oauth2/v2.0/authorize",
+   "expected": "Legitimate",
+   "variants": 12,
+   "min": 0.0381,
+   "max": 0.0381,
+   "same_score": true
+  },
+  {
+   "id": "U-H10",
+   "url": "https://en.wikipedia.org/wiki/Cross-site_scripting",
+   "expected": "Legitimate",
+   "variants": 12,
+   "min": 0.0001,
+   "max": 0.0001,
+   "same_score": true
+  },
+  {
+   "id": "TC-04",
+   "url": "http://sbi-kyc-update.top/verify-now.php",
+   "expected": "",
+   "variants": 12,
+   "min": 0.9952,
+   "max": 0.9952,
+   "same_score": true
+  },
+  {
+   "id": "TC-05",
+   "url": "https://en.wikipedia.org/wiki/Project_management",
+   "expected": "",
+   "variants": 12,
+   "min": 0.0001,
+   "max": 0.0001,
+   "same_score": true
+  },
+  {
+   "id": "TC-06",
+   "url": "http://parcel-redelivery.info/track?id=88213",
+   "expected": "",
+   "variants": 6,
+   "min": 0.451,
+   "max": 0.451,
+   "same_score": true
+  },
+  {
+   "id": "TC-07",
+   "url": "http://parcel-redelivery.info/track?id=88213",
+   "expected": "",
+   "variants": 6,
+   "min": 0.451,
+   "max": 0.451,
+   "same_score": true
+  },
+  {
+   "id": "IN-01",
+   "url": "http://yono-sbi-kyc.co.in/pan-update",
+   "expected": "",
+   "variants": 12,
+   "min": 0.9274,
+   "max": 0.9274,
+   "same_score": true
+  },
+  {
+   "id": "IN-02",
+   "url": "https://indiapost-customs-fee.top/pay",
+   "expected": "",
+   "variants": 12,
+   "min": 0.9883,
+   "max": 0.9883,
+   "same_score": true
+  },
+  {
+   "id": "IN-04",
+   "url": "https://www.amazon.in/gp/your-account/order-history",
+   "expected": "",
+   "variants": 12,
+   "min": 0.0048,
+   "max": 0.0048,
+   "same_score": true
+  }
+ ],
+ "login_false_alarms_final": 0.0,
+ "login_false_alarms_first_version": 0.9223,
+ "recall_bad_on_popular_final": {
+  "n": 381,
+  "recall": 0.3071
+ },
+ "recall_bad_on_popular_first_version": {
+  "n": 381,
+  "recall": 0.4987
+ },
+ "host_grouped_f1": 0.9044,
+ "decision": "no retrain: no variant changes a label"
+}

@@ -132,3 +132,10 @@ All 69 items from section 9 of `CP1_FINISH_TASK.md`. Updated at the end of every
 | blocked | 3 |
 | people | 30 |
 | **total** | **69** |
+
+## Resume here (session paused during Phase 3, 2 Nov 2026)
+
+- **Running when paused:** `src/eval_email_candidates.py` (the Phase 3.1 email candidate). When it finishes it writes `reports/candidates/email_candidates.md` and `.json` and `models/candidates/email_model.joblib`. Read its adoption decision. If (a) to (c) hold, set `USE_EXTRA_CORPORA = True` in `src/train_email.py`, call `download_email_extra.sh` from `download_data.sh`, make `src/make_report.py` and `scripts/compare_reports.py` take the honest email figure over CEAS_08, Enron and FraudEmail (not every held-out corpus), then run all tests (rule d).
+- **Done in Phase 3 so far (not yet merged to main):** extra corpora downloaded from their original sources (`download_email_extra.sh`, `src/email_corpora.py`); `src/train_email.py` importable; URL check: no scheme or slash flip, so no URL retrain (`scripts/check_url_d01.py`); SMS: no new licensed data, D-09 and D-16 stay open (`scripts/sms_lure_report.py`); `DATA_SOURCES.md` generator.
+- **Written ahead for later phases (uncommitted outputs are regenerated):** `scripts/benchmark.py`, `scripts/preflight.py`, `start_demo.bat`, `scripts/nfr05_fresh_clone.py`, `src/eval_comparison.py`, `src/campaign_formula.py` with tests (patent row blocked on the spec), `README.md`, `docs/USER_MANUAL.md`, `docs/PRIVACY.md`, `docs/CP2_BACKLOG.md`, `docs/diagrams/*.mmd` (rendered to SVG and PNG except `events_sequence`).
+- **Next:** finish 3.1, then Phase 4 (tag `cp1-rc1`, final run, benchmark, comparison, NFR-05, exit criteria, `cp1-final`), Phase 5 documents, Phase 6 message.
