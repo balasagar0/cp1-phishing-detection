@@ -104,6 +104,55 @@ def test_D08_ordinary_words_are_not_identities():
     assert extract_ids("email", "Urgent request: please verify the attached form today.") == [] and extract_ids("sms", "Urgent request. Verify today.") == []
 
 
+# ---------- api-console: D-02 (R2-06), D-06 (R2-04), D-07 stays fixed, D-14 ----------
+def test_D02_api_refuses_malformed_urls_and_unknown_channels():
+    c = client()
+    for body in ({"channel": "url", "text": "htp:/bad url"}, {"channel": "url", "text": "http://[::1"}, {"channel": "fax", "text": "hi"}, {"channel": "email", "text": ""}, {"channel": "sms"}):
+        r = c.post("/score", json=body); assert r.status_code == 422, (body, r.status_code, r.text[:160])
+    r = c.post("/score", json={"channel": "url", "text": "htp:/bad url"}); assert "not a valid URL" in r.json()["detail"], r.text
+    r = c.post("/correlate", json={"events": [{"channel": "sms", "text": "hi"}, {"channel": "url", "text": "../../etc/passwd"}]})
+    assert r.status_code == 422 and r.json()["detail"].startswith("event 1:"), r.text
+    assert c.post("/score", json={"channel": "url", "text": "http://0xC0000201/verify/account"}).status_code == 200      # odd but real URL shapes still score
+
+
+def test_D06_cors_names_explicit_origins_never_star():
+    import api
+    assert "*" not in api.ORIGINS and "http://localhost:5173" in api.ORIGINS
+    c = client(); o = "http://localhost:5173"
+    p = c.options("/correlate", headers={"Origin": o, "Access-Control-Request-Method": "POST", "Access-Control-Request-Headers": "content-type"})
+    assert p.status_code == 200 and p.headers.get("access-control-allow-origin") == o, dict(p.headers)
+    assert c.get("/health", headers={"Origin": "http://evil.example"}).headers.get("access-control-allow-origin") is None
+
+
+def test_D07_bad_timestamps_give_422_not_500():
+    r = client().post("/correlate", json={"events": [{"channel": "sms", "text": "hi", "time": "a"}, {"channel": "sms", "text": "ok", "time": "b"}]})
+    assert r.status_code == 422 and "'time'" in r.json()["detail"], r.text
+
+
+def test_D14_a_missing_model_degrades_one_channel_only():
+    import shutil, tempfile
+    from predict import Detectors
+    tmp = Path(tempfile.mkdtemp(prefix="cp1_d14_"))
+    try:
+        for f in ("email_model.joblib", "url_string_model.joblib"): shutil.copy(ROOT / "models" / f, tmp / f)
+        D = Detectors(tmp)
+        assert D.unavailable.keys() == {"sms"} and D.available("email") and D.available("url") and not D.available("sms"), D.unavailable
+        assert D.score("url", "http://sbi-kyc-update.top/verify-now.php")["score"] > 0.5
+        try: D.score("sms", "hi"); raise AssertionError("sms should be unavailable")
+        except RuntimeError as e: assert "not loaded" in str(e)
+    finally: shutil.rmtree(tmp, ignore_errors=True)
+    import api
+    saved = (api.D.sms, dict(api.D.unavailable))
+    try:
+        api.D.unavailable["sms"] = "sms_model.joblib could not be loaded (test)"
+        c = client()
+        assert c.get("/health").json()["status"] == "degraded" and c.post("/score", json={"channel": "sms", "text": "hi"}).status_code == 503
+        j = c.post("/correlate", json={"events": [{"channel": "sms", "text": "Verify now at secure-bank-verify.xyz/login", "time": "0"},
+                                                   {"channel": "url", "text": "secure-bank-verify.xyz/login", "time": "1"}]}).json()
+        assert j["status"] == "ASSESSED" and j["events"][0]["assessed"] is False and "not loaded" in j["events"][0]["reason"] and j["events"][1]["score"] is not None, j
+    finally: api.D.sms, api.D.unavailable = saved[0], saved[1]
+
+
 if __name__ == "__main__":
     ok = True
     for name, fn in sorted((n, f) for n, f in globals().items() if n.startswith("test_") and callable(f)):
