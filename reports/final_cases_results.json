@@ -1,0 +1,1614 @@
+{
+ "run": {
+  "date": "2026-11-02T11:20:24+05:30",
+  "describe": "test-run-20261102-0-11-g44cf209",
+  "commit": "44cf2096c9e1b4c024944287efdf0c559d7163b6",
+  "git_user": "balasagar0",
+  "via": "in-process (FastAPI TestClient)",
+  "python": "3.13.0",
+  "platform": "Windows-11-10.0.26200-SP0"
+ },
+ "cases": {
+  "API-01": {
+   "tag": "Replaced",
+   "why": "v2's /health lists the trained channels and the untrained ones instead of a readiness map.",
+   "status": "Pass",
+   "actual": "HTTP 200: {'status': 'ok', 'channels': ['email', 'sms', 'url'], 'not_trained': ['voice', 'video'], 'not_assessed_channels': ['call', 'voice', 'video'], 'not_available': {}, 'fusion_trained_on': 'simulated bundles', 'window_minutes': 60.0}",
+   "defect": null
+  },
+  "API-02": {
+   "tag": "Replaced",
+   "why": "v2 has no /analyze/email; POST /score with channel=email. v2 returns score (0-1), label (malicious/benign) and the terms that moved the score instead of confidence and top_signals.",
+   "status": "Pass",
+   "actual": "HTTP 200: label malicious, score 0.9998, top terms ['your', 'your account', 'account', 'bank', 'verify your']",
+   "defect": null
+  },
+  "SCO-01": {
+   "tag": "Replaced",
+   "why": "v2 has no SAFE / SUSPICIOUS / HIGH RISK bands (0-30-60-100). Its one line is 0.5. Same intent: the boundary is placed exactly; 0.5 alerts, just below does not, for a channel score and for the bundle label.",
+   "status": "Pass",
+   "actual": "channel labels at 0, 0.4999, 0.5, 1 -> ['benign', 'benign', 'malicious', 'malicious']; one-event bundle at 0.5 -> risk 0.5, at 0.4999 -> risk 0.4999",
+   "defect": null
+  },
+  "SYS-01": {
+   "tag": "Replaced",
+   "why": "HIGH RISK -> alert (bundle risk >= 0.5), SAFE -> no alert. v2's evidence for a shared link is a shared identity token.",
+   "status": "Pass",
+   "actual": "HTTP 200: events: email 0.997, sms 1.000, url 0.974; single-channel alert True; bundle risk 1.000 (elevated risk); windows 1; shared ['dom:bit.ly']",
+   "defect": null
+  },
+  "PRE-01": {
+   "tag": "Ported",
+   "why": "",
+   "status": "Pass",
+   "actual": "clean_text returned: 'Verify now'",
+   "defect": "D-11"
+  },
+  "PRE-02": {
+   "tag": "N/A",
+   "why": "v2 does not replace URLs and e-mail addresses with placeholder tokens. The email model reads the words of the URL, and the correlation step extracts registered domains as identity tokens (tested by COR-02, COR-03 and tests/test_window_and_ids.py).",
+   "status": "N/A",
+   "actual": "v2 does not replace URLs and e-mail addresses with placeholder tokens. The email model reads the words of the URL, and the correlation step extracts registered domains as identity tokens (tested by COR-02, COR-03 and tests/test_window_and_ids.py).",
+   "defect": null
+  },
+  "PRE-03": {
+   "tag": "Ported",
+   "why": "",
+   "status": "Pass",
+   "actual": "clean_text(None), clean_text(123) -> ['', '']",
+   "defect": "D-15"
+  },
+  "PRE-04": {
+   "tag": "Ported",
+   "why": "",
+   "status": "Pass",
+   "actual": "No exception; repeatable=True; result='Your account 🔒 will be blocked ⚠️ आज ही update करें'",
+   "defect": null
+  },
+  "PRE-05": {
+   "tag": "Replaced",
+   "why": "v2 has no 30-feature URL extractor. Its URL representation is the canonical URL's character 3-5-gram hashing (2^20 slots) plus 3 domain-popularity flags. Same intent: the vector for U-P01 is complete and identical on repeat, and the IP host carries no popularity flag.",
+   "status": "Pass",
+   "actual": "width 1048579 (expected 1048579), identical on repeat=True, popularity flags for the IP host=[0.0, 0.0, 0.0]",
+   "defect": null
+  },
+  "PRE-06": {
+   "tag": "Replaced",
+   "why": "Same intent as PRE-05 for odd input: v2's URL representation is built for every input without an exception. (At the API, malformed URLs are refused instead: URL-08.)",
+   "status": "Pass",
+   "actual": "No exception and full width for '', spaces, 'htp:/bad url', a 5,000-character string and 'http://[::1'",
+   "defect": null
+  },
+  "PRE-07": {
+   "tag": "Ported",
+   "why": "",
+   "status": "Pass",
+   "actual": "canonical 'google.com' vs 'google.com'; scores 0.0043 vs 0.0043",
+   "defect": null
+  },
+  "EML-01": {
+   "tag": "Ported",
+   "why": "",
+   "status": "Fail",
+   "actual": "7/11 predicted phishing (64%); wrong: E-P03 10.2, E-P06 5.2, E-P07 23.7, E-P09 20.6",
+   "defect": "D-17"
+  },
+  "EML-02": {
+   "tag": "Ported",
+   "why": "",
+   "status": "Pass",
+   "actual": "11/11 predicted legitimate (100%)",
+   "defect": "D-10"
+  },
+  "EML-03": {
+   "tag": "Ported",
+   "why": "",
+   "status": "Fail",
+   "actual": "Hard case phishing: 2/3 predicted phishing (67%); wrong: E-H01 0.1; hard case legitimate: 2/3 predicted legitimate (67%); wrong: E-H04 57.7",
+   "defect": "D-10, D-17"
+  },
+  "EML-04": {
+   "tag": "Replaced",
+   "why": "v2 returns a probability from 0 to 1 and a label (malicious or benign) plus the terms that moved the score; it has no separate 'confidence' field. Same intent: the score is a valid probability, the label matches the 0.5 line and E-P01 scores higher than E-L01.",
+   "status": "Pass",
+   "actual": "E-P01: malicious 0.9998; E-L01: benign 0.0022",
+   "defect": null
+  },
+  "EML-05": {
+   "tag": "Ported",
+   "why": "",
+   "status": "Pass",
+   "actual": "labels: original / upper case / extra spacing = ['malicious', 'malicious', 'malicious']",
+   "defect": null
+  },
+  "EML-06": {
+   "tag": "Ported",
+   "why": "",
+   "status": "Pass",
+   "actual": "after padding: malicious 0.8895",
+   "defect": null
+  },
+  "EML-07": {
+   "tag": "Replaced",
+   "why": "v2 has no /analyze/email; the same request goes to POST /score with channel=email. Rejected = HTTP 4xx.",
+   "status": "Pass",
+   "actual": "no text -> HTTP 422; empty text -> HTTP 422: {\"detail\":[{\"type\":\"string_too_short\",\"loc\":[\"body\",\"text\"],\"msg\":\"String should have at least 1 character\",\"input\":\"\",\"",
+   "defect": "D-02"
+  },
+  "EML-08": {
+   "tag": "Ported",
+   "why": "",
+   "status": "Pass",
+   "actual": "200,000 characters -> malicious 0.9993 in 0.07 s",
+   "defect": null
+  },
+  "EML-09": {
+   "tag": "Ported",
+   "why": "",
+   "status": "Known limitation",
+   "actual": "normal (pooled random) test F1 98.8%; held-out corpus F1: CEAS_08 86.1%, Enron 74.9%, FraudEmail 85.7%; mean 82.2%. Largest gap 23.8 points (reports/email_metrics.json). Above 10 points: recorded as a limitation, as the plan says",
+   "defect": null
+  },
+  "EML-10": {
+   "tag": "Ported",
+   "why": "",
+   "status": "Pass",
+   "actual": "reports/email_metrics.json pooled random test: F1 0.9876, precision 0.9872, recall 0.9880, confusion [[3616, 46], [43, 3538]]. Honest metric (mean leave-one-corpus-out F1): 0.8223",
+   "defect": null
+  },
+  "SMS-01": {
+   "tag": "Ported",
+   "why": "",
+   "status": "Pass",
+   "actual": "12/12 predicted phishing (100%). SMS alert score = the score /score returns for SMS, which is 1 - P(ham), i.e. spam or smishing.",
+   "defect": "D-09"
+  },
+  "SMS-02": {
+   "tag": "Ported",
+   "why": "",
+   "status": "Pass",
+   "actual": "11/12 predicted legitimate (92%); wrong: S-L05 78.8",
+   "defect": null
+  },
+  "SMS-03": {
+   "tag": "Ported",
+   "why": "",
+   "status": "Fail",
+   "actual": "Hard case phishing: 3/4 predicted phishing (75%); wrong: S-H02 39.7; hard case legitimate: 2/4 predicted legitimate (50%); wrong: S-H05 85.8, S-H08 85.1",
+   "defect": "D-09, D-16"
+  },
+  "SMS-04": {
+   "tag": "Ported",
+   "why": "",
+   "status": "Pass",
+   "actual": "S-L01: benign 0.2041, S-H06: benign 0.3472",
+   "defect": null
+  },
+  "SMS-05": {
+   "tag": "Ported",
+   "why": "",
+   "status": "Pass",
+   "actual": "'Hi' -> benign 0.0002; 1284-character message -> malicious 1.0",
+   "defect": null
+  },
+  "SMS-06": {
+   "tag": "Ported",
+   "why": "",
+   "status": "Pass",
+   "actual": "upper case: malicious 1.0; with emoji: malicious 1.0; S-H04 (Roman-script Hindi): malicious 0.9955",
+   "defect": null
+  },
+  "SMS-07": {
+   "tag": "Replaced",
+   "why": "v2 has no /analyze/sms; the same request goes to POST /score with channel=sms. Rejected = HTTP 4xx.",
+   "status": "Pass",
+   "actual": "no text -> HTTP 422; empty text -> HTTP 422",
+   "defect": "D-02"
+  },
+  "SMS-08": {
+   "tag": "Replaced",
+   "why": "v2's SMS model has three classes. The plan's 'spam class' (unwanted vs ham) is v2's spam-or-smishing vs ham on its 20% test split. The honest SMS metric, smishing vs rest, is reported beside it.",
+   "status": "Pass",
+   "actual": "reports/sms_metrics.json spam-or-smishing vs ham: F1 0.9815, precision 0.9947, recall 0.9688, confusion [[965, 1], [6, 186]]. Honest metric (smishing vs rest): F1 0.8713",
+   "defect": null
+  },
+  "URL-01": {
+   "tag": "Ported",
+   "why": "",
+   "status": "Pass",
+   "actual": "13/13 predicted phishing (100%)",
+   "defect": null
+  },
+  "URL-02": {
+   "tag": "Ported",
+   "why": "",
+   "status": "Pass",
+   "actual": "13/13 predicted legitimate (100%)",
+   "defect": "D-01"
+  },
+  "URL-03": {
+   "tag": "Ported",
+   "why": "",
+   "status": "Pass",
+   "actual": "Hard case phishing: 5/5 predicted phishing (100%); hard case legitimate: 4/5 predicted legitimate (80%); wrong: U-H06 76.0",
+   "defect": "D-01"
+  },
+  "URL-04": {
+   "tag": "Ported",
+   "why": "",
+   "status": "Pass",
+   "actual": "U-P01: malicious 0.9363, U-P02: malicious 0.9885, U-P03: malicious 0.8097",
+   "defect": null
+  },
+  "URL-05": {
+   "tag": "Ported",
+   "why": "",
+   "status": "Pass",
+   "actual": "github.com = benign 0.0013; https://github.com = benign 0.0013; en.wikipedia.org/wiki/Phishing = benign 0.0; https://en.wikipedia.org/wiki/Phishing = benign 0.0; www.kluniversity.in = benign 0.089; https://www.kluniversity.in = benign 0.089",
+   "defect": "D-01"
+  },
+  "URL-06": {
+   "tag": "Ported",
+   "why": "",
+   "status": "Pass",
+   "actual": "without slash: benign 0.0043; with slash: benign 0.0043",
+   "defect": "D-01"
+  },
+  "URL-07": {
+   "tag": "Ported",
+   "why": "",
+   "status": "Fail",
+   "actual": "U-H06: malicious 0.7605, U-H08: benign 0.0096",
+   "defect": "D-01"
+  },
+  "URL-08": {
+   "tag": "Replaced",
+   "why": "v2 has no /analyze/url; the same request goes to POST /score with channel=url. Rejected = HTTP 4xx.",
+   "status": "Pass",
+   "actual": "'htp:/bad url' -> HTTP 422: {\"detail\":\"'htp:/bad url' is not a valid URL: it contains spaces\"}; '' -> HTTP 422: {\"detail\":[{\"type\":\"string_too_short\",\"loc\":[\"body\",\"text\"],\"msg\":\"String should have at least 1 cha",
+   "defect": "D-02"
+  },
+  "URL-09": {
+   "tag": "Ported",
+   "why": "",
+   "status": "Pass",
+   "actual": "5,000 characters -> malicious 0.8688 in 0.022 s",
+   "defect": null
+  },
+  "URL-10": {
+   "tag": "Ported",
+   "why": "",
+   "status": "Pass",
+   "actual": "reports/url_metrics.json deployed string model, host-grouped test: F1 0.9044, precision 0.9608, recall 0.8542, confusion [[46950, 277], [1160, 6796]]. Offline feature benchmark (random split, not deployed): F1 0.9540",
+   "defect": null
+  },
+  "URL-11": {
+   "tag": "Ported",
+   "why": "",
+   "status": "Pass",
+   "actual": "With sockets disabled: github.com -> benign 0.0013; 192.0.2.45/login -> malicious 0.8995",
+   "defect": null
+  },
+  "VV-01": {
+   "tag": "Replaced",
+   "why": "v2 has no stub class. Same intent: the service says video and voice are not available. /health lists them as not trained and /score answers HTTP 501 for them.",
+   "status": "Pass",
+   "actual": "/health not_trained=['voice', 'video']; /score channel=video -> HTTP 501",
+   "defect": null
+  },
+  "VV-02": {
+   "tag": "Replaced",
+   "why": "Same intent as VV-01 with odd input: every call for the video channel gets a clean answer (501 not available, or 422 for a missing text), never a 500.",
+   "status": "Pass",
+   "actual": "HTTP codes for no text, a string, a 100,000-character transcript and null: [422, 501, 501, 422]",
+   "defect": null
+  },
+  "VV-03": {
+   "tag": "Replaced",
+   "why": "v2 has no /analyze. The S-07 case goes to POST /correlate with a channel='video' event. Expected: the email is scored and the video comes back 'not assessed'.",
+   "status": "Pass",
+   "actual": "events: email 0.999, video not assessed; single-channel alert True; bundle risk 0.999 (elevated risk); windows 1; shared []",
+   "defect": "D-13"
+  },
+  "VV-04": {
+   "tag": "Replaced",
+   "why": "v2 has no evidence list. Same intent: a video event never adds risk. It is kept out of the correlation features, the shared tokens and the window.",
+   "status": "Pass",
+   "actual": "events: email 1.000, video not assessed; single-channel alert True; bundle risk 1.000 (elevated risk); windows 1; shared []; features n_events=1.0, window events [0]",
+   "defect": "D-13"
+  },
+  "VV-05": {
+   "tag": "Replaced",
+   "why": "v2 has no verdicts. 'Not SAFE (for example cannot assess)' becomes: the response says CANNOT_ASSESS (or rejects the request with HTTP 4xx) and gives no risk score.",
+   "status": "Pass",
+   "actual": "HTTP 200: events: video not assessed; single-channel alert None; bundle risk none (cannot assess); windows None; shared []",
+   "defect": "D-03"
+  },
+  "VV-06": {
+   "tag": "N/A",
+   "why": "No voice or video detector exists in v2 or in CP1 (VOICE_IN_CP1 = no; video is Capstone-2), and there is no media-file input. Calls and video are 'not assessed'. Not built.",
+   "status": "N/A",
+   "actual": "No voice or video detector exists in v2 or in CP1 (VOICE_IN_CP1 = no; video is Capstone-2), and there is no media-file input. Calls and video are 'not assessed'. Not built.",
+   "defect": null
+  },
+  "VV-07": {
+   "tag": "N/A",
+   "why": "No voice or video detector exists in v2 or in CP1 (VOICE_IN_CP1 = no; video is Capstone-2), and there is no media-file input. Calls and video are 'not assessed'. Not built.",
+   "status": "N/A",
+   "actual": "No voice or video detector exists in v2 or in CP1 (VOICE_IN_CP1 = no; video is Capstone-2), and there is no media-file input. Calls and video are 'not assessed'. Not built.",
+   "defect": null
+  },
+  "VV-08": {
+   "tag": "N/A",
+   "why": "No voice or video detector exists in v2 or in CP1 (VOICE_IN_CP1 = no; video is Capstone-2), and there is no media-file input. Calls and video are 'not assessed'. Not built.",
+   "status": "N/A",
+   "actual": "No voice or video detector exists in v2 or in CP1 (VOICE_IN_CP1 = no; video is Capstone-2), and there is no media-file input. Calls and video are 'not assessed'. Not built.",
+   "defect": null
+  },
+  "VV-09": {
+   "tag": "N/A",
+   "why": "No voice or video detector exists in v2 or in CP1 (VOICE_IN_CP1 = no; video is Capstone-2), and there is no media-file input. Calls and video are 'not assessed'. Not built.",
+   "status": "N/A",
+   "actual": "No voice or video detector exists in v2 or in CP1 (VOICE_IN_CP1 = no; video is Capstone-2), and there is no media-file input. Calls and video are 'not assessed'. Not built.",
+   "defect": null
+  },
+  "VV-10": {
+   "tag": "N/A",
+   "why": "No voice or video detector exists in v2 or in CP1 (VOICE_IN_CP1 = no; video is Capstone-2), and there is no media-file input. Calls and video are 'not assessed'. Not built.",
+   "status": "N/A",
+   "actual": "No voice or video detector exists in v2 or in CP1 (VOICE_IN_CP1 = no; video is Capstone-2), and there is no media-file input. Calls and video are 'not assessed'. Not built.",
+   "defect": null
+  },
+  "COR-01": {
+   "tag": "Replaced",
+   "why": "v2 has no evidence strings or bonus. Same intent: the shared link is found as a shared identity token and the link features are on. Uses fixed detector scores through v2's correlation engine (Fusion.risk), as the plan does.",
+   "status": "Pass",
+   "actual": "shared tokens ['dom:bit.ly']; shares_identity 1.0; risk 1.000",
+   "defect": null
+  },
+  "COR-02": {
+   "tag": "Replaced",
+   "why": "Same intent as COR-01: the flagged URL inside the email gives the email the URL's domain token, shared with the URL event. Uses fixed detector scores through v2's correlation engine (Fusion.risk), as the plan does.",
+   "status": "Pass",
+   "actual": "email tokens ['dom:secure-bank-verify.xyz']; url tokens ['dom:secure-bank-verify.xyz']; shared ['dom:secure-bank-verify.xyz']",
+   "defect": null
+  },
+  "COR-03": {
+   "tag": "Replaced",
+   "why": "Same intent as COR-02 for the SMS. Uses fixed detector scores through v2's correlation engine (Fusion.risk), as the plan does.",
+   "status": "Pass",
+   "actual": "sms tokens ['dom:secure-bank-verify.xyz']; shared ['dom:secure-bank-verify.xyz']",
+   "defect": null
+  },
+  "COR-04": {
+   "tag": "Replaced",
+   "why": "v2 reports a shared link as a fact whatever the scores, and the learned model decides its weight; there is no bonus. Same intent: three legitimate channels sharing a link and a brand raise no alert (bundle risk below 0.5). Uses fixed detector scores through v2's correlation engine (Fusion.risk), as the plan does.",
+   "status": "Pass",
+   "actual": "scores 0.10 / 0.12 / 0.05; shared ['dom:securebank.com']; bundle risk 0.030",
+   "defect": null
+  },
+  "COR-05": {
+   "tag": "N/A",
+   "why": "v2 has no rule that link evidence needs a risky URL channel. Shared links are identity tokens and the learned model weighs them with the scores.",
+   "status": "N/A",
+   "actual": "v2 has no rule that link evidence needs a risky URL channel. Shared links are identity tokens and the learned model weighs them with the scores.",
+   "defect": null
+  },
+  "COR-06": {
+   "tag": "N/A",
+   "why": "v2 has no rule that identity evidence needs both email and SMS to be risky. Brand names are not identity tokens in v2 (only domains, phone numbers and the identity field).",
+   "status": "N/A",
+   "actual": "v2 has no rule that identity evidence needs both email and SMS to be risky. Brand names are not identity tokens in v2 (only domains, phone numbers and the identity field).",
+   "defect": null
+  },
+  "COR-07": {
+   "tag": "Ported",
+   "why": "",
+   "status": "Pass",
+   "actual": "email tokens []; sms tokens []; shared []",
+   "defect": null
+  },
+  "COR-08": {
+   "tag": "N/A",
+   "why": "v2 has no bonus and so no MAX_BONUS cap. The bundle risk is a probability from the learned model, between 0 and 1 by construction.",
+   "status": "N/A",
+   "actual": "v2 has no bonus and so no MAX_BONUS cap. The bundle risk is a probability from the learned model, between 0 and 1 by construction.",
+   "defect": null
+  },
+  "COR-09": {
+   "tag": "Replaced",
+   "why": "Same intent as VV-04 at the API: a video event never contributes to the bundle risk.",
+   "status": "Pass",
+   "actual": "bundle risk email alone 0.9998; with a video event 0.9998",
+   "defect": "D-13"
+  },
+  "COR-10": {
+   "tag": "Replaced",
+   "why": "v2 has one alert line (0.5), so S-03's fixed scores 0.55 / 0.52 / 0.58 each alert on their own and the SUSPICIOUS band does not exist. Same intent where it can be kept: the bundle alerts and its risk is at least the best single score. The lift from below the line is SYS-14 / TC-06. Uses fixed detector scores through v2's correlation engine (Fusion.risk), as the plan does.",
+   "status": "Pass",
+   "actual": "best single 0.58 (alerts alone); bundle risk 1.000; shared ['dom:bit.ly']",
+   "defect": null
+  },
+  "COR-11": {
+   "tag": "N/A",
+   "why": "v2 has no time-evidence rule that needs email, SMS and URL timestamps. The time span of a window is a model feature for any two or more events.",
+   "status": "N/A",
+   "actual": "v2 has no time-evidence rule that needs email, SMS and URL timestamps. The time span of a window is a model feature for any two or more events.",
+   "defect": null
+  },
+  "COR-12": {
+   "tag": "Replaced",
+   "why": "v2 has no evidence strings. Same intent: events 3 and 6 days apart fall in separate 60-minute windows, are not linked, and the bundle risk is the strongest single event. Uses fixed detector scores through v2's correlation engine (Fusion.risk), as the plan does.",
+   "status": "Pass",
+   "actual": "windows 3; shared []; risk 0.800 (strongest single 0.8)",
+   "defect": null
+  },
+  "COR-13": {
+   "tag": "Replaced",
+   "why": "v2 has no evidence text. Same intent: the window's time span is the real span (90 s = 1.5 minutes).",
+   "status": "Pass",
+   "actual": "window time span 1.5 minutes; windows 1",
+   "defect": null
+  },
+  "COR-14": {
+   "tag": "Replaced",
+   "why": "Same intent: the shared link on a .online host is found as a shared identity token (full public suffix list). Uses fixed detector scores through v2's correlation engine (Fusion.risk), as the plan does.",
+   "status": "Pass",
+   "actual": "shared ['dom:secure-bank-verify.online']",
+   "defect": null
+  },
+  "COR-15": {
+   "tag": "Ported",
+   "why": "",
+   "status": "Pass",
+   "actual": "identical=True; bundle risk 0.9999",
+   "defect": null
+  },
+  "COR-16": {
+   "tag": "N/A",
+   "why": "v2 has no risk threshold of 20 and no separate phishing label for evidence. Its one line is 0.5.",
+   "status": "N/A",
+   "actual": "v2 has no risk threshold of 20 and no separate phishing label for evidence. Its one line is 0.5.",
+   "defect": null
+  },
+  "COR-17": {
+   "tag": "Replaced",
+   "why": "v2 has no bonus. Same intent: missing content does not crash the service; it is rejected with HTTP 4xx (no 500).",
+   "status": "Pass",
+   "actual": "null texts -> HTTP 422; empty body -> HTTP 422",
+   "defect": null
+  },
+  "SCO-02": {
+   "tag": "Replaced",
+   "why": "v2's bundle risk is a learned model, not min(100, best + bonus), so the formula part is N/A. The second part is kept: the bundle risk is never below the best channel score, for S-01, S-02 and S-05.",
+   "status": "Pass",
+   "actual": "S-01: best 1.000, bundle 1.000; S-02: best 0.999, bundle 1.000; S-05: best 0.999, bundle 0.999",
+   "defect": null
+  },
+  "SCO-03": {
+   "tag": "N/A",
+   "why": "v2 returns no correlation_delta field (no bonus). It returns bundle_risk and, for comparison, bundle_risk_without_correlation.",
+   "status": "N/A",
+   "actual": "v2 returns no correlation_delta field (no bonus). It returns bundle_risk and, for comparison, bundle_risk_without_correlation.",
+   "defect": null
+  },
+  "SCO-04": {
+   "tag": "Replaced",
+   "why": "v2 scores are probabilities from 0 to 1 (the plan's 0-100 scale divided by 100).",
+   "status": "Pass",
+   "actual": "96 samples, min 0.0000, max 1.0000",
+   "defect": null
+  },
+  "SCO-05": {
+   "tag": "Replaced",
+   "why": "v2 has no /analyze. Same intent through /correlate: a URL-only case returns one URL event and no other channel.",
+   "status": "Pass",
+   "actual": "channels analysed: ['url']",
+   "defect": null
+  },
+  "SCO-06": {
+   "tag": "Replaced",
+   "why": "v2 has no analyze({}). The empty case goes to POST /correlate. Expected: rejected with HTTP 4xx or CANNOT_ASSESS, never a low risk.",
+   "status": "Pass",
+   "actual": "POST {} -> HTTP 422; POST {\"events\": []} -> HTTP 422: {\"detail\":\"no events\"}",
+   "defect": "D-03"
+  },
+  "SCO-07": {
+   "tag": "Ported",
+   "why": "",
+   "status": "Pass",
+   "actual": "5 runs, distinct results: 1",
+   "defect": null
+  },
+  "SCO-08": {
+   "tag": "Replaced",
+   "why": "Same intent through /correlate: with S-06, the bundle risk is at least the email score.",
+   "status": "Fail",
+   "actual": "events: email 0.999, sms 0.194, url 0.005; single-channel alert True; bundle risk 0.957 (elevated risk); windows 1; shared []",
+   "defect": "D-18"
+  },
+  "API-03": {
+   "tag": "Replaced",
+   "why": "POST /score with channel=sms instead of /analyze/sms.",
+   "status": "Pass",
+   "actual": "HTTP 200: label malicious, score 1.0",
+   "defect": null
+  },
+  "API-04": {
+   "tag": "Replaced",
+   "why": "POST /score with channel=url instead of /analyze/url.",
+   "status": "Pass",
+   "actual": "HTTP 200: label malicious, score 0.9363",
+   "defect": null
+  },
+  "API-05": {
+   "tag": "Replaced",
+   "why": "POST /correlate instead of /analyze. It returns per-event scores, bundle_risk, bundle_label, shared identity tokens and the window instead of combined_score, verdict and correlation_delta.",
+   "status": "Pass",
+   "actual": "HTTP 200: events: email 0.997, sms 1.000, url 0.974; single-channel alert True; bundle risk 1.000 (elevated risk); windows 1; shared ['dom:bit.ly']",
+   "defect": null
+  },
+  "API-06": {
+   "tag": "Ported",
+   "why": "",
+   "status": "Pass",
+   "actual": "HTTP 422; service still answers /health with 200",
+   "defect": null
+  },
+  "API-07": {
+   "tag": "Ported",
+   "why": "",
+   "status": "Pass",
+   "actual": "sms text=12345 -> HTTP 422; email subject=list -> HTTP 422",
+   "defect": null
+  },
+  "API-08": {
+   "tag": "Replaced",
+   "why": "v2 takes one 'time' per event (minutes or ISO). The S-01 case goes to /correlate with times 'a', 'b', 'c'.",
+   "status": "Pass",
+   "actual": "HTTP 422: {\"detail\":\"event 0: 'time' must be a number of minutes or an ISO timestamp, got 'a'\"}",
+   "defect": null
+  },
+  "API-09": {
+   "tag": "Replaced",
+   "why": "v2 has no per-channel readiness map. Same intent: with the SMS model file missing, the service still starts, SMS is 'not assessed', and email and URL are still scored.",
+   "status": "Pass",
+   "actual": "/health: {'sms': 'sms_model.joblib could not be loaded (FileNotFoundError)'}; /correlate HTTP 200: events: email 0.998, sms not assessed, url 0.999; single-channel alert True; bundle risk 0.996 (elevated risk); windows 1; shared ['dom:secure-bank-verify.xyz']",
+   "defect": "D-14"
+  },
+  "API-10": {
+   "tag": "Ported",
+   "why": "",
+   "status": "Pass",
+   "actual": "20 of 20 parallel responses matched their own serial result",
+   "defect": null
+  },
+  "API-11": {
+   "tag": "Replaced",
+   "why": "Same intent: hostile strings are data, every answer is JSON and nothing runs. Email and SMS answer 200. For URL, a string that is not a URL may be refused with 422 instead, because URL-08 requires invalid URLs to be rejected; a 500 or a non-JSON answer fails.",
+   "status": "Pass",
+   "actual": "9 requests, HTTP codes [('email', 200), ('sms', 200), ('url', 422)]; all JSON=True; none executed",
+   "defect": null
+  },
+  "API-12": {
+   "tag": "Replaced",
+   "why": "Stricter than the plan, as CP1_FINISH_TASK.md R2-04 asks: CORS with explicit origins, never '*'. The console's dev origin (localhost:5173) gets the header and the preflight succeeds; an unknown origin gets no header.",
+   "status": "Pass",
+   "actual": "Allow-Origin for http://localhost:5173: GET http://localhost:5173, preflight http://localhost:5173 (HTTP 200); for http://evil.example: None",
+   "defect": "D-06"
+  },
+  "API-13": {
+   "tag": "Ported",
+   "why": "",
+   "status": "Pass",
+   "actual": "2.0 MB body -> HTTP 200 in 0.72 s",
+   "defect": null
+  },
+  "UI-01": {
+   "tag": "Replaced",
+   "why": "Same check on v2's console, served by FastAPI. Panels: email, SMS and URL inputs and a voice/video line that reads 'not assessed'.",
+   "status": "Not run",
+   "actual": "The console checks run with Playwright in scripts/ui_checks.py (Phase 2.4); reports/ui_checks.json does not exist yet.",
+   "defect": null
+  },
+  "UI-02": {
+   "tag": "Ported",
+   "why": "Same check: E-P01 and E-L01 through the console, compared with /score.",
+   "status": "Not run",
+   "actual": "The console checks run with Playwright in scripts/ui_checks.py (Phase 2.4); reports/ui_checks.json does not exist yet.",
+   "defect": null
+  },
+  "UI-03": {
+   "tag": "Replaced",
+   "why": "Preset scenario 1 = TC-04 (KYC campaign). 'Correlated at or above each single score' is kept.",
+   "status": "Not run",
+   "actual": "The console checks run with Playwright in scripts/ui_checks.py (Phase 2.4); reports/ui_checks.json does not exist yet.",
+   "defect": null
+  },
+  "UI-04": {
+   "tag": "Replaced",
+   "why": "Preset scenario 2 = TC-06 (weak parcel campaign). 'Correlated at or above each single score' is kept.",
+   "status": "Not run",
+   "actual": "The console checks run with Playwright in scripts/ui_checks.py (Phase 2.4); reports/ui_checks.json does not exist yet.",
+   "defect": null
+  },
+  "UI-05": {
+   "tag": "Replaced",
+   "why": "Same check: an email, an SMS and a URL entered by hand; the bundle risk and the shared tokens (v2's evidence) are shown.",
+   "status": "Not run",
+   "actual": "The console checks run with Playwright in scripts/ui_checks.py (Phase 2.4); reports/ui_checks.json does not exist yet.",
+   "defect": null
+  },
+  "UI-06": {
+   "tag": "Ported",
+   "why": "Same check with the API stopped.",
+   "status": "Not run",
+   "actual": "The console checks run with Playwright in scripts/ui_checks.py (Phase 2.4); reports/ui_checks.json does not exist yet.",
+   "defect": null
+  },
+  "UI-07": {
+   "tag": "Ported",
+   "why": "Same check at 1366x768 and 1920x1080 in Chromium and Edge (Edge only if it is installed).",
+   "status": "Not run",
+   "actual": "The console checks run with Playwright in scripts/ui_checks.py (Phase 2.4); reports/ui_checks.json does not exist yet.",
+   "defect": null
+  },
+  "SYS-02": {
+   "tag": "Replaced",
+   "why": "HIGH RISK -> alert (bundle risk >= 0.5), SAFE -> no alert. v2's evidence for a shared link is a shared identity token.",
+   "status": "Pass",
+   "actual": "HTTP 200: events: email 0.999, sms 0.998, url 0.999; single-channel alert True; bundle risk 1.000 (elevated risk); windows 1; shared ['dom:secure-bank-verify.xyz']",
+   "defect": null
+  },
+  "SYS-03": {
+   "tag": "Replaced",
+   "why": "S-03 uses fixed scores 0.55 / 0.52 / 0.58, which /correlate cannot take, so it runs through the engine (as COR-10). With v2's single line at 0.5 the best channel already alerts. Kept: the bundle alerts and is at least the best single score. The lift from below the line is SYS-14 / TC-06.",
+   "status": "Pass",
+   "actual": "fixed scores email 0.55, sms 0.52, url 0.58 through the engine: best single 0.58 (alerts alone); bundle risk 1.000; shared ['dom:bit.ly']",
+   "defect": null
+  },
+  "SYS-04": {
+   "tag": "Replaced",
+   "why": "HIGH RISK -> alert (bundle risk >= 0.5), SAFE -> no alert. v2's evidence for a shared link is a shared identity token.",
+   "status": "Pass",
+   "actual": "HTTP 200: events: email 0.087, sms 0.042, url 0.018; single-channel alert False; bundle risk 0.114 (low risk); windows 1; shared []",
+   "defect": null
+  },
+  "SYS-05": {
+   "tag": "Replaced",
+   "why": "HIGH RISK -> alert (bundle risk >= 0.5), SAFE -> no alert. v2's evidence for a shared link is a shared identity token.",
+   "status": "Pass",
+   "actual": "HTTP 200: events: email 0.999; single-channel alert True; bundle risk 0.999 (elevated risk); windows 1; shared []",
+   "defect": null
+  },
+  "SYS-06": {
+   "tag": "Replaced",
+   "why": "HIGH RISK -> alert (bundle risk >= 0.5), SAFE -> no alert. v2's evidence for a shared link is a shared identity token.",
+   "status": "Pass",
+   "actual": "HTTP 200: events: email 0.999, sms 0.194, url 0.005; single-channel alert True; bundle risk 0.957 (elevated risk); windows 1; shared []",
+   "defect": null
+  },
+  "SYS-07": {
+   "tag": "Replaced",
+   "why": "HIGH RISK -> alert (bundle risk >= 0.5), SAFE -> no alert. v2's evidence for a shared link is a shared identity token. The video event must come back 'not assessed' and stay out of the shared tokens and features.",
+   "status": "Pass",
+   "actual": "HTTP 200: events: email 0.999, sms 0.998, video not assessed; single-channel alert True; bundle risk 1.000 (elevated risk); windows 1; shared ['dom:secure-bank-verify.xyz']",
+   "defect": "D-13"
+  },
+  "SYS-08": {
+   "tag": "Replaced",
+   "why": "'Anything except SAFE (for example cannot assess)' becomes: CANNOT_ASSESS with no risk score, or HTTP 4xx.",
+   "status": "Pass",
+   "actual": "HTTP 200: events: video not assessed; single-channel alert None; bundle risk none (cannot assess); windows None; shared []",
+   "defect": "D-03"
+  },
+  "SYS-09": {
+   "tag": "Replaced",
+   "why": "HIGH RISK -> alert (bundle risk >= 0.5), SAFE -> no alert. v2's evidence for a shared link is a shared identity token. 'No time-proximity evidence' = three separate windows and no shared token inside the scored window.",
+   "status": "Pass",
+   "actual": "HTTP 200: events: email 0.999, sms 0.998, url 0.999; single-channel alert True; bundle risk 0.999 (elevated risk); windows 3; shared []",
+   "defect": null
+  },
+  "SYS-10": {
+   "tag": "Replaced",
+   "why": "HIGH RISK -> alert (bundle risk >= 0.5), SAFE -> no alert. v2's evidence for a shared link is a shared identity token. 'Time-proximity evidence' = one window holding all three events.",
+   "status": "Pass",
+   "actual": "HTTP 200: events: email 0.999, sms 0.998, url 0.999; single-channel alert True; bundle risk 1.000 (elevated risk); windows 1; shared ['dom:secure-bank-verify.xyz']",
+   "defect": null
+  },
+  "SYS-11": {
+   "tag": "Replaced",
+   "why": "HIGH RISK -> alert (bundle risk >= 0.5), SAFE -> no alert. v2's evidence for a shared link is a shared identity token.",
+   "status": "Pass",
+   "actual": "HTTP 200: events: email 0.999, sms 0.999, url 0.994; single-channel alert True; bundle risk 1.000 (elevated risk); windows 1; shared ['dom:secure-bank-verify.online']",
+   "defect": null
+  },
+  "SYS-12": {
+   "tag": "Replaced",
+   "why": "'Rejected (HTTP 4xx). Not reported as SAFE' is kept as written.",
+   "status": "Pass",
+   "actual": "POST {\"events\": []} -> HTTP 422; POST {} -> HTTP 422",
+   "defect": "D-03"
+  },
+  "SYS-13": {
+   "tag": "Replaced",
+   "why": "HIGH RISK -> alert (bundle risk >= 0.5), SAFE -> no alert. v2's evidence for a shared link is a shared identity token.",
+   "status": "Pass",
+   "actual": "HTTP 200: events: email 0.003, sms 0.013, url 0.098; single-channel alert False; bundle risk 0.030 (low risk); windows 1; shared []",
+   "defect": "D-01"
+  },
+  "SYS-14": {
+   "tag": "Ported",
+   "why": "Kept as written: S-01, S-02 and S-11 with the real models. TC-06 (hand-written) is the case where correlation lifts a bundle over the line; see R2-09.",
+   "status": "Fail",
+   "actual": "S-01: best single alert, bundle alert (1.000); S-02: best single alert, bundle alert (1.000); S-11: best single alert, bundle alert (1.000). The detectors already alert on all three, so correlation cannot raise the verdict.",
+   "defect": "D-12"
+  },
+  "NFR-01": {
+   "tag": "Ported",
+   "why": "Measured here in-process or over HTTP; scripts/benchmark.py (Phase 4.2) measures 100 requests per channel over real HTTP and its result is used when present.",
+   "status": "Pass",
+   "actual": "Median / 95th percentile over 50 requests each (in-process (FastAPI TestClient)): email 27 ms / 35 ms; sms 17 ms / 20 ms; url 12 ms / 14 ms",
+   "defect": null
+  },
+  "NFR-02": {
+   "tag": "Replaced",
+   "why": "S-01 goes to /correlate instead of /analyze.",
+   "status": "Pass",
+   "actual": "S-01 through POST /correlate, 5 runs (in-process (FastAPI TestClient)): 57 ms, 57 ms, 57 ms, 56 ms, 56 ms",
+   "defect": null
+  },
+  "NFR-03": {
+   "tag": "Ported",
+   "why": "",
+   "status": "Pass",
+   "actual": "errors: 0; median of first 20 = 18 ms, last 20 = 18 ms",
+   "defect": null
+  },
+  "NFR-04": {
+   "tag": "Ported",
+   "why": "Uses scripts/secret_scan.py over the files git tracks or would add.",
+   "status": "Pass",
+   "actual": "scanned 73 files: 0 possible secret(s)",
+   "defect": null
+  },
+  "NFR-05": {
+   "tag": "Ported",
+   "why": "Run by scripts/nfr05_fresh_clone.py (Phase 4.4), which writes reports/nfr05_fresh_clone.json.",
+   "status": "Not run",
+   "actual": "Runs in Phase 4.4 on the frozen build (scripts/nfr05_fresh_clone.py).",
+   "defect": null
+  },
+  "NFR-06": {
+   "tag": "Replaced",
+   "why": "The serving code now includes the event store, which may store message text only when CP1_STORE_CONTENT=1. Same intent: a message sent through the API never appears in a log line, and nothing is written to disk unless the event store is used.",
+   "status": "Pass",
+   "actual": "marker found in output: nowhere; files changed during the requests: none (holding the marker: none); serving files with log or write calls: none",
+   "defect": null
+  },
+  "NFR-07": {
+   "tag": "Ported",
+   "why": "Compares this run with reports/regression_baseline.json (the results on the build before the last change, Phase 4).",
+   "status": "Not run",
+   "actual": "Runs in Phase 4 after the final code change: needs reports/regression_baseline.json from the earlier run.",
+   "defect": null
+  }
+ },
+ "samples": {
+  "E-P01": {
+   "channel": "email",
+   "group": "Standard",
+   "expected": "Phishing",
+   "predicted": "Phishing",
+   "score": 0.9998,
+   "result": "Pass"
+  },
+  "E-P02": {
+   "channel": "email",
+   "group": "Standard",
+   "expected": "Phishing",
+   "predicted": "Phishing",
+   "score": 0.8172,
+   "result": "Pass"
+  },
+  "E-P03": {
+   "channel": "email",
+   "group": "Standard",
+   "expected": "Phishing",
+   "predicted": "Legitimate",
+   "score": 0.102,
+   "result": "Fail"
+  },
+  "E-P04": {
+   "channel": "email",
+   "group": "Standard",
+   "expected": "Phishing",
+   "predicted": "Phishing",
+   "score": 0.9953,
+   "result": "Pass"
+  },
+  "E-P05": {
+   "channel": "email",
+   "group": "Standard",
+   "expected": "Phishing",
+   "predicted": "Phishing",
+   "score": 0.9309,
+   "result": "Pass"
+  },
+  "E-P06": {
+   "channel": "email",
+   "group": "Standard",
+   "expected": "Phishing",
+   "predicted": "Legitimate",
+   "score": 0.0517,
+   "result": "Fail"
+  },
+  "E-P07": {
+   "channel": "email",
+   "group": "Standard",
+   "expected": "Phishing",
+   "predicted": "Legitimate",
+   "score": 0.2372,
+   "result": "Fail"
+  },
+  "E-P08": {
+   "channel": "email",
+   "group": "Standard",
+   "expected": "Phishing",
+   "predicted": "Phishing",
+   "score": 0.9547,
+   "result": "Pass"
+  },
+  "E-P09": {
+   "channel": "email",
+   "group": "Standard",
+   "expected": "Phishing",
+   "predicted": "Legitimate",
+   "score": 0.2057,
+   "result": "Fail"
+  },
+  "E-P10": {
+   "channel": "email",
+   "group": "Standard",
+   "expected": "Phishing",
+   "predicted": "Phishing",
+   "score": 0.9004,
+   "result": "Pass"
+  },
+  "E-P11": {
+   "channel": "email",
+   "group": "Standard",
+   "expected": "Phishing",
+   "predicted": "Phishing",
+   "score": 0.9696,
+   "result": "Pass"
+  },
+  "E-L01": {
+   "channel": "email",
+   "group": "Standard",
+   "expected": "Legitimate",
+   "predicted": "Legitimate",
+   "score": 0.0022,
+   "result": "Pass"
+  },
+  "E-L02": {
+   "channel": "email",
+   "group": "Standard",
+   "expected": "Legitimate",
+   "predicted": "Legitimate",
+   "score": 0.096,
+   "result": "Pass"
+  },
+  "E-L03": {
+   "channel": "email",
+   "group": "Standard",
+   "expected": "Legitimate",
+   "predicted": "Legitimate",
+   "score": 0.0438,
+   "result": "Pass"
+  },
+  "E-L04": {
+   "channel": "email",
+   "group": "Standard",
+   "expected": "Legitimate",
+   "predicted": "Legitimate",
+   "score": 0.0161,
+   "result": "Pass"
+  },
+  "E-L05": {
+   "channel": "email",
+   "group": "Standard",
+   "expected": "Legitimate",
+   "predicted": "Legitimate",
+   "score": 0.0004,
+   "result": "Pass"
+  },
+  "E-L06": {
+   "channel": "email",
+   "group": "Standard",
+   "expected": "Legitimate",
+   "predicted": "Legitimate",
+   "score": 0.0798,
+   "result": "Pass"
+  },
+  "E-L07": {
+   "channel": "email",
+   "group": "Standard",
+   "expected": "Legitimate",
+   "predicted": "Legitimate",
+   "score": 0.0082,
+   "result": "Pass"
+  },
+  "E-L08": {
+   "channel": "email",
+   "group": "Standard",
+   "expected": "Legitimate",
+   "predicted": "Legitimate",
+   "score": 0.2801,
+   "result": "Pass"
+  },
+  "E-L09": {
+   "channel": "email",
+   "group": "Standard",
+   "expected": "Legitimate",
+   "predicted": "Legitimate",
+   "score": 0.041,
+   "result": "Pass"
+  },
+  "E-L10": {
+   "channel": "email",
+   "group": "Standard",
+   "expected": "Legitimate",
+   "predicted": "Legitimate",
+   "score": 0.0025,
+   "result": "Pass"
+  },
+  "E-L11": {
+   "channel": "email",
+   "group": "Standard",
+   "expected": "Legitimate",
+   "predicted": "Legitimate",
+   "score": 0.0127,
+   "result": "Pass"
+  },
+  "E-H01": {
+   "channel": "email",
+   "group": "Hard case",
+   "expected": "Phishing",
+   "predicted": "Legitimate",
+   "score": 0.0006,
+   "result": "Fail"
+  },
+  "E-H02": {
+   "channel": "email",
+   "group": "Hard case",
+   "expected": "Phishing",
+   "predicted": "Phishing",
+   "score": 0.8102,
+   "result": "Pass"
+  },
+  "E-H03": {
+   "channel": "email",
+   "group": "Hard case",
+   "expected": "Phishing",
+   "predicted": "Phishing",
+   "score": 0.9669,
+   "result": "Pass"
+  },
+  "E-H04": {
+   "channel": "email",
+   "group": "Hard case",
+   "expected": "Legitimate",
+   "predicted": "Phishing",
+   "score": 0.577,
+   "result": "Fail"
+  },
+  "E-H05": {
+   "channel": "email",
+   "group": "Hard case",
+   "expected": "Legitimate",
+   "predicted": "Legitimate",
+   "score": 0.0015,
+   "result": "Pass"
+  },
+  "E-H06": {
+   "channel": "email",
+   "group": "Hard case",
+   "expected": "Legitimate",
+   "predicted": "Legitimate",
+   "score": 0.0177,
+   "result": "Pass"
+  },
+  "S-P01": {
+   "channel": "sms",
+   "group": "Standard",
+   "expected": "Phishing",
+   "predicted": "Phishing",
+   "score": 0.9996,
+   "result": "Pass",
+   "smishing_probability": 0.9994
+  },
+  "S-P02": {
+   "channel": "sms",
+   "group": "Standard",
+   "expected": "Phishing",
+   "predicted": "Phishing",
+   "score": 0.9999,
+   "result": "Pass",
+   "smishing_probability": 0.9999
+  },
+  "S-P03": {
+   "channel": "sms",
+   "group": "Standard",
+   "expected": "Phishing",
+   "predicted": "Phishing",
+   "score": 0.957,
+   "result": "Pass",
+   "smishing_probability": 0.7261
+  },
+  "S-P04": {
+   "channel": "sms",
+   "group": "Standard",
+   "expected": "Phishing",
+   "predicted": "Phishing",
+   "score": 1.0,
+   "result": "Pass",
+   "smishing_probability": 1.0
+  },
+  "S-P05": {
+   "channel": "sms",
+   "group": "Standard",
+   "expected": "Phishing",
+   "predicted": "Phishing",
+   "score": 0.9936,
+   "result": "Pass",
+   "smishing_probability": 0.9917
+  },
+  "S-P06": {
+   "channel": "sms",
+   "group": "Standard",
+   "expected": "Phishing",
+   "predicted": "Phishing",
+   "score": 0.95,
+   "result": "Pass",
+   "smishing_probability": 0.9036
+  },
+  "S-P07": {
+   "channel": "sms",
+   "group": "Standard",
+   "expected": "Phishing",
+   "predicted": "Phishing",
+   "score": 0.9659,
+   "result": "Pass",
+   "smishing_probability": 0.9556
+  },
+  "S-P08": {
+   "channel": "sms",
+   "group": "Standard",
+   "expected": "Phishing",
+   "predicted": "Phishing",
+   "score": 0.8905,
+   "result": "Pass",
+   "smishing_probability": 0.6987
+  },
+  "S-P09": {
+   "channel": "sms",
+   "group": "Standard",
+   "expected": "Phishing",
+   "predicted": "Phishing",
+   "score": 0.9713,
+   "result": "Pass",
+   "smishing_probability": 0.9398
+  },
+  "S-P10": {
+   "channel": "sms",
+   "group": "Standard",
+   "expected": "Phishing",
+   "predicted": "Phishing",
+   "score": 0.9926,
+   "result": "Pass",
+   "smishing_probability": 0.9881
+  },
+  "S-P11": {
+   "channel": "sms",
+   "group": "Standard",
+   "expected": "Phishing",
+   "predicted": "Phishing",
+   "score": 0.9915,
+   "result": "Pass",
+   "smishing_probability": 0.896
+  },
+  "S-P12": {
+   "channel": "sms",
+   "group": "Standard",
+   "expected": "Phishing",
+   "predicted": "Phishing",
+   "score": 0.998,
+   "result": "Pass",
+   "smishing_probability": 0.998
+  },
+  "S-L01": {
+   "channel": "sms",
+   "group": "Standard",
+   "expected": "Legitimate",
+   "predicted": "Legitimate",
+   "score": 0.2041,
+   "result": "Pass",
+   "smishing_probability": 0.0228
+  },
+  "S-L02": {
+   "channel": "sms",
+   "group": "Standard",
+   "expected": "Legitimate",
+   "predicted": "Legitimate",
+   "score": 0.0417,
+   "result": "Pass",
+   "smishing_probability": 0.0033
+  },
+  "S-L03": {
+   "channel": "sms",
+   "group": "Standard",
+   "expected": "Legitimate",
+   "predicted": "Legitimate",
+   "score": 0.1017,
+   "result": "Pass",
+   "smishing_probability": 0.0558
+  },
+  "S-L04": {
+   "channel": "sms",
+   "group": "Standard",
+   "expected": "Legitimate",
+   "predicted": "Legitimate",
+   "score": 0.1942,
+   "result": "Pass",
+   "smishing_probability": 0.0001
+  },
+  "S-L05": {
+   "channel": "sms",
+   "group": "Standard",
+   "expected": "Legitimate",
+   "predicted": "Phishing",
+   "score": 0.788,
+   "result": "Fail",
+   "smishing_probability": 0.7521
+  },
+  "S-L06": {
+   "channel": "sms",
+   "group": "Standard",
+   "expected": "Legitimate",
+   "predicted": "Legitimate",
+   "score": 0.0364,
+   "result": "Pass",
+   "smishing_probability": 0.021
+  },
+  "S-L07": {
+   "channel": "sms",
+   "group": "Standard",
+   "expected": "Legitimate",
+   "predicted": "Legitimate",
+   "score": 0.0437,
+   "result": "Pass",
+   "smishing_probability": 0.0121
+  },
+  "S-L08": {
+   "channel": "sms",
+   "group": "Standard",
+   "expected": "Legitimate",
+   "predicted": "Legitimate",
+   "score": 0.0016,
+   "result": "Pass",
+   "smishing_probability": 0.0005
+  },
+  "S-L09": {
+   "channel": "sms",
+   "group": "Standard",
+   "expected": "Legitimate",
+   "predicted": "Legitimate",
+   "score": 0.0002,
+   "result": "Pass",
+   "smishing_probability": 0.0001
+  },
+  "S-L10": {
+   "channel": "sms",
+   "group": "Standard",
+   "expected": "Legitimate",
+   "predicted": "Legitimate",
+   "score": 0.1043,
+   "result": "Pass",
+   "smishing_probability": 0.0001
+  },
+  "S-L11": {
+   "channel": "sms",
+   "group": "Standard",
+   "expected": "Legitimate",
+   "predicted": "Legitimate",
+   "score": 0.1566,
+   "result": "Pass",
+   "smishing_probability": 0.1209
+  },
+  "S-L12": {
+   "channel": "sms",
+   "group": "Standard",
+   "expected": "Legitimate",
+   "predicted": "Legitimate",
+   "score": 0.0629,
+   "result": "Pass",
+   "smishing_probability": 0.0024
+  },
+  "S-H01": {
+   "channel": "sms",
+   "group": "Hard case",
+   "expected": "Phishing",
+   "predicted": "Phishing",
+   "score": 0.8942,
+   "result": "Pass",
+   "smishing_probability": 0.8143
+  },
+  "S-H02": {
+   "channel": "sms",
+   "group": "Hard case",
+   "expected": "Phishing",
+   "predicted": "Legitimate",
+   "score": 0.3968,
+   "result": "Fail",
+   "smishing_probability": 0.1707
+  },
+  "S-H03": {
+   "channel": "sms",
+   "group": "Hard case",
+   "expected": "Phishing",
+   "predicted": "Phishing",
+   "score": 0.956,
+   "result": "Pass",
+   "smishing_probability": 0.9225
+  },
+  "S-H04": {
+   "channel": "sms",
+   "group": "Hard case",
+   "expected": "Phishing",
+   "predicted": "Phishing",
+   "score": 0.9955,
+   "result": "Pass",
+   "smishing_probability": 0.9912
+  },
+  "S-H05": {
+   "channel": "sms",
+   "group": "Hard case",
+   "expected": "Legitimate",
+   "predicted": "Phishing",
+   "score": 0.8582,
+   "result": "Fail",
+   "smishing_probability": 0.8306
+  },
+  "S-H06": {
+   "channel": "sms",
+   "group": "Hard case",
+   "expected": "Legitimate",
+   "predicted": "Legitimate",
+   "score": 0.3472,
+   "result": "Pass",
+   "smishing_probability": 0.3159
+  },
+  "S-H07": {
+   "channel": "sms",
+   "group": "Hard case",
+   "expected": "Legitimate",
+   "predicted": "Legitimate",
+   "score": 0.2401,
+   "result": "Pass",
+   "smishing_probability": 0.2157
+  },
+  "S-H08": {
+   "channel": "sms",
+   "group": "Hard case",
+   "expected": "Legitimate",
+   "predicted": "Phishing",
+   "score": 0.8507,
+   "result": "Fail",
+   "smishing_probability": 0.1612
+  },
+  "U-P01": {
+   "channel": "url",
+   "group": "Standard",
+   "expected": "Phishing",
+   "predicted": "Phishing",
+   "score": 0.9363,
+   "result": "Pass"
+  },
+  "U-P02": {
+   "channel": "url",
+   "group": "Standard",
+   "expected": "Phishing",
+   "predicted": "Phishing",
+   "score": 0.9885,
+   "result": "Pass"
+  },
+  "U-P03": {
+   "channel": "url",
+   "group": "Standard",
+   "expected": "Phishing",
+   "predicted": "Phishing",
+   "score": 0.8097,
+   "result": "Pass"
+  },
+  "U-P04": {
+   "channel": "url",
+   "group": "Standard",
+   "expected": "Phishing",
+   "predicted": "Phishing",
+   "score": 0.9971,
+   "result": "Pass"
+  },
+  "U-P05": {
+   "channel": "url",
+   "group": "Standard",
+   "expected": "Phishing",
+   "predicted": "Phishing",
+   "score": 0.9998,
+   "result": "Pass"
+  },
+  "U-P06": {
+   "channel": "url",
+   "group": "Standard",
+   "expected": "Phishing",
+   "predicted": "Phishing",
+   "score": 0.9888,
+   "result": "Pass"
+  },
+  "U-P07": {
+   "channel": "url",
+   "group": "Standard",
+   "expected": "Phishing",
+   "predicted": "Phishing",
+   "score": 0.6054,
+   "result": "Pass"
+  },
+  "U-P08": {
+   "channel": "url",
+   "group": "Standard",
+   "expected": "Phishing",
+   "predicted": "Phishing",
+   "score": 0.9604,
+   "result": "Pass"
+  },
+  "U-P09": {
+   "channel": "url",
+   "group": "Standard",
+   "expected": "Phishing",
+   "predicted": "Phishing",
+   "score": 0.9928,
+   "result": "Pass"
+  },
+  "U-P10": {
+   "channel": "url",
+   "group": "Standard",
+   "expected": "Phishing",
+   "predicted": "Phishing",
+   "score": 0.9703,
+   "result": "Pass"
+  },
+  "U-P11": {
+   "channel": "url",
+   "group": "Standard",
+   "expected": "Phishing",
+   "predicted": "Phishing",
+   "score": 0.9481,
+   "result": "Pass"
+  },
+  "U-P12": {
+   "channel": "url",
+   "group": "Standard",
+   "expected": "Phishing",
+   "predicted": "Phishing",
+   "score": 0.9907,
+   "result": "Pass"
+  },
+  "U-P13": {
+   "channel": "url",
+   "group": "Standard",
+   "expected": "Phishing",
+   "predicted": "Phishing",
+   "score": 0.9993,
+   "result": "Pass"
+  },
+  "U-L01": {
+   "channel": "url",
+   "group": "Standard",
+   "expected": "Legitimate",
+   "predicted": "Legitimate",
+   "score": 0.0043,
+   "result": "Pass"
+  },
+  "U-L02": {
+   "channel": "url",
+   "group": "Standard",
+   "expected": "Legitimate",
+   "predicted": "Legitimate",
+   "score": 0.0013,
+   "result": "Pass"
+  },
+  "U-L03": {
+   "channel": "url",
+   "group": "Standard",
+   "expected": "Legitimate",
+   "predicted": "Legitimate",
+   "score": 0.0,
+   "result": "Pass"
+  },
+  "U-L04": {
+   "channel": "url",
+   "group": "Standard",
+   "expected": "Legitimate",
+   "predicted": "Legitimate",
+   "score": 0.089,
+   "result": "Pass"
+  },
+  "U-L05": {
+   "channel": "url",
+   "group": "Standard",
+   "expected": "Legitimate",
+   "predicted": "Legitimate",
+   "score": 0.0979,
+   "result": "Pass"
+  },
+  "U-L06": {
+   "channel": "url",
+   "group": "Standard",
+   "expected": "Legitimate",
+   "predicted": "Legitimate",
+   "score": 0.1464,
+   "result": "Pass"
+  },
+  "U-L07": {
+   "channel": "url",
+   "group": "Standard",
+   "expected": "Legitimate",
+   "predicted": "Legitimate",
+   "score": 0.0098,
+   "result": "Pass"
+  },
+  "U-L08": {
+   "channel": "url",
+   "group": "Standard",
+   "expected": "Legitimate",
+   "predicted": "Legitimate",
+   "score": 0.0013,
+   "result": "Pass"
+  },
+  "U-L09": {
+   "channel": "url",
+   "group": "Standard",
+   "expected": "Legitimate",
+   "predicted": "Legitimate",
+   "score": 0.0004,
+   "result": "Pass"
+  },
+  "U-L10": {
+   "channel": "url",
+   "group": "Standard",
+   "expected": "Legitimate",
+   "predicted": "Legitimate",
+   "score": 0.0055,
+   "result": "Pass"
+  },
+  "U-L11": {
+   "channel": "url",
+   "group": "Standard",
+   "expected": "Legitimate",
+   "predicted": "Legitimate",
+   "score": 0.0003,
+   "result": "Pass"
+  },
+  "U-L12": {
+   "channel": "url",
+   "group": "Standard",
+   "expected": "Legitimate",
+   "predicted": "Legitimate",
+   "score": 0.1986,
+   "result": "Pass"
+  },
+  "U-L13": {
+   "channel": "url",
+   "group": "Standard",
+   "expected": "Legitimate",
+   "predicted": "Legitimate",
+   "score": 0.0175,
+   "result": "Pass"
+  },
+  "U-H01": {
+   "channel": "url",
+   "group": "Hard case",
+   "expected": "Phishing",
+   "predicted": "Phishing",
+   "score": 0.5687,
+   "result": "Pass"
+  },
+  "U-H02": {
+   "channel": "url",
+   "group": "Hard case",
+   "expected": "Phishing",
+   "predicted": "Phishing",
+   "score": 0.9986,
+   "result": "Pass"
+  },
+  "U-H03": {
+   "channel": "url",
+   "group": "Hard case",
+   "expected": "Phishing",
+   "predicted": "Phishing",
+   "score": 0.9743,
+   "result": "Pass"
+  },
+  "U-H04": {
+   "channel": "url",
+   "group": "Hard case",
+   "expected": "Phishing",
+   "predicted": "Phishing",
+   "score": 0.9985,
+   "result": "Pass"
+  },
+  "U-H05": {
+   "channel": "url",
+   "group": "Hard case",
+   "expected": "Phishing",
+   "predicted": "Phishing",
+   "score": 0.9968,
+   "result": "Pass"
+  },
+  "U-H06": {
+   "channel": "url",
+   "group": "Hard case",
+   "expected": "Legitimate",
+   "predicted": "Phishing",
+   "score": 0.7605,
+   "result": "Fail"
+  },
+  "U-H07": {
+   "channel": "url",
+   "group": "Hard case",
+   "expected": "Legitimate",
+   "predicted": "Legitimate",
+   "score": 0.0155,
+   "result": "Pass"
+  },
+  "U-H08": {
+   "channel": "url",
+   "group": "Hard case",
+   "expected": "Legitimate",
+   "predicted": "Legitimate",
+   "score": 0.0096,
+   "result": "Pass"
+  },
+  "U-H09": {
+   "channel": "url",
+   "group": "Hard case",
+   "expected": "Legitimate",
+   "predicted": "Legitimate",
+   "score": 0.0381,
+   "result": "Pass"
+  },
+  "U-H10": {
+   "channel": "url",
+   "group": "Hard case",
+   "expected": "Legitimate",
+   "predicted": "Legitimate",
+   "score": 0.0001,
+   "result": "Pass"
+  }
+ },
+ "scenarios": {
+  "S-01": "HTTP 200: events: email 0.997, sms 1.000, url 0.974; single-channel alert True; bundle risk 1.000 (elevated risk); windows 1; shared ['dom:bit.ly']",
+  "S-08": "HTTP 200: events: video not assessed; single-channel alert None; bundle risk none (cannot assess); windows None; shared []",
+  "S-02": "HTTP 200: events: email 0.999, sms 0.998, url 0.999; single-channel alert True; bundle risk 1.000 (elevated risk); windows 1; shared ['dom:secure-bank-verify.xyz']",
+  "S-05": "HTTP 200: events: email 0.999; single-channel alert True; bundle risk 0.999 (elevated risk); windows 1; shared []",
+  "S-06": "HTTP 200: events: email 0.999, sms 0.194, url 0.005; single-channel alert True; bundle risk 0.957 (elevated risk); windows 1; shared []",
+  "S-03": "fixed scores email 0.55, sms 0.52, url 0.58 through the engine: best single 0.58 (alerts alone); bundle risk 1.000; shared ['dom:bit.ly']",
+  "S-04": "HTTP 200: events: email 0.087, sms 0.042, url 0.018; single-channel alert False; bundle risk 0.114 (low risk); windows 1; shared []",
+  "S-07": "HTTP 200: events: email 0.999, sms 0.998, video not assessed; single-channel alert True; bundle risk 1.000 (elevated risk); windows 1; shared ['dom:secure-bank-verify.xyz']",
+  "S-09": "HTTP 200: events: email 0.999, sms 0.998, url 0.999; single-channel alert True; bundle risk 0.999 (elevated risk); windows 3; shared []",
+  "S-10": "HTTP 200: events: email 0.999, sms 0.998, url 0.999; single-channel alert True; bundle risk 1.000 (elevated risk); windows 1; shared ['dom:secure-bank-verify.xyz']",
+  "S-11": "HTTP 200: events: email 0.999, sms 0.999, url 0.994; single-channel alert True; bundle risk 1.000 (elevated risk); windows 1; shared ['dom:secure-bank-verify.online']",
+  "S-12": "POST {\"events\": []} -> HTTP 422; POST {} -> HTTP 422",
+  "S-13": "HTTP 200: events: email 0.003, sms 0.013, url 0.098; single-channel alert False; bundle risk 0.030 (low risk); windows 1; shared []"
+ }
+}

@@ -1,12 +1,14 @@
 @echo off
 cd /d "%~dp0"
-echo Window, identity token and input check tests
-python tests\test_window_and_ids.py
+set PY=python
+if exist ".venv\Scripts\python.exe" set PY=.venv\Scripts\python.exe
+echo Unit and API tests (window, identity tokens, demo cases TC-01 to TC-08, defects, refit path)
+%PY% -m pytest tests -q -p no:cacheprovider --ignore=tests/test_final_cases.py
 echo.
-echo Workbook and validator checks
-python tests\smoke_test.py
+echo The 112 ported test-plan cases (writes reports\final_cases_results.json)
+%PY% tests\test_final_cases.py
 echo.
-echo Note: smoke_test stops at the synthetic row generator, which needs
-echo data\processed\pool_*.csv from run_all.sh. Not needed for the demo.
+echo Workbook and validator checks (the second half needs data\processed\pool_*.csv from run_all.sh)
+%PY% tests\smoke_test.py
 echo.
 pause
