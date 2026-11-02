@@ -1,5 +1,5 @@
 {
- "date": "2026-11-02T11:44:43+05:30",
+ "date": "2026-11-02T11:54:31+05:30",
  "ok": true,
  "checks": [
   {
@@ -25,7 +25,7 @@
   {
    "check": "no URL of unknown purpose in the console",
    "ok": true,
-   "detail": "URLs that are text only, by kind: {'XML namespace (not fetched)': 5, 'React error-documentation link (text only)': 1, 'this machine': 2, 'preset or sample message text (data, not fetched)': 6}"
+   "detail": "URLs that are text only, by kind: {'XML namespace (not fetched)': 5, 'this machine': 2, 'React error-documentation link (text only)': 1, 'preset or sample message text (data, not fetched)': 6}"
   }
  ],
  "text_only_urls": {
@@ -36,12 +36,12 @@
    "http://www.w3.org/2000/svg",
    "http://www.w3.org/XML/1998/namespace"
   ],
-  "React error-documentation link (text only)": [
-   "https://reactjs.org/docs/error-decoder.html?invariant="
-  ],
   "this machine": [
    "http://127.0.0.1:8000",
    "http://localhost:8000"
+  ],
+  "React error-documentation link (text only)": [
+   "https://reactjs.org/docs/error-decoder.html?invariant="
   ],
   "preset or sample message text (data, not fetched)": [
    "http://parcel-redelivery.info/confirm",

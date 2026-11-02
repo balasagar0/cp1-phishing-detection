@@ -2,7 +2,7 @@
 
 All 69 items from section 9 of `CP1_FINISH_TASK.md`. Updated at the end of every phase. Nothing is marked done without evidence (a file, a test or a commit).
 
-**Last update:** end of Phase 1 (test port, defect re-test, code fixes), 2 Nov 2026. Tag `test-run-20261102-1`.
+**Last update:** end of Phase 2 (event store, live console, offline and UI checks), 2 Nov 2026. Tag `test-run-20261102-2`.
 
 **Status words:** done (finished, with evidence) · partial (some of it is done; the rest is named) · open (not started) · blocked (waiting on something named) · people (a person does it; tracked here).
 
@@ -14,8 +14,8 @@ All 69 items from section 9 of `CP1_FINISH_TASK.md`. Updated at the end of every
 |---|---|---|
 | 0. Baseline and audit | done | `reports/baseline_check.md`, `reports/model_manifest.json`, `tests/test_demo_cases.py`, tags `v2-baseline` and `test-run-20261102-0` |
 | 1. Port the test suite, re-test defects, code fixes | done | `tests/test_final_cases.py` (112 cases), `reports/final_cases_results.json`, `reports/Test_Cases_and_Test_Data_FINAL.xlsx`, `reports/defect_log.md`, `tests/test_defects.py`; merges of `module/testing-docs`, `module/email-sms`, `module/url`, `module/correlation`, `module/api-console`; tag `test-run-20261102-1` |
-| 2. Event store, live flow, console | open | Starts next |
-| 3. Models | open | Needs Phase 1 measurements |
+| 2. Event store, live flow, console | done | `src/event_store.py` and its routes, `tests/test_event_store.py`; console in `console/` served at `/`; `scripts/offline_check.py` (`reports/offline_check.md`); `scripts/ui_checks.py` (`reports/ui_checks.json`, `reports/screenshots/`); `reports/r2_09_evidence.md`; tag `test-run-20261102-2` |
+| 3. Models | open | Starts next |
 | 4. Freeze and final run | open | Needs Phases 1 to 3 |
 | 5. Documents | open | Needs `cp1-final`. PT-03 and PT-04 also need the patent spec |
 | 6. Wrap up | open | Last |
@@ -39,38 +39,47 @@ All 69 items from section 9 of `CP1_FINISH_TASK.md`. Updated at the end of every
 4. **Not changed:** no model was retrained. The email cleaner changed, but none of the 28 workbook emails, the demo-case emails or the 9,000 pooled emails changes, so the live email model's inputs are the same for them. The retrain is Phase 3.
 5. **Run order:** `pytest tests/` now runs everything except the script-style smoke test (`tests/conftest.py`); `RUN_TESTS.bat` uses the venv.
 
+## Found in Phase 2
+
+1. **The event store gives the same answer as `/correlate`.** It calls v2's own window scorer (`fusion.window_risks`; `windowed_risk` now takes the highest of it, identical on 3,000 simulated bundles). TC-04, TC-06 and TC-07 match to 3 decimals; TC-07 gives three one-event campaigns.
+2. **UI-03 fails, on D-18.** In TC-04 the bundle shows 99.99% beside an SMS at 100.00%; the plan wants the correlated score at or above every single score. Linked to D-18 (proposed for acceptance, not accepted).
+3. **Privacy detail found:** uvicorn's access log prints request paths, which would carry `?recipient=` in clear. `RUN_DEMO.bat` now starts uvicorn with `--no-access-log`; `start_demo.bat` will too.
+4. **`/docs` and `/redoc` are off.** Their pages load Swagger UI from a CDN, which breaks the offline rule. `/openapi.json` stays; the console replaces them for the demo.
+5. **`console.html` is served at `/lite`.** Opened as a file it can no longer reach the API, because CORS no longer answers '*'.
+6. **The four Indian stories, run once:** IN-01 to IN-03 alert; IN-04, the legitimate order, stays quiet. Nothing was tuned.
+
 ## All 69 items
 
 | ID | Item | Owner | Who does it | Status | Evidence | Next step |
 |---|---|---|---|---|---|---|
 | R2-01 | URL false alarms on `https://` and a trailing slash (D-01) | V | Code | partial | D-01 Open (`reports/defect_log.md`): the scheme and trailing-slash flips are gone (URL-05, URL-06, URL-02, SYS-13 pass, because `canon()` normalises in training and serving); URL-07 fails on U-H06, a real Google sign-in URL with a long query | Phase 3.2: no retrain for the scheme (it no longer flips). Record U-H06 as the login-page trade-off; the team decides on D-01 |
 | R2-02 | The SMS model catches smishing (D-09) | K | Code; may end as a proposed acceptance | partial | SMS-01 passes (every standard phishing SMS caught); SMS-03 fails on its legitimate half (bank alerts flagged, new defect D-16). `reports/defect_log.md` | Phase 3.3: retrain only with real SMS data whose licence can be checked; otherwise D-09 and D-16 stay open with a proposal |
-| R2-03 | A fixed time window (D-04) | B | Code | partial | `src/fusion.py` line 13 `DEFAULT_WINDOW_MIN = 60.0` is the one place; the API and `refit_fusion.py` read it through `Fusion.window`. COR-12, SYS-09 and `tests/test_defects.py::test_D04_events_days_apart_are_not_combined` pass | Phase 2: the event store and console take the window from the same line |
-| R2-04 | The console calls the API (D-06) | V | Code | partial | D-06 Closed: CORS names the console's dev origins, never '*' (`api.py`, API-12, `test_D06_cors_names_explicit_origins_never_star`). The console already calls `/correlate` | Phase 2.2: build the console and serve it from FastAPI |
-| R2-05 | Event store, identity linking, composite score and alert | B | Code | open | Not built | Phase 2.1 |
+| R2-03 | A fixed time window (D-04) | B | Code | done | One line sets the window: `src/fusion.py` line 13 `DEFAULT_WINDOW_MIN = 60.0`. `/correlate` and the event store read it through `Fusion.window` (`api.py` line 42, `src/event_store.py`), `refit_fusion.py` and `eval_window.py` read the same constant, the console takes it from `/health`. Tests: COR-12, SYS-09, `test_D04_*`, `test_window_edges_59_and_61_minutes` | Nothing for code. A refit on real bundles may store its own window (R2-10) |
+| R2-04 | The console calls the API (D-06) | V | Code | done | The console calls the live API on every view (`/health`, `/presets`, `/correlate`, `/events`, `/campaigns`, `/alerts`) and is served by FastAPI at `/` (built files in `console/dist`). CORS names explicit origins. UI-01, UI-02, UI-04 to UI-07 pass in Chrome and Edge (`reports/ui_checks.json`); UI-03 fails on D-18 | Nothing for code. The team decides on D-18 |
+| R2-05 | Event store, identity linking, composite score and alert | B | Code | done | `src/event_store.py` (SQLite, HMAC-hashed recipient and tokens, text only with `CP1_STORE_CONTENT=1`), routes `POST /events`, `GET /campaigns`, `GET /campaigns/{id}`, `GET /alerts`, `POST /alerts/{id}/ack`, `POST /purge`. `tests/test_event_store.py` (12 tests): equal to `/correlate` on TC-04, TC-06, TC-07; linking; 59/61-minute edges; two recipients; one alert; calls in the timeline; purge; restart; privacy | Phase 4.2 end-to-end check on the frozen build |
 | R2-06 | The API rejects bad input (D-02, D-07) | V | Code | done | D-02 and D-07 Closed: empty text, unknown channels and malformed URLs give HTTP 422 with a reason (`check_url`, commits 3ec9530, 658d63c); EML-07, SMS-07, URL-08, API-08 pass; `test_D02_*`, `test_D07_*` | Nothing for code. Re-run in Phase 4 |
 | R2-07 | The remaining correlation defects (D-03, D-05, D-08) | B | Code | done | D-03, D-05, D-08 Closed, and D-13 (found on v2) Closed: calls and video are 'not assessed', nothing assessable is CANNOT_ASSESS (commit 3d42061); SCO-06, VV-03 to VV-05, COR-07, COR-09, COR-14, SYS-07, SYS-08, SYS-11, SYS-12 pass; `test_D03_*`, `test_D05_*`, `test_D08_*`, `test_D13_*` | Nothing for code. Re-run in Phase 4 |
 | R2-08 | The email defects (D-10, D-11) | K | Code | partial | D-11 Closed (cleaner strips scripts and HTML, keeps link targets; commit b151be2; PRE-01). D-10 Open: EML-03 fails on E-H04. New D-17: EML-01 misses 4 of 11 standard phishing emails | Phase 3.1: add Nazario, SpamAssassin and Ling, retrain with the new cleaner, apply the adoption rule |
-| R2-09 | Correlation changes a verdict with real scores (D-12, SYS-14) | B, M | Code | partial | TC-06 alerts only as a bundle (0.595) and its control TC-07 does not (0.451): `tests/test_demo_cases.py`. Hand-written, not a test set | Phase 2.5: the evidence table (S-03, TC-06, TC-07, TC-05, simulated weak campaigns) |
+| R2-09 | Correlation changes a verdict with real scores (D-12, SYS-14) | B, M | Code | partial | `reports/r2_09_evidence.md`: S-03 on the old build (fixed scores), S-03 on v2's engine, TC-06 against its control TC-07, TC-05, and the simulated weak campaigns, each labelled. SYS-14 as written still fails (D-12 open, proposal written) | The team decides on the D-12 proposal; real bundles (R2-10) settle the claim |
 | R2-10 | Collect 40 + 40 real bundles (150 to refit) | T | People | people | `testcases/review2_testcase_workbook.xlsx` holds 0 real bundles. The path workbook -> `refit_fusion.py` -> `reports/real_bundles_report.md` works on the example rows (`tests/test_refit_path.py`; smoke test 24 checks pass with the data present) | The team collects 40 coordinated and 40 benign bundles (150 to refit). No bundle is ever generated |
-| R2-11 | Meet the test plan's exit criteria | M | Code | partial | The 112 cases are ported and run (`reports/final_cases_results.json`): 84 Pass, 6 Fail, 1 Known limitation, 12 N/A, 9 Not run; every failure is linked to an open defect. The FINAL workbook is filled by `scripts/fill_final_workbook.py` | Phase 4.4: judge the 7 exit criteria on the frozen build |
+| R2-11 | Meet the test plan's exit criteria | M | Code | partial | The 112 cases run on this build (`reports/final_cases_results.json`): every failure is linked to an open defect; the console cases now run (Playwright). The FINAL workbook is filled by `scripts/fill_final_workbook.py` | Phase 4.4: judge the 7 exit criteria on the frozen build |
 | R2-12 | A private git repo with real history | M | Code | done | Local repo with real history: `v2-baseline` is v2 byte for byte; every commit uses the configured identity and the Claude co-author line; module branches merged into `main` with `--no-ff`; tags per phase; `git remote -v` is empty | Keep committing at each phase end; never push |
 | R2-13 | Literature survey of at least 10 papers | T | People | people | Not a code item | The team writes it |
 | R2-14 | SRS, ER and UML diagrams | M, B | Inputs: as-built diagrams | open | No as-built diagrams yet | Phase 5: Mermaid diagrams in `docs/diagrams/`. The guide signs off |
 | R2-15 | Record the Review-2 feedback and the fixes | B | People | people | Not a code item | Bala records it |
 | R3-01 | Agree the CP1 scope with the guide | B | People | people | Not a code item | Bala meets the guide; `docs/BUILT_VS_DESCRIBED.md` (Phase 5) supports it |
 | R3-02 | Freeze one final build | M | Code | open | Not frozen | Phase 4: tags `cp1-rc1` and `cp1-final` |
-| R3-03 | Run the whole flow live | V, B | Code | open | Only `/correlate` exists; no event store | Phase 2 and the end-to-end check in Phase 4.2 |
+| R3-03 | Run the whole flow live | V, B | Code | partial | The whole flow runs live: console -> API -> detectors -> correlation -> event store -> alert, shown in the console (`reports/screenshots/store_replay_TC06.png`) and tested (`tests/test_event_store.py`, UI checks) | Phase 4.2: end-to-end check on the frozen build |
 | R3-04 | The voice module, if it stays in CP1 | K | Code only if `VOICE_IN_CP1` is `yes` | people | `VOICE_IN_CP1` is `no`. Calls answer HTTP 501 on `/score` (`tests/test_demo_cases.py::test_tc03_voice_call_is_not_assessed`) | S and the team confirm voice scope. If it becomes `yes`, Appendix A |
 | R3-05 | Script and rehearse the demo | V, B | Inputs; the rehearsal is People | open | No script yet | Phase 5: `docs/DEMO_SCRIPT.md`. Viraj and Bala rehearse |
-| R3-06 | A review-proof demo laptop | V | Code, plus one real Wi-Fi-off run by a person | open | No preflight or offline check yet | Phases 2.3 and 5: `scripts/offline_check.py`, `scripts/preflight.py`, `start_demo.bat`. Viraj does one Wi-Fi-off run |
+| R3-06 | A review-proof demo laptop | V | Code, plus one real Wi-Fi-off run by a person | partial | `scripts/offline_check.py` passes: no outbound socket while every demo case and story runs; tldextract uses its bundled list; the console fetches nothing from outside (`reports/offline_check.md`). The UI checks saw no request leave the machine | Phase 5: `scripts/preflight.py` and `start_demo.bat`. Viraj does one real Wi-Fi-off run on the demo laptop |
 | R3-07 | Re-run every test case on the final build | M | Code | partial | Every ported case runs on this build (`tests/test_final_cases.py`, `reports/final_cases_results.json`) | Phase 4.2: re-run everything on `cp1-rc1` / `cp1-final` |
 | R3-08 | Final metrics for each channel | K, V | Code | open | v2 figures reproduce (`reports/baseline_check.md`); final figures come from `cp1-final` | Phase 4.1 and `reports/FINAL_NUMBERS.md` |
 | R3-09 | Correlation against the baselines | B, M | Code for the simulated half; the real half is blocked on R2-10 | partial | v2's window table on 12,000 simulated bundles (`reports/results.md`, `reports/window_metrics.json`) | Phase 4.3: add parallel multi-channel and the patent's noisy-OR row (needs the patent spec) |
 | R3-10 | Timing on the demo laptop | M | Code | open | Not measured | Phase 4.2: `scripts/benchmark.py` |
 | R3-11 | The final test report | M | Code | open | Not written | Phase 5: `reports/FINAL_TEST_REPORT.md` |
 | R3-12 | One set of numbers everywhere | T | Code for FINAL_NUMBERS; restating it is People | open | Not written | Phase 5: `reports/FINAL_NUMBERS.md`. The team copies it into the deck, report, patent and paper |
-| R3-13 | Indian attack stories | B | Inputs: console presets | open | The console has a KYC preset only | Phase 2.2: KYC freeze, courier customs fee, work-from-home task scam, a legitimate order |
+| R3-13 | Indian attack stories | B | Inputs: console presets | done | Four Indian stories in `src/demo_cases.py` (KYC freeze, courier customs fee, work-from-home task scam, legitimate order), served by `/presets` as one-click console presets, hand-written and run once. The legitimate order stays below the line (`reports/screenshots/demo_IN-04.png`) | Nothing for code |
 | R3-14 | Results on real or lab-made bundles | M | Blocked on R2-10 | blocked | 0 real bundles. When they exist, `refit_fusion.py` writes `reports/real_bundles_report.md` and `reports/real_bundles_metrics.json` by default (checked by `tests/test_refit_path.py`) | Blocked on R2-10 |
 | R3-15 | Who would use it | B | People | people | Not a code item | Bala writes it |
 | R3-16 | Privacy and ethics | M | Inputs: PRIVACY.md | open | Not written | Phase 5: `docs/PRIVACY.md` |
@@ -117,9 +126,9 @@ All 69 items from section 9 of `CP1_FINISH_TASK.md`. Updated at the end of every
 
 | Status | Items |
 |---|---|
-| done | 4 |
+| done | 8 |
 | partial | 9 |
-| open | 23 |
+| open | 19 |
 | blocked | 3 |
 | people | 30 |
 | **total** | **69** |

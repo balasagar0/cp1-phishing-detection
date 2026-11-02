@@ -1,0 +1,69 @@
+{
+ "date": "2026-11-02T11:54:10+05:30",
+ "rows": [
+  {
+   "evidence": "S-03 on the old build (29 Sep run)",
+   "kind": "fixed scores (55 / 52 / 58 on a 0-100 scale), rule bonus",
+   "events": "email 55, sms 52, url 58",
+   "alone": "best single 58.0 = SUSPICIOUS",
+   "bundle": "83.0 = HIGH RISK (bonus +25)",
+   "lift": "yes, from SUSPICIOUS to HIGH RISK, on fixed scores",
+   "source": "team workbook, SYS-03 'Actual result' (29 Sep)"
+  },
+  {
+   "evidence": "S-03 fixed scores through v2's engine",
+   "kind": "fixed scores (0.55 / 0.52 / 0.58)",
+   "events": "email 0.550, sms 0.520, url 0.580",
+   "alone": "yes (each is at or above 0.5)",
+   "bundle": "1.000",
+   "lift": "no: with one line at 0.5 these scores already alert alone",
+   "source": "fusion.Fusion.risk, computed here"
+  },
+  {
+   "evidence": "TC-06: weak parcel campaign, 15 minutes",
+   "kind": "hand-written, not a test set (real detector scores)",
+   "events": "sms 0.421, url 0.451, email 0.204",
+   "alone": "no",
+   "bundle": "0.595 (alert; 1 window, shared dom:parcel-redelivery.info)",
+   "lift": "yes: no event alerts alone, the bundle does",
+   "source": "POST /correlate, run here"
+  },
+  {
+   "evidence": "TC-07: TC-06's messages 3 days apart (control)",
+   "kind": "hand-written, not a test set (real detector scores)",
+   "events": "sms 0.421, url 0.451, email 0.204",
+   "alone": "no",
+   "bundle": "0.451 (no alert; 3 windows, shared none)",
+   "lift": "no: stays below the line",
+   "source": "POST /correlate, run here"
+  },
+  {
+   "evidence": "TC-05: colleague shares an article (linked but harmless)",
+   "kind": "hand-written, not a test set (real detector scores)",
+   "events": "sms 0.002, email 0.000, url 0.000",
+   "alone": "no",
+   "bundle": "0.000 (no alert; 1 window, shared dom:wikipedia.org)",
+   "lift": "no: stays below the line",
+   "source": "POST /correlate, run here"
+  },
+  {
+   "evidence": "TC-04: KYC campaign on one domain",
+   "kind": "hand-written, not a test set (real detector scores)",
+   "events": "sms 1.000, url 0.995, email 0.998",
+   "alone": "yes",
+   "bundle": "1.000 (alert; 1 window, shared dom:sbi-kyc-update.top)",
+   "lift": "no: already alerts alone",
+   "source": "POST /correlate, run here"
+  },
+  {
+   "evidence": "Simulated linked attacks where every event is below 0.5",
+   "kind": "SIMULATED bundles (12,000 test bundles; real held-out messages, constructed links)",
+   "events": "27 campaigns (0.8% of simulated linked attacks)",
+   "alone": "no (by definition)",
+   "bundle": "flagged by the 60-minute engine: 18.5% (5 of 27); by the whole-bundle model: 18.5%",
+   "lift": "yes, for a minority of a small group, on simulated bundles",
+   "source": "reports/window_metrics.json, reports/fusion_metrics.json"
+  }
+ ],
+ "sys14": "S-01: best single alert, bundle alert (1.000); S-02: best single alert, bundle alert (1.000); S-11: best single alert, bundle alert (1.000). The detectors already alert on all three, so correlation cannot raise the verdict."
+}

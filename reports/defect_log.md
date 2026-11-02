@@ -1,6 +1,6 @@
 # Defect log
 
-Written by `scripts/fill_final_workbook.py` from the run of 2026-11-02 11:20 on `test-run-20261102-0-11-g44cf209`. Status comes from the run: Closed only when every linked case passes. Accepting a defect is the team's call.
+Written by `scripts/fill_final_workbook.py` from the run of 2026-11-02 11:53 on `test-run-20261102-1-11-ga6ecbd4`. Status comes from the run: Closed only when every linked case passes. Accepting a defect is the team's call.
 
 | Defect | Severity | Module | Status | Linked cases on this run | Fixed by | Fix summary |
 |---|---|---|---|---|---|---|
@@ -21,4 +21,4 @@ Written by `scripts/fill_final_workbook.py` from the run of 2026-11-02 11:20 on 
 | D-15 | Low | Preprocessing | **Closed** | PRE-03 Pass | this work (b151be2) | clean_text() returns an empty string for anything that is not a string. |
 | D-16 | Medium | SMS classifier | **Open** | SMS-03 Fail | not fixed | Needs retraining with more legitimate transactional SMS (Phase 3.3), from a source whose licence can be checked. |
 | D-17 | High | Email classifier | **Open** | EML-01 Fail, EML-03 Fail | not fixed | Phase 3.1 adds the Nazario, SpamAssassin and Ling corpora and retrains under the adoption rule. |
-| D-18 | Low | Correlation engine | **Open** | SCO-08 Fail | not fixed (design) | This is how the learned model lowers false alarms: when a high score sits beside benign events it may pull the bundle down. A floor at the best single score would bring back single-channel alerting and its false alarms (reports/window_metrics.json). Proposed: accept because the alert does not change in S-06, and lowering a lone high score next to benign events is where the model's lower false-alarm rate on simulated bundles comes from. Recheck on real bundles (R2-10). |
+| D-18 | Low | Correlation engine | **Open** | SCO-08 Fail, UI-03 Fail, UI-04 Pass | not fixed (design) | This is how the learned model lowers false alarms: when a high score sits beside benign events it may pull the bundle down. A floor at the best single score would bring back single-channel alerting and its false alarms (reports/window_metrics.json). Proposed: accept because the alert does not change in S-06, and lowering a lone high score next to benign events is where the model's lower false-alarm rate on simulated bundles comes from. Recheck on real bundles (R2-10). |
