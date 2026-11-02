@@ -47,7 +47,7 @@ h2{font-size:13px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;c
 <div id="out"></div>
 
 <script>
-var API="http://127.0.0.1:8000";
+var API=location.protocol.indexOf("http")===0?location.origin:"http://127.0.0.1:8000";   // served by the API at /lite: same origin, no CORS needed
 
 var KYC=[{channel:"sms",text:"Dear customer, your SBI account will be blocked today. Update your KYC now at http://sbi-kyc-update.top/verify-now.php or call 9876543210",identity:"+91 98765 43210",time:"0"},
 {channel:"url",text:"http://sbi-kyc-update.top/verify-now.php",time:"4"},

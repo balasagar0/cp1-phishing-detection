@@ -25,7 +25,7 @@ NOT_BUILT = "no detector for this channel (not built in CP1)"
 # CP1_CORS_ORIGINS="http://host:port,..." replaces the list. Never '*'.
 ORIGINS = [o.strip() for o in os.environ.get("CP1_CORS_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173").split(",") if o.strip() and o.strip() != "*"]
 
-app = FastAPI(title="CP1 per-channel phishing detectors", version="0.2")
+app = FastAPI(title="CP1 per-channel phishing detectors", version="0.3", docs_url=None, redoc_url=None)   # /docs and /redoc load Swagger UI from a CDN; offline demo, so off (the schema stays at /openapi.json)
 app.add_middleware(CORSMiddleware, allow_origins=ORIGINS, allow_methods=["GET", "POST", "OPTIONS"], allow_headers=["Content-Type"])
 D = Detectors()
 _real = Path(__file__).parent / "models" / "fusion_model_real.joblib"   # written by src/refit_fusion.py --save
@@ -209,3 +209,30 @@ def ack_alert(aid: int):
 def purge(b: Optional[PurgeIn] = None):
     """Retention purge: deletes events stored more than older_than_days ago (default CP1_RETENTION_DAYS, 30) and the alerts and campaigns that go with them."""
     return store().purge((b or PurgeIn()).older_than_days)
+
+
+# ---------------------------------------------------------------- console (R2-04, R3-13)
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
+
+
+@app.get("/presets")
+def get_presets():
+    """One-click console presets: TC-01 to TC-08 and four Indian stories. HAND-WRITTEN, NOT A TEST SET."""
+    from demo_cases import presets
+    return presets()
+
+
+@app.get("/lite", include_in_schema=False)
+def lite():
+    """The one-file console (console.html), served here so it needs no CORS."""
+    return FileResponse(ROOT / "console.html")
+
+
+_DIST = ROOT / "console" / "dist"            # the built React console: one command, one address (uvicorn api:app, then http://127.0.0.1:8000/)
+if _DIST.exists():
+    app.mount("/", StaticFiles(directory=_DIST, html=True), name="console")
+else:
+    @app.get("/", include_in_schema=False)
+    def no_console():
+        return {"detail": "The console is not built. Run `npm install` and `npm run build` in console/, or open /lite."}

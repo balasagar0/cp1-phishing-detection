@@ -770,7 +770,7 @@ for _cid, _why in (("UI-01", "Same check on v2's console, served by FastAPI. Pan
                    ("UI-05", "Same check: an email, an SMS and a URL entered by hand; the bundle risk and the shared tokens (v2's evidence) are shown."),
                    ("UI-06", "Same check with the API stopped."),
                    ("UI-07", "Same check at 1366x768 and 1920x1080 in Chromium and Edge (Edge only if it is installed).")):
-    case(_cid, "Replaced" if _cid in ("UI-01", "UI-03", "UI-04", "UI-05") else "Ported", _why)((lambda c: (lambda: ui(c)))(_cid))
+    case(_cid, "Replaced" if _cid in ("UI-01", "UI-03", "UI-04", "UI-05") else "Ported", _why, defect="D-18" if _cid in ("UI-03", "UI-04") else None)((lambda c: (lambda: ui(c)))(_cid))
 
 
 # ================================================================= End-to-end cases (Scenarios S-01 to S-13)
