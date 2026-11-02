@@ -1,0 +1,36 @@
+{
+ "UI-01": {
+  "status": "Pass",
+  "actual": "Chrome at http://127.0.0.1:61257/: browser console errors none; channel inputs ['email', 'sms', 'url', 'call', 'video']; 'Voice and video: not assessed (not built)'; health '\u25cf connected' Screenshots: reports/screenshots/ui01_console_loaded.png."
+ },
+ "UI-02": {
+  "status": "Pass",
+  "actual": "E-P01: console 99.98%, alerts alone 'yes'; /score 99.98%; E-L01: console 0.22%, alerts alone 'no'; /score 0.22% Screenshots: reports/screenshots/ui02_single_email_EP01.png, reports/screenshots/ui02_single_email_EL01.png."
+ },
+ "UI-03": {
+  "status": "Fail",
+  "actual": "TC-04: single-channel view 'Alert raised', correlated view 'elevated risk \u00b7 99.99%', event scores ['100.00%', '99.52%', '99.75%']; correlated 99.99% >= best single 100.00%: False Screenshots: reports/screenshots/ui03_preset_TC04.png."
+ },
+ "UI-04": {
+  "status": "Pass",
+  "actual": "TC-06: single-channel view 'No alert', correlated view 'elevated risk \u00b7 59.5%', event scores ['42.1%', '45.1%', '20.4%']; correlated 59.5% >= best single 45.1%: True Screenshots: reports/screenshots/ui04_preset_TC06.png."
+ },
+ "UI-05": {
+  "status": "Pass",
+  "actual": "custom email + SMS + URL: correlated view shows 'elevated risk \u00b7 99.97%' and 'Linked by dom:secure-bank-verify.xyz; window span 2 min.' Screenshots: reports/screenshots/ui05_custom_input.png."
+ },
+ "UI-06": {
+  "status": "Pass",
+  "actual": "API stopped: 'Cannot reach http://127.0.0.1:61257. Start the backend (start_demo.bat, or uvicorn api:app --port 8000) and press Retry.'; page still responds (preset switched, Analyze enabled: True); after the API restarts, Analyze again shows 'low risk \u00b7 0.01%' Screenshots: reports/screenshots/ui06_service_down.png."
+ },
+ "UI-07": {
+  "status": "Pass",
+  "actual": "browsers ['Chrome', 'Edge']; sizes 1366x768 and 1920x1080; no horizontal overflow and no console errors: True; identical results everywhere: True (elevated risk \u00b7 99.99%) Screenshots: reports/screenshots/ui07_chrome_1366x768.png, reports/screenshots/ui07_chrome_1920x1080.png, reports/screenshots/ui07_edge_1366x768.png, reports/screenshots/ui07_edge_1920x1080.png."
+ },
+ "_run": {
+  "date": "2026-11-02T11:47:45+05:30",
+  "machine": "AMD Ryzen 7 5800HS with Radeon Graphics (16 logical CPUs), 15.4 GB RAM, Windows-11-10.0.26200-SP0, Python 3.13.0",
+  "requests_outside_this_machine": [],
+  "commit": "test-run-20261102-1-4-ge69e46b-dirty"
+ }
+}
