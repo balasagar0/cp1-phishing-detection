@@ -20,6 +20,39 @@ def host_of(c):
     return re.sub(r":\d+$", "", re.split(r"[/?#]", c, maxsplit=1)[0].split("@")[-1])
 
 
+_SCHEME = re.compile(r"^([a-z][a-z0-9+.\-]*):", re.I)
+_IPV4 = re.compile(r"^\d{1,3}(?:\.\d{1,3}){3}$")
+_INT_HOST = re.compile(r"^(?:0x[0-9a-f]+|\d+)$")                 # integer and hex IP forms (phishing uses them, e.g. http://0xC0000201/)
+_LABEL = re.compile(r"^(?!-)[\w-]{1,63}(?<!-)$")                 # \w keeps internationalised names and the underscores some hosts carry
+
+
+def check_url(u):
+    """None when `u` looks like a URL or a bare domain, else a short reason. The API uses it to refuse malformed input (R2-06, D-02).
+    It only checks the shape (scheme, host); it never looks the URL up."""
+    s = str(u).strip()
+    if not s: return "it is empty"
+    if re.search(r"\s", s): return "it contains spaces"
+    m = _SCHEME.match(s)
+    if m:
+        rest = s[m.end():]
+        if rest.startswith("//"):
+            if m.group(1).lower() not in ("http", "https", "ftp"): return f"the scheme '{m.group(1)}' is not http, https or ftp"
+        elif not re.match(r"^\d+(?:[/?#]|$)", rest):              # 'host:port/...' is fine; 'htp:/x' or 'javascript:...' is not
+            return f"'{m.group(1)}:' is not a valid scheme (use http:// or https://, or give just the domain)"
+    host = host_of(canon(s))
+    if not host: return "it has no host"
+    if host.startswith("["):
+        return None if re.match(r"^\[[0-9a-f:.]+\]$", host) else "the host is not a valid IPv6 address"
+    if host == "localhost" or _INT_HOST.match(host): return None
+    if _IPV4.match(host):
+        return None if all(int(p) <= 255 for p in host.split(".")) else "the host is not a valid IPv4 address"
+    labels = host.split(".")
+    if len(labels) < 2: return f"the host '{host[:60]}' has no domain ending (for example .com or .in)"
+    if not all(_LABEL.match(x) for x in labels): return f"the host '{host[:60]}' has characters a domain cannot have"
+    if labels[-1].isdigit(): return f"the host '{host[:60]}' does not end in a domain ending"
+    return None
+
+
 _RD = {}
 def reg_domain(host):
     if host not in _RD:

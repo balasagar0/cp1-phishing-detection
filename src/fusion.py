@@ -62,11 +62,19 @@ def windowed_risk(model, ev, window=DEFAULT_WINDOW_MIN):
     risk_without_correlation scores ALL events together with link and timing evidence hidden (no window, no shared identity).
     `model` is Fusion.model (it already carries the single-event rule)."""
     if not ev: raise ValueError("no events")
+    wins = window_risks(model, ev, window)
+    k = int(np.argmax([r for _, r, _ in wins]))
+    p0 = float(model.predict_proba(bundle_features(ev, strip=True)[None, :])[0, 1])
+    return {"risk": wins[k][1], "risk_without_correlation": p0, "x": wins[k][2], "window_events": wins[k][0], "n_windows": len(wins)}
+
+
+def window_risks(model, ev, window=DEFAULT_WINDOW_MIN):
+    """Every time window of `ev` with its risk: a list of (event indices, risk, features). The one scorer behind /correlate
+    (windowed_risk takes the highest window) and the event store (each window is a campaign)."""
     groups = time_windows(ev, window)
     xs = [bundle_features([ev[i] for i in g]) for g in groups]
-    p = model.predict_proba(np.stack(xs + [bundle_features(ev, strip=True)]))[:, 1]
-    k = int(np.argmax(p[:-1]))
-    return {"risk": float(p[k]), "risk_without_correlation": float(p[-1]), "x": xs[k], "window_events": groups[k], "n_windows": len(groups)}
+    p = model.predict_proba(np.stack(xs))[:, 1]
+    return [(g, float(r), x) for g, r, x in zip(groups, p, xs)]
 
 
 def simulate(pools, n, rng):

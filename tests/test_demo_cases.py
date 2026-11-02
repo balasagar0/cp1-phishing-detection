@@ -63,8 +63,9 @@ def test_tc03_voice_call_is_not_assessed():
     call = CASES["TC-03"]["events"][0]
     r = client().post("/score", json={"channel": call["channel"], "text": call["text"]})
     assert r.status_code == 501, (r.status_code, r.text[:200])
-    r = correlate("TC-03")
-    assert r.status_code == 501, (r.status_code, r.text[:200])
+    # v2 answered HTTP 501 here too. Since R2-07 (D-03) /correlate answers CANNOT_ASSESS with no risk: a call alone is never a low score.
+    r = correlate("TC-03"); j = r.json()
+    assert r.status_code == 200 and j["status"] == "CANNOT_ASSESS" and j["bundle_risk"] is None and j["events"][0]["assessed"] is False, (r.status_code, r.text[:200])
 
 
 if __name__ == "__main__":

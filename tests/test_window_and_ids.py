@@ -154,13 +154,14 @@ def test_bad_input_is_rejected():
     for name, body, code in [("empty text", {"events": [dict(channel="sms", text="")]}, 422), ("time is a word", {"events": [dict(ok, time="tomorrow")]}, 422),
                              ("time is nan", {"events": [dict(ok, time="nan")]}, 422), ("window 0", {"events": [ok], "window_minutes": 0}, 422),
                              ("window negative", {"events": [ok], "window_minutes": -5}, 422), ("window above a week", {"events": [ok], "window_minutes": 99999}, 422),
-                             ("no events", {"events": []}, 422), ("voice is not trained", {"events": [dict(channel="voice", text="hi")]}, 501)]:
+                             ("no events", {"events": []}, 422), ("voice alone: CANNOT_ASSESS since R2-07 (was 501)", {"events": [dict(channel="voice", text="hi")]}, 200)]:
         r = c.post("/correlate", json=body); assert r.status_code == code, (name, r.status_code, r.text[:120])
 
 
 def test_cors_preflight():
     r = client().options("/correlate", headers={"Origin": "http://localhost:5173", "Access-Control-Request-Method": "POST"})
-    assert r.status_code == 200 and r.headers.get("access-control-allow-origin") == "*", (r.status_code, dict(r.headers))
+    # since R2-04 (D-06) CORS names the console's dev origin explicitly instead of '*'
+    assert r.status_code == 200 and r.headers.get("access-control-allow-origin") == "http://localhost:5173", (r.status_code, dict(r.headers))
 
 
 if __name__ == "__main__":

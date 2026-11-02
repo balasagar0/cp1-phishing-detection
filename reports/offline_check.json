@@ -1,0 +1,55 @@
+{
+ "date": "2026-11-02T11:54:31+05:30",
+ "ok": true,
+ "checks": [
+  {
+   "check": "the socket blocker refuses an outbound connection",
+   "ok": true,
+   "detail": "test attempt recorded: [\"create_connection ('example.com', 80)\"]"
+  },
+  {
+   "check": "public-suffix list is the bundled snapshot",
+   "ok": true,
+   "detail": "tldextract suffix_list_urls=(), cache_dir=None"
+  },
+  {
+   "check": "every demo case and story runs through every route with sockets blocked (8 cases, 4 stories)",
+   "ok": true,
+   "detail": "59 requests; failures: none; blocked outbound attempts: none"
+  },
+  {
+   "check": "built console and console.html fetch nothing from outside",
+   "ok": true,
+   "detail": "external fetches: none; console/dist built: True"
+  },
+  {
+   "check": "no URL of unknown purpose in the console",
+   "ok": true,
+   "detail": "URLs that are text only, by kind: {'XML namespace (not fetched)': 5, 'this machine': 2, 'React error-documentation link (text only)': 1, 'preset or sample message text (data, not fetched)': 6}"
+  }
+ ],
+ "text_only_urls": {
+  "XML namespace (not fetched)": [
+   "http://www.w3.org/1998/Math/MathML",
+   "http://www.w3.org/1999/xhtml",
+   "http://www.w3.org/1999/xlink",
+   "http://www.w3.org/2000/svg",
+   "http://www.w3.org/XML/1998/namespace"
+  ],
+  "this machine": [
+   "http://127.0.0.1:8000",
+   "http://localhost:8000"
+  ],
+  "React error-documentation link (text only)": [
+   "https://reactjs.org/docs/error-decoder.html?invariant="
+  ],
+  "preset or sample message text (data, not fetched)": [
+   "http://parcel-redelivery.info/confirm",
+   "http://parcel-redelivery.info/track?id=88213",
+   "http://sbi-kyc-update.top/verify-now.php",
+   "https://en.wikipedia.org/wiki/Project_management",
+   "https://www.fedex.com/fedextrack/?trknbr=123456789012",
+   "https://www.fedex.com/fedextrack/?trknbr=123456789012."
+  ]
+ }
+}

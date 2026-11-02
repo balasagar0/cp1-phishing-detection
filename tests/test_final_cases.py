@@ -15,7 +15,9 @@ import json, os, sys, time, re, socket, statistics, subprocess, datetime, platfo
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]; sys.path.insert(0, str(ROOT / "src")); sys.path.insert(0, str(ROOT))
-import pytest
+import pytest, tempfile
+os.environ.setdefault("CP1_EVENT_DB", str(Path(tempfile.mkdtemp(prefix="cp1_cases_")) / "events.db"))   # never the project's database
+os.environ.setdefault("CP1_HMAC_KEY", "test-key-not-secret")
 
 DATA = json.loads((ROOT / "tests" / "data" / "workbook_cases.json").read_text(encoding="utf-8"))
 SAMPLE = {ch: {r["ID"]: r for r in DATA[ch]} for ch in ("email", "sms", "url")}
@@ -26,7 +28,7 @@ OUT = ROOT / "reports" / "final_cases_results.json"
 
 # Defects that are open on this build. A case linked to one of these may fail without failing the suite (it is reported as xfail).
 # Update this set as defects close: a defect leaves it only after its failing case passes.
-OPEN_DEFECTS = {"D-01", "D-02", "D-03", "D-06", "D-09", "D-10", "D-12", "D-13", "D-14", "D-16", "D-17", "D-18"}
+OPEN_DEFECTS = {"D-01", "D-09", "D-10", "D-12", "D-16", "D-17", "D-18"}
 
 CASES, RESULTS, SAMPLE_RESULTS, SCENARIO_RESULTS = {}, {}, {}, {}
 
@@ -768,7 +770,7 @@ for _cid, _why in (("UI-01", "Same check on v2's console, served by FastAPI. Pan
                    ("UI-05", "Same check: an email, an SMS and a URL entered by hand; the bundle risk and the shared tokens (v2's evidence) are shown."),
                    ("UI-06", "Same check with the API stopped."),
                    ("UI-07", "Same check at 1366x768 and 1920x1080 in Chromium and Edge (Edge only if it is installed).")):
-    case(_cid, "Replaced" if _cid in ("UI-01", "UI-03", "UI-04", "UI-05") else "Ported", _why)((lambda c: (lambda: ui(c)))(_cid))
+    case(_cid, "Replaced" if _cid in ("UI-01", "UI-03", "UI-04", "UI-05") else "Ported", _why, defect="D-18" if _cid in ("UI-03", "UI-04") else None)((lambda c: (lambda: ui(c)))(_cid))
 
 
 # ================================================================= End-to-end cases (Scenarios S-01 to S-13)
@@ -927,15 +929,19 @@ def _():
     try:
         with contextlib.redirect_stdout(buf_out), contextlib.redirect_stderr(buf_err):
             score("email", f"Please verify {marker} now"); score("sms", f"verify {marker}"); correlate([{"channel": "sms", "text": f"verify {marker}"}])
+            ev = C().post("/events", json={"recipient": f"{marker}@example.test", "events": [{"channel": "sms", "text": f"verify {marker} at {marker}.top", "time": "0"}]})
     finally: root.removeHandler(h); root.setLevel(old)
     seen = [n for n, b in (("stdout", buf_out), ("stderr", buf_err), ("logging", logs)) if marker in b.getvalue()]
     changed = [p for p in _changed_files(before) if p.suffix not in (".pyc",)]
+    db = Path(os.environ["CP1_EVENT_DB"]); in_db = db.exists() and marker.encode() in db.read_bytes()
     with_marker = [p.relative_to(ROOT).as_posix() for p in changed if p.is_file() and marker.encode() in p.read_bytes()]
-    src = [p for p in ("api.py", "src/predict.py", "src/fusion.py", "src/url_features.py") if (ROOT / p).exists()]       # common.py: serving uses clean_text only; save_json is a training helper
-    writes = [p for p in src if re.search(r"\blogging\.(info|debug|warning|error)\(|\bprint\(|\.write_text\(|open\([^)]*['\"]w", (ROOT / p).read_text(encoding="utf-8").split('if __name__ == "__main__":')[0])]
-    return ok(not seen and not with_marker and not writes,
-              f"marker found in output: {seen or 'nowhere'}; files changed during the requests: {[p.relative_to(ROOT).as_posix() for p in changed] or 'none'}"
-              f" (holding the marker: {with_marker or 'none'}); serving files with log or write calls: {writes or 'none'}")
+    src = [p for p in ("api.py", "src/predict.py", "src/fusion.py", "src/url_features.py", "src/event_store.py") if (ROOT / p).exists()]       # common.py: serving uses clean_text only; save_json is a training helper
+    allowed = {"src/event_store.py": "p.write_text(secrets.token_hex(32))"}        # writes the HMAC key file once; holds no message content
+    def body(p): return (ROOT / p).read_text(encoding="utf-8").split('if __name__ == "__main__":')[0].replace(allowed.get(p, "\0"), "")
+    writes = [p for p in src if re.search(r"\blogging\.(info|debug|warning|error)\(|\bprint\(|\.write_text\(|open\([^)]*['\"]w", body(p))]
+    return ok(not seen and not with_marker and not writes and not in_db and ev.status_code == 200,
+              f"marker found in output: {seen or 'nowhere'}; in the event store (content storage off): {in_db}; files changed during the requests: {[p.relative_to(ROOT).as_posix() for p in changed] or 'none'}"
+              f" (holding the marker: {with_marker or 'none'}); serving files with log or write calls: {writes or 'none'} (allowed: the one-time HMAC key file write in src/event_store.py)")
 
 
 def _snapshot():

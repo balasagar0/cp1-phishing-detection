@@ -35,10 +35,10 @@ Three trained detectors (email, SMS, URL) plus a learned correlation model appli
 | SMS detector | Trained. Three classes: ham, spam, smishing. 5,789 messages |
 | URL detector | Trained. Character n-grams on the URL text, 260,000 URLs. No network lookups |
 | Correlation | A model trained on **simulated** bundles, applied in a 60-minute window |
-| Voice | **Not trained.** No accessible data. Returns HTTP 501 |
-| Video | **Not trained.** Returns HTTP 501 |
-| Event store | **Not built.** `/correlate` scores a bundle you hand it; nothing is persisted |
-| Live-stream grouping | **Not built** |
+| Voice | **Not trained.** No accessible data. `/score` returns HTTP 501; `/correlate` and `/events` mark calls 'not assessed' |
+| Video | **Not trained.** Same as voice |
+| Event store | **Built in Phase 2** (`src/event_store.py`): SQLite, per recipient, campaigns = v2's time windows, one alert per campaign at 0.5. Hashed recipient and tokens |
+| Live-stream grouping | Done by the event store: each `POST /events` regroups the recipient's events. No message queue or streaming source is built |
 
 ## Numbers
 
@@ -76,10 +76,13 @@ python -m venv .venv                                   # the project venv; run_a
 
 On Windows run the `.sh` scripts from Git Bash. The folder path has a space (`Capstone_HTE Project`): quote every path.
 
-- Routes: `GET /health`, `POST /score`, `POST /score/batch`, `POST /correlate`. There is **no `/`** —
-  it returns 404. Use `/docs` or open `console.html`.
-- `console.html` (repo root) is a standalone demo console. No npm. Open it in a browser with the API running.
-- `console/phishing_correlation_console.jsx` is the React version; it needs Vite (see README).
+- Routes: `GET /health`, `POST /score`, `POST /score/batch`, `POST /correlate`, `POST /events`, `GET /campaigns`,
+  `GET /campaigns/{id}`, `GET /alerts`, `POST /alerts/{id}/ack`, `POST /purge`, `GET /presets`.
+- `/` serves the built React console (`console/dist`, committed). `/lite` serves `console.html`. `/docs` and `/redoc`
+  are **off** (they load Swagger UI from a CDN; the demo must run offline); `/openapi.json` stays.
+- `console/phishing_correlation_console.jsx` is the console; rebuild with `npm install` and `npm run build` in `console/`.
+- Start uvicorn with `--no-access-log` for demos: access lines would carry `?recipient=` in clear.
+- `scripts/offline_check.py` (no network at runtime) and `scripts/ui_checks.py` (Playwright, UI-01 to UI-07, screenshots).
 - `RUN_DEMO.bat` and `RUN_TESTS.bat` are Windows double-click wrappers.
 
 ## Tests
@@ -88,13 +91,19 @@ On Windows run the `.sh` scripts from Git Bash. The folder path has a space (`Ca
   the shipped models. **These should always pass.**
 - `tests/test_demo_cases.py` — TC-01 to TC-08 (hand-written demo cases, defined in `src/demo_cases.py`).
   Scores must match to 3 decimals. `CP1_API_URL=http://127.0.0.1:8000` runs them over real HTTP.
-- `tests/smoke_test.py` — 24 workbook and validator checks. Without data, 11 pass and 1 is skipped (it
-  needs a spreadsheet program); it then calls `make_synthetic_testcases.py`, which needs
-  `data/processed/pool_*.csv` built by `run_all.sh`. Those files are not in the repo, so it stops there.
-  **This is missing data, not a defect.**
+  TC-03 via `/correlate` answers CANNOT_ASSESS since R2-07 (v2 gave HTTP 501); `/score` still gives 501.
+- `tests/test_defects.py` — one regression test per fixed defect (D-02 ... D-15), named after it.
+- `tests/test_refit_path.py` — the workbook's example rows reach `refit_fusion.py` and its report.
+- `tests/test_final_cases.py` — the 112 test-plan cases ported to v2 (Ported / Replaced / N/A). Failures
+  linked to an open defect are xfail; `OPEN_DEFECTS` lists them. `python tests/test_final_cases.py`
+  writes `reports/final_cases_results.json`; `python scripts/fill_final_workbook.py` fills
+  `reports/Test_Cases_and_Test_Data_FINAL.xlsx` and `reports/defect_log.md` from it.
+- `tests/smoke_test.py` — 24 workbook, validator and refit checks; a script, not pytest. It needs
+  `data/processed/pool_*.csv` (made by `run_all.sh`; present in this folder, gitignored). With them, 24 pass
+  and 1 is skipped (it needs a spreadsheet program). Without them it stops after 11: missing data, not a defect.
 
-Do not run `pytest tests/` as a whole — the smoke-test import aborts collection and the 17 real tests
-never run. Run the two files separately.
+`pytest tests/` runs everything except the smoke test (`tests/conftest.py` skips the script-style files).
+`RUN_TESTS.bat` runs all of it with the venv.
 
 ## Known traps
 

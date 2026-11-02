@@ -1,0 +1,228 @@
+{
+ "run": {
+  "date": "2026-11-02T11:53:59+05:30",
+  "describe": "test-run-20261102-1-11-ga6ecbd4",
+  "commit": "a6ecbd469c00b9c2ce41bb37670afd9eb67af923",
+  "git_user": "balasagar0",
+  "via": "in-process (FastAPI TestClient)",
+  "python": "3.13.0",
+  "platform": "Windows-11-10.0.26200-SP0"
+ },
+ "defects": {
+  "D-01": {
+   "status": "Open",
+   "cases": {
+    "URL-02": "Pass",
+    "URL-03": "Pass",
+    "URL-05": "Pass",
+    "URL-06": "Pass",
+    "URL-07": "Fail",
+    "SYS-13": "Pass"
+   },
+   "retest": "test-run-20261102-1-11-ga6ecbd4 on 2026-11-02: URL-02 Pass; URL-03 Pass; URL-05 Pass; URL-06 Pass; URL-07 Fail; SYS-13 Pass",
+   "commits": [],
+   "date_closed": "",
+   "proposal": ""
+  },
+  "D-02": {
+   "status": "Closed",
+   "cases": {
+    "EML-07": "Pass",
+    "SMS-07": "Pass",
+    "URL-08": "Pass"
+   },
+   "retest": "test-run-20261102-1-11-ga6ecbd4 on 2026-11-02: EML-07 Pass; SMS-07 Pass; URL-08 Pass",
+   "commits": [
+    "3ec9530",
+    "658d63c"
+   ],
+   "date_closed": "2026-11-02",
+   "proposal": ""
+  },
+  "D-03": {
+   "status": "Closed",
+   "cases": {
+    "SCO-06": "Pass",
+    "VV-05": "Pass",
+    "SYS-08": "Pass",
+    "SYS-12": "Pass"
+   },
+   "retest": "test-run-20261102-1-11-ga6ecbd4 on 2026-11-02: SCO-06 Pass; VV-05 Pass; SYS-08 Pass; SYS-12 Pass",
+   "commits": [
+    "3d42061"
+   ],
+   "date_closed": "2026-11-02",
+   "proposal": ""
+  },
+  "D-04": {
+   "status": "Closed",
+   "cases": {
+    "COR-12": "Pass",
+    "SYS-09": "Pass"
+   },
+   "retest": "test-run-20261102-1-11-ga6ecbd4 on 2026-11-02: COR-12 Pass; SYS-09 Pass",
+   "commits": [],
+   "date_closed": "2026-11-02",
+   "proposal": ""
+  },
+  "D-05": {
+   "status": "Closed",
+   "cases": {
+    "COR-14": "Pass",
+    "SYS-11": "Pass"
+   },
+   "retest": "test-run-20261102-1-11-ga6ecbd4 on 2026-11-02: COR-14 Pass; SYS-11 Pass",
+   "commits": [],
+   "date_closed": "2026-11-02",
+   "proposal": ""
+  },
+  "D-06": {
+   "status": "Closed",
+   "cases": {
+    "API-12": "Pass"
+   },
+   "retest": "test-run-20261102-1-11-ga6ecbd4 on 2026-11-02: API-12 Pass",
+   "commits": [
+    "658d63c"
+   ],
+   "date_closed": "2026-11-02",
+   "proposal": ""
+  },
+  "D-07": {
+   "status": "Closed",
+   "cases": {
+    "API-08": "Pass"
+   },
+   "retest": "test-run-20261102-1-11-ga6ecbd4 on 2026-11-02: API-08 Pass",
+   "commits": [],
+   "date_closed": "2026-11-02",
+   "proposal": ""
+  },
+  "D-08": {
+   "status": "Closed",
+   "cases": {
+    "COR-07": "Pass"
+   },
+   "retest": "test-run-20261102-1-11-ga6ecbd4 on 2026-11-02: COR-07 Pass",
+   "commits": [],
+   "date_closed": "2026-11-02",
+   "proposal": ""
+  },
+  "D-09": {
+   "status": "Open",
+   "cases": {
+    "SMS-01": "Pass",
+    "SMS-03": "Fail"
+   },
+   "retest": "test-run-20261102-1-11-ga6ecbd4 on 2026-11-02: SMS-01 Pass; SMS-03 Fail",
+   "commits": [],
+   "date_closed": "",
+   "proposal": ""
+  },
+  "D-10": {
+   "status": "Open",
+   "cases": {
+    "EML-02": "Pass",
+    "EML-03": "Fail"
+   },
+   "retest": "test-run-20261102-1-11-ga6ecbd4 on 2026-11-02: EML-02 Pass; EML-03 Fail",
+   "commits": [],
+   "date_closed": "",
+   "proposal": ""
+  },
+  "D-11": {
+   "status": "Closed",
+   "cases": {
+    "PRE-01": "Pass"
+   },
+   "retest": "test-run-20261102-1-11-ga6ecbd4 on 2026-11-02: PRE-01 Pass",
+   "commits": [
+    "b151be2"
+   ],
+   "date_closed": "2026-11-02",
+   "proposal": ""
+  },
+  "D-12": {
+   "status": "Open",
+   "cases": {
+    "SYS-14": "Fail"
+   },
+   "retest": "test-run-20261102-1-11-ga6ecbd4 on 2026-11-02: SYS-14 Fail",
+   "commits": [],
+   "date_closed": "",
+   "proposal": "Proposed: accept because no case in S-01, S-02 or S-11 can show a lift (each already alerts alone), and the lift is shown instead by TC-06 against TC-07. This stays a hand-written and simulated result until real bundles exist (R2-10)."
+  },
+  "D-13": {
+   "status": "Closed",
+   "cases": {
+    "VV-03": "Pass",
+    "VV-04": "Pass",
+    "COR-09": "Pass",
+    "SYS-07": "Pass"
+   },
+   "retest": "test-run-20261102-1-11-ga6ecbd4 on 2026-11-02: VV-03 Pass; VV-04 Pass; COR-09 Pass; SYS-07 Pass",
+   "commits": [
+    "3d42061"
+   ],
+   "date_closed": "2026-11-02",
+   "proposal": ""
+  },
+  "D-14": {
+   "status": "Closed",
+   "cases": {
+    "API-09": "Pass"
+   },
+   "retest": "test-run-20261102-1-11-ga6ecbd4 on 2026-11-02: API-09 Pass",
+   "commits": [
+    "658d63c"
+   ],
+   "date_closed": "2026-11-02",
+   "proposal": ""
+  },
+  "D-15": {
+   "status": "Closed",
+   "cases": {
+    "PRE-03": "Pass"
+   },
+   "retest": "test-run-20261102-1-11-ga6ecbd4 on 2026-11-02: PRE-03 Pass",
+   "commits": [
+    "b151be2"
+   ],
+   "date_closed": "2026-11-02",
+   "proposal": ""
+  },
+  "D-16": {
+   "status": "Open",
+   "cases": {
+    "SMS-03": "Fail"
+   },
+   "retest": "test-run-20261102-1-11-ga6ecbd4 on 2026-11-02: SMS-03 Fail",
+   "commits": [],
+   "date_closed": "",
+   "proposal": ""
+  },
+  "D-17": {
+   "status": "Open",
+   "cases": {
+    "EML-01": "Fail",
+    "EML-03": "Fail"
+   },
+   "retest": "test-run-20261102-1-11-ga6ecbd4 on 2026-11-02: EML-01 Fail; EML-03 Fail",
+   "commits": [],
+   "date_closed": "",
+   "proposal": ""
+  },
+  "D-18": {
+   "status": "Open",
+   "cases": {
+    "SCO-08": "Fail",
+    "UI-03": "Fail",
+    "UI-04": "Pass"
+   },
+   "retest": "test-run-20261102-1-11-ga6ecbd4 on 2026-11-02: SCO-08 Fail; UI-03 Fail; UI-04 Pass",
+   "commits": [],
+   "date_closed": "",
+   "proposal": "Proposed: accept because the alert does not change in S-06, and lowering a lone high score next to benign events is where the model's lower false-alarm rate on simulated bundles comes from. Recheck on real bundles (R2-10)."
+  }
+ }
+}
