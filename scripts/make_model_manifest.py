@@ -15,7 +15,7 @@ def sha256(p, chunk=1 << 20):
 
 
 def manifest(models_dir=ROOT / "models"):
-    files = sorted(p for p in Path(models_dir).rglob("*") if p.is_file())
+    files = sorted(p for p in Path(models_dir).rglob("*") if p.is_file() and "candidates" not in p.relative_to(models_dir).parts)   # candidates are local-only (gitignored); the manifest covers the live models
     return [{"file": p.relative_to(ROOT).as_posix(), "bytes": p.stat().st_size, "sha256": sha256(p)} for p in files]
 
 
