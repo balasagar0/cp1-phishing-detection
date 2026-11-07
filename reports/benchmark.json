@@ -1,0 +1,45 @@
+{
+ "date": "2026-11-07T16:42:30+05:30",
+ "machine": "AMD Ryzen 7 5800HS with Radeon Graphics (16 logical CPUs), 15.4 GB RAM, Windows-11-10.0.26200-SP0, Python 3.13.0",
+ "machine_detail": {
+  "cpu": "AMD Ryzen 7 5800HS with Radeon Graphics",
+  "logical_cpus": 16,
+  "ram_gb": 15.4,
+  "os": "Windows-11-10.0.26200-SP0",
+  "python": "3.13.0",
+  "machine": "MINsd"
+ },
+ "transport": "real HTTP to uvicorn on http://127.0.0.1:51908",
+ "commit": "cp1-rc1-2-g50c3228-dirty",
+ "n_per_channel": 100,
+ "per_channel": {
+  "email": {
+   "n": 100,
+   "median_ms": 23.0,
+   "p95_ms": 39.2,
+   "max_ms": 137.5
+  },
+  "sms": {
+   "n": 100,
+   "median_ms": 11.6,
+   "p95_ms": 13.8,
+   "max_ms": 15.6
+  },
+  "url": {
+   "n": 100,
+   "median_ms": 6.0,
+   "p95_ms": 8.4,
+   "max_ms": 10.2
+  }
+ },
+ "full_case": {
+  "n": 100,
+  "median_ms": 67.1,
+  "p95_ms": 89.1,
+  "max_ms": 1970.3
+ },
+ "startup_s": 8.2,
+ "nfr01_median_le_2s_each_channel": true,
+ "nfr02_every_full_case_le_5s": true,
+ "demo_laptop": "not confirmed: Viraj confirms whether this is the demo laptop, or re-runs this script on it (R3-10)"
+}

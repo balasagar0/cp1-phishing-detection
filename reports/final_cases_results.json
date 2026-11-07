@@ -1,8 +1,8 @@
 {
  "run": {
-  "date": "2026-11-02T11:53:59+05:30",
-  "describe": "test-run-20261102-1-11-ga6ecbd4",
-  "commit": "a6ecbd469c00b9c2ce41bb37670afd9eb67af923",
+  "date": "2026-11-07T16:49:17+05:30",
+  "describe": "cp1-rc1-2-g50c3228-dirty",
+  "commit": "50c3228c4014f58f2bcabb1956c6d16c3187f567",
   "git_user": "balasagar0",
   "via": "in-process (FastAPI TestClient)",
   "python": "3.13.0",
@@ -272,7 +272,7 @@
    "tag": "Ported",
    "why": "",
    "status": "Pass",
-   "actual": "5,000 characters -> malicious 0.8688 in 0.030 s",
+   "actual": "5,000 characters -> malicious 0.8688 in 0.025 s",
    "defect": null
   },
   "URL-10": {
@@ -608,7 +608,7 @@
    "tag": "Replaced",
    "why": "Same check on v2's console, served by FastAPI. Panels: email, SMS and URL inputs and a voice/video line that reads 'not assessed'.",
    "status": "Pass",
-   "actual": "Chrome at http://127.0.0.1:61257/: browser console errors none; channel inputs ['email', 'sms', 'url', 'call', 'video']; 'Voice and video: not assessed (not built)'; health '● connected' Screenshots: reports/screenshots/ui01_console_loaded.png.",
+   "actual": "Chrome at http://127.0.0.1:56117/: browser console errors none; channel inputs ['email', 'sms', 'url', 'call', 'video']; 'Voice and video: not assessed (not built)'; health '● connected' Screenshots: reports/screenshots/ui01_console_loaded.png.",
    "defect": null
   },
   "UI-02": {
@@ -643,7 +643,7 @@
    "tag": "Ported",
    "why": "Same check with the API stopped.",
    "status": "Pass",
-   "actual": "API stopped: 'Cannot reach http://127.0.0.1:61257. Start the backend (start_demo.bat, or uvicorn api:app --port 8000) and press Retry.'; page still responds (preset switched, Analyze enabled: True); after the API restarts, Analyze again shows 'low risk · 0.01%' Screenshots: reports/screenshots/ui06_service_down.png.",
+   "actual": "API stopped: 'Cannot reach http://127.0.0.1:56117. Start the backend (start_demo.bat, or uvicorn api:app --port 8000) and press Retry.'; page still responds (preset switched, Analyze enabled: True); after the API restarts, Analyze again shows 'low risk · 0.01%' Screenshots: reports/screenshots/ui06_service_down.png.",
    "defect": null
   },
   "UI-07": {
@@ -748,14 +748,14 @@
    "tag": "Ported",
    "why": "Measured here in-process or over HTTP; scripts/benchmark.py (Phase 4.2) measures 100 requests per channel over real HTTP and its result is used when present.",
    "status": "Pass",
-   "actual": "Median / 95th percentile over 50 requests each (in-process (FastAPI TestClient)): email 30 ms / 36 ms; sms 19 ms / 22 ms; url 13 ms / 14 ms",
+   "actual": "scripts/benchmark.py over real HTTP, 100 requests each (AMD Ryzen 7 5800HS with Radeon Graphics (16 logical CPUs), 15.4 GB RAM, Windows-11-10.0.26200-SP0, Python 3.13.0): email 23 ms / 39 ms; sms 12 ms / 14 ms; url 6 ms / 8 ms",
    "defect": null
   },
   "NFR-02": {
    "tag": "Replaced",
    "why": "S-01 goes to /correlate instead of /analyze.",
    "status": "Pass",
-   "actual": "S-01 through POST /correlate, 5 runs (in-process (FastAPI TestClient)): 82 ms, 81 ms, 80 ms, 78 ms, 77 ms",
+   "actual": "scripts/benchmark.py over real HTTP, 100 full cases: median 67 ms, 95th percentile 89 ms, max 1970 ms",
    "defect": null
   },
   "NFR-03": {
@@ -769,14 +769,14 @@
    "tag": "Ported",
    "why": "Uses scripts/secret_scan.py over the files git tracks or would add.",
    "status": "Pass",
-   "actual": "scanned 112 files: 0 possible secret(s)",
+   "actual": "scanned 197 files: 0 possible secret(s)",
    "defect": null
   },
   "NFR-05": {
    "tag": "Ported",
    "why": "Run by scripts/nfr05_fresh_clone.py (Phase 4.4), which writes reports/nfr05_fresh_clone.json.",
-   "status": "Not run",
-   "actual": "Runs in Phase 4.4 on the frozen build (scripts/nfr05_fresh_clone.py).",
+   "status": "Pass",
+   "actual": "Fresh clone of cp1-rc1-2-g50c3228-dirty into a new temporary folder with a space in its path; new venv; README Quick start commands found in README: True; 'git clone (committed files only)' exit 0 in 2.4 s; 'python -m venv .venv' exit 0 in 19.8 s; '.venv\\Scripts\\python.exe -m pip install -r requirements.txt' exit 0 in 184.8 s; '.venv\\Scripts\\python.exe -m pytest tests -q' exit 0 in 114.3 s; API started from the clone, console served: True, TC-04 bundle risk 0.9999",
    "defect": null
   },
   "NFR-06": {
@@ -789,8 +789,8 @@
   "NFR-07": {
    "tag": "Ported",
    "why": "Compares this run with reports/regression_baseline.json (the results on the build before the last change, Phase 4).",
-   "status": "Not run",
-   "actual": "Runs in Phase 4 after the final code change: needs reports/regression_baseline.json from the earlier run.",
+   "status": "Pass",
+   "actual": "compared with test-run-20261102-1-11-ga6ecbd4: cases that passed before and do not now: none",
    "defect": null
   }
  },

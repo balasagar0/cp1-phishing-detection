@@ -1,0 +1,57 @@
+{
+ "date": "2026-11-07T16:32:27+05:30",
+ "commit": "cp1-rc1-2-g50c3228-dirty",
+ "ok": true,
+ "steps": [
+  {
+   "step": "API up, all detectors loaded",
+   "ok": true,
+   "detail": "channels ['email', 'sms', 'url'], window 60.0 min, correlation trained on simulated bundles"
+  },
+  {
+   "step": "console served at /",
+   "ok": true,
+   "detail": "HTTP 200, script /assets/index-_BF-aL5T.js"
+  },
+  {
+   "step": "console presets from the API",
+   "ok": true,
+   "detail": "12 presets"
+  },
+  {
+   "step": "correlation: TC-06 alerts only as a bundle",
+   "ok": true,
+   "detail": "bundle risk 0.595, single-channel alert False"
+  },
+  {
+   "step": "event store: same risk as /correlate",
+   "ok": true,
+   "detail": "store 0.595, correlate 0.595"
+  },
+  {
+   "step": "alert raised once, with its reason",
+   "ok": true,
+   "detail": "1 new alert(s); linked by ['dom:parcel-redelivery.info']"
+  },
+  {
+   "step": "alert listed, campaign timeline holds the events",
+   "ok": true,
+   "detail": "1 open alert(s); timeline 3 events"
+  },
+  {
+   "step": "alert acknowledged",
+   "ok": true,
+   "detail": "ack HTTP 200"
+  },
+  {
+   "step": "control TC-07: three one-event campaigns, no alert",
+   "ok": true,
+   "detail": "3 campaigns, 0 alerts, highest 0.451"
+  },
+  {
+   "step": "a call alone: CANNOT_ASSESS, stored, no campaign",
+   "ok": true,
+   "detail": "status CANNOT_ASSESS"
+  }
+ ]
+}

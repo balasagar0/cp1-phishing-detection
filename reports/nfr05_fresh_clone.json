@@ -1,0 +1,45 @@
+{
+ "date": "2026-11-07T16:48:26+05:30",
+ "commit": "cp1-rc1-2-g50c3228-dirty",
+ "status": "Pass",
+ "actual": "Fresh clone of cp1-rc1-2-g50c3228-dirty into a new temporary folder with a space in its path; new venv; README Quick start commands found in README: True; 'git clone (committed files only)' exit 0 in 2.4 s; 'python -m venv .venv' exit 0 in 19.8 s; '.venv\\Scripts\\python.exe -m pip install -r requirements.txt' exit 0 in 184.8 s; '.venv\\Scripts\\python.exe -m pytest tests -q' exit 0 in 114.3 s; API started from the clone, console served: True, TC-04 bundle risk 0.9999",
+ "steps": [
+  {
+   "step": "git clone (committed files only)",
+   "exit": 0,
+   "s": 2.4,
+   "tail": []
+  },
+  {
+   "step": "python -m venv .venv",
+   "exit": 0,
+   "s": 19.8,
+   "tail": []
+  },
+  {
+   "step": ".venv\\Scripts\\python.exe -m pip install -r requirements.txt",
+   "exit": 0,
+   "s": 184.8,
+   "tail": [
+    "",
+    "[notice] A new release of pip is available: 24.2 -> 26.3",
+    "[notice] To update, run: C:\\Users\\sagar\\AppData\\Local\\Temp\\cp1 nfr05 tu8sar74\\cp1\\.venv\\Scripts\\python.exe -m pip install --upgrade pip"
+   ]
+  },
+  {
+   "step": ".venv\\Scripts\\python.exe -m pytest tests -q",
+   "exit": 0,
+   "s": 114.3,
+   "tail": [
+    "",
+    "-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html",
+    "180 passed, 1 skipped, 7 xfailed, 24 warnings in 111.68s (0:01:51)"
+   ]
+  }
+ ],
+ "demo": {
+  "console_served": true,
+  "tc04_bundle_risk": 0.9999,
+  "tc04_alert": true
+ }
+}

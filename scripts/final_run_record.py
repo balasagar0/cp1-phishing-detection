@@ -15,6 +15,9 @@ FR, FRM, FRP = ROOT / "reports" / "final_run", ROOT / "models" / "candidates" / 
 def jl(p): return json.loads(Path(p).read_text(encoding="utf-8"))
 def loco(E): v = E["leave_one_corpus_out"]; return sum(x["f1"] for x in v.values()) / len(v)
 def git(*a): return subprocess.run(["git", *a], cwd=ROOT, capture_output=True, text=True).stdout.strip()
+def utf8(p):
+    try: Path(p).read_bytes().decode("utf-8"); return True
+    except UnicodeDecodeError: return False
 
 
 def main():
@@ -63,7 +66,8 @@ def main():
     M = ["# Final run record (Phase 4.1)\n",
          f"Written by `scripts/final_run_record.py` on {doc['date']}. Every number below is computed by that script.\n",
          f"`download_data.sh` and `run_all.sh` ran on `{build}` (commit `{doc['commit'][:7]}`). This folder holds the reports that run wrote (`*.json`, `results.md`, `log_*.txt`, `run_all_log.txt`). "
-         "The models it trained are kept on the build laptop in `models/candidates/final_run/` and are not committed; `model_manifest.json` here lists their hashes.\n",
+         "The models it trained are kept on the build laptop in `models/candidates/final_run/` and are not committed; `model_manifest.json` here lists their hashes."
+         + (" `results.md` here is kept byte for byte as the run wrote it: that build's `make_report.py` used the Windows code page (cp1252), fixed afterwards, so open it as cp1252." if not utf8(FR / "results.md") else "") + "\n",
          "## Decision\n", f"**Not adopted.** {doc['decision']}. Rule (c) says the demo cases' alert outcomes are kept; "
          f"{'it is met' if not flips else 'it fails on ' + ', '.join(flips)}. The shipped models are v2's, and `reports/` describes them.\n",
          "## What changed and why\n",
