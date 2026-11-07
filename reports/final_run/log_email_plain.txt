@@ -1,0 +1,19 @@
+[    24s] loaded 74983 emails after cleaning + dedupe; {'rows_before': 83020, 'rows_after': 74983, 'conflicting_texts_dropped': 0}
+[    25s] 
+label           0      1
+source                  
+CEAS_08     17197  18545
+Enron       15533  14464
+FraudEmail   5091   4153
+[    25s] split sizes train/val/test: 59986 7498 7499
+[    65s] vectorised; vocab size 200000
+[    69s] C=1: val F1=0.9838 AUC=0.9988
+[    72s] C=4: val F1=0.9874 AUC=0.9993
+[    77s] C=16: val F1=0.989 AUC=0.9995
+[    77s] chosen C = 16
+[    85s] pooled test: {'n': 7499, 'positives': 3716, 'threshold': 0.5, 'accuracy': 0.9917, 'precision': 0.9911, 'recall': 0.9922, 'f1': 0.9917, 'false_positive_rate': 0.0087, 'tn': 3750, 'fp': 33, 'fn': 29, 'tp': 3687, 'roc_auc': 0.9995, 'pr_auc': 0.9995}
+[    85s] NB baseline test: {'n': 7499, 'positives': 3716, 'threshold': 0.5, 'accuracy': 0.9883, 'precision': 0.9943, 'recall': 0.982, 'f1': 0.9881, 'false_positive_rate': 0.0056, 'tn': 3762, 'fp': 21, 'fn': 67, 'tp': 3649, 'roc_auc': 0.9992, 'pr_auc': 0.9992}
+[   123s] LOCO held-out=CEAS_08: F1=0.8491 recall=0.991 precision=0.7428 AUC=0.9611
+[   169s] LOCO held-out=Enron: F1=0.7469 recall=0.6134 precision=0.9548 AUC=0.9353
+[   226s] LOCO held-out=FraudEmail: F1=0.8699 recall=0.9824 precision=0.7806 AUC=0.9797
+[   289s] saved email model + metrics

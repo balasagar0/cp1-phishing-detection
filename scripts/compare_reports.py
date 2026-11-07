@@ -8,6 +8,8 @@ import argparse, hashlib, json, math, platform, sys, datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+PRIVATE_DIRS = {"email_own"}                       # private data under data/raw: never listed in a report
+CANDIDATE_DIRS = {"email_extra", "email_legit"}   # fetched by download_email_extra.sh / download_email_legit.sh for Phase 3, not by download_data.sh
 
 # (label, file, key path, Review-3 figure as a fraction). The key path is a list because some keys contain dots.
 HEADLINE = [
@@ -40,7 +42,7 @@ HEADLINE += [
 def load(d, name):
     p = Path(d) / name
     if not p.exists(): return None
-    j = json.loads(p.read_text())
+    j = json.loads(p.read_text(encoding="utf-8"))
     if name == "email_metrics.json" and "leave_one_corpus_out" in j:     # derived: the honest email figure is the mean over held-out corpora
         lo = j["leave_one_corpus_out"]; j["loco_mean"] = {"f1": sum(v["f1"] for v in lo.values()) / len(lo)}
     return j
@@ -89,10 +91,15 @@ def main():
     if a.raw:
         dl = Path(a.download_log).read_text(errors="ignore") if a.download_log else ""
         L.append("## Data sources\n\n| File | Bytes | SHA-256 | Download |\n|---|---|---|---|")
+        private = False
         for p in sorted(Path(a.raw).rglob("*")):
             if p.is_file():
-                rel = p.relative_to(a.raw).as_posix(); status = "ok" if f"ok {rel}" in dl else ("unpacked from an archive" if dl else "present")
+                rel = p.relative_to(a.raw).as_posix()
+                if rel.split("/")[0] in PRIVATE_DIRS: private = True; continue        # the owner's own mail: never listed, not even its size or hash
+                if rel.split("/")[0] in CANDIDATE_DIRS: status = "not used by this run (Phase 3 candidate corpora)"
+                else: status = "ok" if f"ok {rel}" in dl else ("unpacked from an archive" if dl else "present")
                 L.append(f"| `{rel}` | {p.stat().st_size:,} | `{sha256(p)}` | {status} |")
+        if private: L.append("\nThe account owner's private mail export (`email_own/`) is left out of this table on purpose. No run in `run_all.sh` reads it.")
         if a.download_log:
             failed = [ln for ln in dl.splitlines() if "curl:" in ln or "error" in ln.lower()]
             L.append("\nEvery source in `download_data.sh` downloaded." if not failed else "\nSources that failed:\n" + "\n".join(f"- `{x}`" for x in failed))
@@ -140,7 +147,7 @@ def main():
     if a.run_log and Path(a.run_log).exists():
         tail = Path(a.run_log).read_text(errors="ignore").strip().splitlines()[-6:]
         L.append("## End of the run log\n\n```\n" + "\n".join(tail) + "\n```\n")
-    if a.extra and Path(a.extra).exists(): L.append(Path(a.extra).read_text())
+    if a.extra and Path(a.extra).exists(): L.append(Path(a.extra).read_text(encoding="utf-8"))
     Path(a.out).write_text("\n".join(L) + "\n", encoding="utf-8")
     print(f"wrote {a.out}: {same_n}/{len(HEADLINE)} Review-3 figures the same; {len(diffs)} differing values")
 

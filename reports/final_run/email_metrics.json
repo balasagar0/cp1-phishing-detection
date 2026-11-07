@@ -1,0 +1,472 @@
+{
+  "variant": "robust",
+  "data": {
+    "dedupe": {
+      "rows_before": 83042,
+      "rows_after": 72431,
+      "conflicting_texts_dropped": 0
+    },
+    "counts": {
+      "CEAS_08": {
+        "0": 17046,
+        "1": 17248
+      },
+      "Enron": {
+        "0": 14485,
+        "1": 14432
+      },
+      "FraudEmail": {
+        "0": 5091,
+        "1": 4129
+      }
+    },
+    "split": {
+      "train": 57944,
+      "val": 7243,
+      "test": 7244
+    },
+    "candidate_terms": 400000,
+    "kept_terms": 49052
+  },
+  "chosen_C": 16,
+  "validation_by_C": {
+    "1": {
+      "n": 7243,
+      "positives": 3582,
+      "threshold": 0.5,
+      "accuracy": 0.9847,
+      "precision": 0.9798,
+      "recall": 0.9894,
+      "f1": 0.9846,
+      "false_positive_rate": 0.0199,
+      "tn": 3588,
+      "fp": 73,
+      "fn": 38,
+      "tp": 3544,
+      "roc_auc": 0.9985,
+      "pr_auc": 0.9985
+    },
+    "4": {
+      "n": 7243,
+      "positives": 3582,
+      "threshold": 0.5,
+      "accuracy": 0.9873,
+      "precision": 0.9845,
+      "recall": 0.9899,
+      "f1": 0.9872,
+      "false_positive_rate": 0.0153,
+      "tn": 3605,
+      "fp": 56,
+      "fn": 36,
+      "tp": 3546,
+      "roc_auc": 0.999,
+      "pr_auc": 0.9991
+    },
+    "16": {
+      "n": 7243,
+      "positives": 3582,
+      "threshold": 0.5,
+      "accuracy": 0.9881,
+      "precision": 0.9872,
+      "recall": 0.9888,
+      "f1": 0.988,
+      "false_positive_rate": 0.0126,
+      "tn": 3615,
+      "fp": 46,
+      "fn": 40,
+      "tp": 3542,
+      "roc_auc": 0.9992,
+      "pr_auc": 0.9992
+    }
+  },
+  "pooled_test": {
+    "n": 7244,
+    "positives": 3581,
+    "threshold": 0.5,
+    "accuracy": 0.988,
+    "precision": 0.9899,
+    "recall": 0.9858,
+    "f1": 0.9878,
+    "false_positive_rate": 0.0098,
+    "tn": 3627,
+    "fp": 36,
+    "fn": 51,
+    "tp": 3530,
+    "roc_auc": 0.999,
+    "pr_auc": 0.9991
+  },
+  "pooled_test_ci95": {
+    "precision": [
+      0.9862,
+      0.9934
+    ],
+    "recall": [
+      0.9823,
+      0.989
+    ],
+    "f1": [
+      0.9854,
+      0.99
+    ]
+  },
+  "pooled_test_at_1pct_fpr": {
+    "n": 7244,
+    "positives": 3581,
+    "threshold": 0.5508,
+    "accuracy": 0.9883,
+    "precision": 0.9913,
+    "recall": 0.9849,
+    "f1": 0.9881,
+    "false_positive_rate": 0.0085,
+    "tn": 3632,
+    "fp": 31,
+    "fn": 54,
+    "tp": 3527,
+    "roc_auc": 0.999,
+    "pr_auc": 0.9991
+  },
+  "pooled_test_per_source": {
+    "CEAS_08": {
+      "n": 3430,
+      "positives": 1725,
+      "threshold": 0.5,
+      "accuracy": 0.9945,
+      "precision": 0.9919,
+      "recall": 0.9971,
+      "f1": 0.9945,
+      "false_positive_rate": 0.0082,
+      "tn": 1691,
+      "fp": 14,
+      "fn": 5,
+      "tp": 1720,
+      "roc_auc": 0.9998,
+      "pr_auc": 0.9998
+    },
+    "Enron": {
+      "n": 2892,
+      "positives": 1443,
+      "threshold": 0.5,
+      "accuracy": 0.9837,
+      "precision": 0.9943,
+      "recall": 0.973,
+      "f1": 0.9835,
+      "false_positive_rate": 0.0055,
+      "tn": 1441,
+      "fp": 8,
+      "fn": 39,
+      "tp": 1404,
+      "roc_auc": 0.9985,
+      "pr_auc": 0.9987
+    },
+    "FraudEmail": {
+      "n": 922,
+      "positives": 413,
+      "threshold": 0.5,
+      "accuracy": 0.9772,
+      "precision": 0.9667,
+      "recall": 0.9831,
+      "f1": 0.9748,
+      "false_positive_rate": 0.0275,
+      "tn": 495,
+      "fp": 14,
+      "fn": 7,
+      "tp": 406,
+      "roc_auc": 0.9978,
+      "pr_auc": 0.9975
+    }
+  },
+  "leave_one_corpus_out": {
+    "CEAS_08": {
+      "n": 34294,
+      "positives": 17248,
+      "threshold": 0.5,
+      "accuracy": 0.8434,
+      "precision": 0.7775,
+      "recall": 0.9647,
+      "f1": 0.861,
+      "false_positive_rate": 0.2794,
+      "tn": 12284,
+      "fp": 4762,
+      "fn": 609,
+      "tp": 16639,
+      "roc_auc": 0.9428,
+      "pr_auc": 0.9354
+    },
+    "Enron": {
+      "n": 28917,
+      "positives": 14432,
+      "threshold": 0.5,
+      "accuracy": 0.7946,
+      "precision": 0.9716,
+      "recall": 0.6062,
+      "f1": 0.7465,
+      "false_positive_rate": 0.0177,
+      "tn": 14229,
+      "fp": 256,
+      "fn": 5684,
+      "tp": 8748,
+      "roc_auc": 0.9469,
+      "pr_auc": 0.948
+    },
+    "FraudEmail": {
+      "n": 9220,
+      "positives": 4129,
+      "threshold": 0.5,
+      "accuracy": 0.8567,
+      "precision": 0.7765,
+      "recall": 0.955,
+      "f1": 0.8565,
+      "false_positive_rate": 0.2229,
+      "tn": 3956,
+      "fp": 1135,
+      "fn": 186,
+      "tp": 3943,
+      "roc_auc": 0.9636,
+      "pr_auc": 0.9636
+    }
+  },
+  "top_terms_malicious": [
+    [
+      "your",
+      14.522
+    ],
+    [
+      "!",
+      10.846
+    ],
+    [
+      "! http",
+      9.833
+    ],
+    [
+      "http",
+      9.302
+    ],
+    [
+      "remove",
+      8.517
+    ],
+    [
+      "sex",
+      8.477
+    ],
+    [
+      "life",
+      8.239
+    ],
+    [
+      "man",
+      7.914
+    ],
+    [
+      "here",
+      7.884
+    ],
+    [
+      "our",
+      7.754
+    ],
+    [
+      "re numtok",
+      7.638
+    ],
+    [
+      "com",
+      7.585
+    ],
+    [
+      "bank",
+      7.378
+    ],
+    [
+      "men",
+      7.281
+    ],
+    [
+      "love",
+      7.244
+    ],
+    [
+      "meds",
+      7.01
+    ],
+    [
+      "software",
+      6.906
+    ],
+    [
+      "viagra",
+      6.669
+    ],
+    [
+      "stock",
+      6.499
+    ],
+    [
+      "watches",
+      6.45
+    ],
+    [
+      "watch",
+      6.404
+    ],
+    [
+      "site",
+      6.349
+    ],
+    [
+      "gr",
+      6.325
+    ],
+    [
+      "mobile numtok",
+      6.115
+    ],
+    [
+      "you will",
+      5.992
+    ],
+    [
+      "company",
+      5.958
+    ],
+    [
+      "quality",
+      5.874
+    ],
+    [
+      "medications",
+      5.774
+    ],
+    [
+      "online",
+      5.738
+    ],
+    [
+      "no",
+      5.72
+    ]
+  ],
+  "top_terms_legit": [
+    [
+      "wrote",
+      -12.832
+    ],
+    [
+      "thanks",
+      -11.283
+    ],
+    [
+      "vince",
+      -10.372
+    ],
+    [
+      "ie",
+      -10.329
+    ],
+    [
+      "numtok yeartok",
+      -9.215
+    ],
+    [
+      "to",
+      -9.159
+    ],
+    [
+      "louise",
+      -8.962
+    ],
+    [
+      "fyi",
+      -8.723
+    ],
+    [
+      "call",
+      -8.562
+    ],
+    [
+      "nz",
+      -8.381
+    ],
+    [
+      "tony",
+      -8.162
+    ],
+    [
+      "on",
+      -8.137
+    ],
+    [
+      "challenge",
+      -7.553
+    ],
+    [
+      "the",
+      -7.524
+    ],
+    [
+      "numtok http",
+      -7.307
+    ],
+    [
+      "org",
+      -7.096
+    ],
+    [
+      "python",
+      -7.081
+    ],
+    [
+      "doc",
+      -7.03
+    ],
+    [
+      "employees",
+      -6.944
+    ],
+    [
+      "houston",
+      -6.835
+    ],
+    [
+      "february",
+      -6.82
+    ],
+    [
+      "will",
+      -6.775
+    ],
+    [
+      "fork",
+      -6.722
+    ],
+    [
+      "at http",
+      -6.702
+    ],
+    [
+      "thx",
+      -6.698
+    ],
+    [
+      "issues",
+      -6.522
+    ],
+    [
+      "cc",
+      -6.315
+    ],
+    [
+      "tomorrow",
+      -6.29
+    ],
+    [
+      "daren",
+      -6.177
+    ],
+    [
+      "at",
+      -5.939
+    ]
+  ]
+}

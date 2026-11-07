@@ -109,6 +109,19 @@ Campaigns where every event scores below 0.5: 27; flagged by the whole-bundle mo
 
 The 60-minute window and the single-event rule were fixed before this evaluation was run. The other window sizes are shown for information and were not used to pick anything. The model itself was not retrained.
 
+### R3-09: correlation against the baselines (SIMULATED bundles, alert line 0.5)
+
+| Method | n | Precision | Recall | F1 (95% CI) | False-positive rate (95% CI) | Simulated campaigns every filter misses, flagged |
+|---|---|---|---|---|---|---|
+| Single-channel: alert if any event >= 0.5 | 12,000 | 87.0% | 95.3% | 91.0% (90.4%-91.4%) | 14.1% (13.2%-15.1%) | 0.0% |
+| Parallel multi-channel: fusion without link and timing features, whole bundle | 12,000 | 97.0% | 92.2% | 94.5% (94.2%-94.9%) | 2.8% (2.5%-3.3%) | 11.1% |
+| Correlation model on the whole bundle (pools up to 72 h) | 12,000 | 97.0% | 92.9% | 94.9% (94.6%-95.3%) | 2.8% (2.5%-3.2%) | 18.5% |
+| Deployed engine: 60-minute windows (what the API does) | 12,000 | 89.4% | 94.9% | 92.0% (91.5%-92.5%) | 11.1% (10.3%-11.9%) | 18.5% |
+
+SIMULATED bundles (12,000 test bundles; events are real held-out messages, links are constructed). Parallel multi-channel = the same fusion recipe trained without link and timing features (src/eval_comparison.py). Real bundles: blocked on R2-10: 0 real bundles collected.
+
+Patent noisy-OR campaign score: not evaluated: the owner decided on 7 Nov 2026 that the patent will be written from this build; the old draft's noisy-OR method and its generated numbers are not used.
+
 ## 3. How to read these numbers
 
 - **Pooled email scores are flattering.** The leave-one-corpus-out rows are the honest estimate: ranking stays fairly good (AUC 0.94-0.96) but a 0.5 threshold does not transfer. False-positive rates on unseen corpora: CEAS_08 28.0%, Enron 1.8%, FraudEmail 22.2%; recall: CEAS_08 96.5%, Enron 61.0%, FraudEmail 95.4%.
@@ -141,13 +154,14 @@ Legitimate inputs scoring high (url Google Docs link, sms courier tracking messa
 
 ## 5. Known limitations (state these in the review)
 
-1. **Email labels are 'unwanted / fraudulent', not strictly phishing.** Corpora used: CEAS_08 (spam + phishing mix), Enron-Spam, a Nigerian-fraud corpus. Nazario (real phishing emails), SpamAssassin and Ling are not in this run; they are on GitHub and can be added (README, 'Retrain from scratch').
+1. **Email labels are 'unwanted / fraudulent', not strictly phishing.** Corpora used: CEAS_08 (spam + phishing mix), Enron-Spam, a Nigerian-fraud corpus. Three retrain attempts that added Nazario (real phishing), SpamAssassin, Ling-Spam and legitimate transactional mail all failed the adoption rule (reports/candidates/), so the deployed model still uses these three corpora. Earlier text, kept for the record: Nazario (real phishing emails), SpamAssassin and Ling are not in this run; they are on GitHub and can be added (README, 'Retrain from scratch').
 2. **URL login-page fix is partial.** It works for the 10,000 most popular domains; login pages on unknown small sites are still likely to be flagged, and phishing hosted on popular domains is caught less often (section 3).
 3. **Known false positives:** legitimate Google Docs links and courier tracking SMS (section 4).
 4. **Thresholds are not portable across sources** (email, section 3). The 0.5 operating point was not re-validated on any new environment.
 5. **The correlation model is trained on simulated bundles.** Its numbers describe the simulation, not field performance. The API adds a time window (default 60 minutes, `window_minutes` per request) and judges a lone event by its detector; both came after training, so the model was not retrained, and the window value has to come from real bundles. Refit and evaluate on the Review-2 test-case set.
 6. **No real-traffic or time-split evaluation.** All corpora are static public collections.
 7. **Voice and video detectors are not trained** (no accessible data).
+8. **The correlation model is sensitive to small changes in its simulated training data.** A full retrain on this build (`run_all.sh` on `cp1-rc1`), where the only training change since v2 is the email text cleaner fix (D-11, D-15), moves the simulated 60-minute engine's F1 from 92.0% to 92.1%, but moves the hand-written TC-06 bundle from 0.595 to 0.456, below the alert line. The change comes from the correlation model, not the detectors (live correlation with retrained detectors: 0.595). The retrain failed the adoption rule and was not adopted; the record is in `reports/final_run/`.
 
 ## 6. Reproduce
 
@@ -157,3 +171,5 @@ bash download_data.sh      # public GitHub sources only
 bash run_all.sh            # trains everything, rewrites reports/
 uvicorn api:app --port 8000
 ```
+
+On this build, `run_all.sh` gives models close to but not identical with the shipped ones, because the email text cleaner was fixed after v2 (D-11, D-15). The shipped models are v2's; `reports/final_run/` holds what a retrain gives.

@@ -1,0 +1,7 @@
+single_channel_alert_any_event_ge_0.5 {'precision': 0.8708, 'recall': 0.9538, 'f1': 0.9104, 'false_positive_rate': 0.1395}
+fusion_at_matched_fpr {'precision': 0.8723, 'recall': 0.9738, 'f1': 0.9203, 'false_positive_rate': 0.1405}
+fusion_without_correlation_features_at_matched_fpr {'precision': 0.8685, 'recall': 0.9718, 'f1': 0.9173, 'false_positive_rate': 0.1449}
+auc {'single_channel_max_score': 0.9749, 'fusion': 0.9878, 'fusion_without_correlation_features': 0.9852}
+hard campaigns {'n': 26, 'share_of_linked_attacks': 0.0073, 'caught_by_fusion': 0.4231, 'caught_by_fusion_without_correlation_features': 0.3462}
+flag rate fusion {np.str_('attack_linked'): 0.9922, np.str_('attack_single'): 0.9763, np.str_('benign_linked'): 0.0284, np.str_('benign_unlinked'): 0.2138, np.str_('mixed_unlinked'): 0.9147}
+flag rate single {np.str_('attack_linked'): 0.9927, np.str_('attack_single'): 0.893, np.str_('benign_linked'): 0.1547, np.str_('benign_unlinked'): 0.1295, np.str_('mixed_unlinked'): 0.8984}

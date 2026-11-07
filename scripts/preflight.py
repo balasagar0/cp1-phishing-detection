@@ -42,7 +42,7 @@ def main():
     try:
         import importlib.metadata as md
         want = {}
-        for line in (ROOT / "requirements.txt").read_text().splitlines():
+        for line in (ROOT / "requirements.txt").read_text(encoding="utf-8").splitlines():
             m = re.match(r"^\s*([A-Za-z0-9_.\-]+)\s*(==|>=)\s*([\w.]+)", line)
             if m: want[m.group(1).lower()] = (m.group(2), m.group(3))
         bad = []
@@ -53,7 +53,7 @@ def main():
         check("packages installed at the pinned versions", not bad, "; ".join(bad) or f"{len(want)} packages; scikit-learn {md.version('scikit-learn')}")
     except Exception as e: check("packages installed at the pinned versions", False, repr(e))
     try:
-        man = json.loads((ROOT / "reports" / "model_manifest.json").read_text())
+        man = json.loads((ROOT / "reports" / "model_manifest.json").read_text(encoding="utf-8"))
         wrong = [f["file"] for f in man["files"] if not (ROOT / f["file"]).exists() or (ROOT / f["file"]).stat().st_size != f["bytes"] or sha256(ROOT / f["file"]) != f["sha256"]]
         check("model files match reports/model_manifest.json", not wrong, ", ".join(wrong) or f"{len(man['files'])} files")
     except Exception as e: check("model files match reports/model_manifest.json", False, repr(e))

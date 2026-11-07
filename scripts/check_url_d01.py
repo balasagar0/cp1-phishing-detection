@@ -34,7 +34,7 @@ def main():
         rows.append({"id": cid, "url": u, "expected": exp, "variants": len(sc), "min": min(sc.values()), "max": max(sc.values()), "same_score": len(set(sc.values())) == 1})
     src_train = (ROOT / "src" / "train_url.py").read_text(encoding="utf-8"); src_pred = (ROOT / "src" / "predict.py").read_text(encoding="utf-8")
     same_canon = "u.url.map(canon)" in src_train and "c = canon(url)" in src_pred
-    U = json.loads((ROOT / "reports" / "url_metrics.json").read_text())["string_model"]; ab = U["ablation"]
+    U = json.loads((ROOT / "reports" / "url_metrics.json").read_text(encoding="utf-8"))["string_model"]; ab = U["ablation"]
     fin, first = ab["c_plus_login_training_urls_FINAL"], ab["a_ngrams_only"]
     res = {"date": datetime.datetime.now().astimezone().isoformat(timespec="seconds"), "urls": len(urls), "variants_scored": n, "urls_whose_label_flips": flips,
            "training_and_serving_use_canon": same_canon, "rows": rows,

@@ -268,7 +268,7 @@ def _():
 
 @case("EML-09", "Ported")
 def _():
-    m = json.loads((ROOT / "reports" / "email_metrics.json").read_text()); pooled = m["pooled_test"]["f1"]; lo = m["leave_one_corpus_out"]
+    m = json.loads((ROOT / "reports" / "email_metrics.json").read_text(encoding="utf-8")); pooled = m["pooled_test"]["f1"]; lo = m["leave_one_corpus_out"]
     gaps = {k: pooled - v["f1"] for k, v in lo.items()}; worst = max(gaps.values())
     txt = (f"normal (pooled random) test F1 {100 * pooled:.1f}%; held-out corpus F1: " + ", ".join(f"{k} {100 * v['f1']:.1f}%" for k, v in lo.items())
            + f"; mean {100 * sum(v['f1'] for v in lo.values()) / len(lo):.1f}%. Largest gap {100 * worst:.1f} points (reports/email_metrics.json)")
@@ -278,7 +278,7 @@ def _():
 
 @case("EML-10", "Ported")
 def _():
-    m = json.loads((ROOT / "reports" / "email_metrics.json").read_text()); t = m["pooled_test"]; lo = m["leave_one_corpus_out"]
+    m = json.loads((ROOT / "reports" / "email_metrics.json").read_text(encoding="utf-8")); t = m["pooled_test"]; lo = m["leave_one_corpus_out"]
     honest = sum(v["f1"] for v in lo.values()) / len(lo)
     return ok(t["f1"] >= 0.90, f"reports/email_metrics.json pooled random test: F1 {t['f1']:.4f}, precision {t['precision']:.4f}, recall {t['recall']:.4f}, "
               f"confusion [[{t['tn']}, {t['fp']}], [{t['fn']}, {t['tp']}]]. Honest metric (mean leave-one-corpus-out F1): {honest:.4f}")
@@ -333,7 +333,7 @@ def _():
 @case("SMS-08", "Replaced", "v2's SMS model has three classes. The plan's 'spam class' (unwanted vs ham) is v2's spam-or-smishing vs ham on its 20% test split. "
       "The honest SMS metric, smishing vs rest, is reported beside it.")
 def _():
-    m = json.loads((ROOT / "reports" / "sms_metrics.json").read_text()); u, s = m["test_unwanted_vs_ham"], m["test_smishing_vs_rest"]
+    m = json.loads((ROOT / "reports" / "sms_metrics.json").read_text(encoding="utf-8")); u, s = m["test_unwanted_vs_ham"], m["test_smishing_vs_rest"]
     return ok(u["f1"] >= 0.90, f"reports/sms_metrics.json spam-or-smishing vs ham: F1 {u['f1']:.4f}, precision {u['precision']:.4f}, recall {u['recall']:.4f}, "
               f"confusion [[{u['tn']}, {u['fp']}], [{u['fn']}, {u['tp']}]]. Honest metric (smishing vs rest): F1 {s['f1']:.4f}")
 
@@ -398,7 +398,7 @@ def _():
 
 @case("URL-10", "Ported")
 def _():
-    m = json.loads((ROOT / "reports" / "url_metrics.json").read_text()); g = m["string_model"]["grouped_test"]; b = m["feature_benchmark"]["hgb_all_features"]
+    m = json.loads((ROOT / "reports" / "url_metrics.json").read_text(encoding="utf-8")); g = m["string_model"]["grouped_test"]; b = m["feature_benchmark"]["hgb_all_features"]
     return ok(g["f1"] >= 0.90, f"reports/url_metrics.json deployed string model, host-grouped test: F1 {g['f1']:.4f}, precision {g['precision']:.4f}, recall {g['recall']:.4f}, "
               f"confusion [[{g['tn']}, {g['fp']}], [{g['fn']}, {g['tp']}]]. Offline feature benchmark (random split, not deployed): F1 {b['f1']:.4f}")
 
@@ -758,7 +758,7 @@ def _():
 def ui(cid):
     p = ROOT / "reports" / "ui_checks.json"
     if not p.exists(): return not_run("The console checks run with Playwright in scripts/ui_checks.py (Phase 2.4); reports/ui_checks.json does not exist yet.")
-    j = json.loads(p.read_text()).get(cid)
+    j = json.loads(p.read_text(encoding="utf-8")).get(cid)
     if not j: return not_run(f"{cid} is not in reports/ui_checks.json")
     return (j["status"], j["actual"])
 
@@ -871,7 +871,7 @@ def via(): return "over HTTP to " + os.environ["CP1_API_URL"] if os.environ.get(
 
 def bench():
     p = ROOT / "reports" / "benchmark.json"
-    return json.loads(p.read_text()) if p.exists() else None
+    return json.loads(p.read_text(encoding="utf-8")) if p.exists() else None
 
 
 @case("NFR-01", "Ported", "Measured here in-process or over HTTP; scripts/benchmark.py (Phase 4.2) measures 100 requests per channel over real HTTP and its result is used when present.")
@@ -917,7 +917,7 @@ def _():
 def _():
     p = ROOT / "reports" / "nfr05_fresh_clone.json"
     if not p.exists(): return not_run("Runs in Phase 4.4 on the frozen build (scripts/nfr05_fresh_clone.py).")
-    j = json.loads(p.read_text()); return (j["status"], j["actual"])
+    j = json.loads(p.read_text(encoding="utf-8")); return (j["status"], j["actual"])
 
 
 @case("NFR-06", "Replaced", "The serving code now includes the event store, which may store message text only when CP1_STORE_CONTENT=1. Same intent: a message sent through the API "
@@ -957,9 +957,9 @@ def _changed_files(before):
 def _():
     p = ROOT / "reports" / "regression_baseline.json"
     if not p.exists(): return not_run("Runs in Phase 4 after the final code change: needs reports/regression_baseline.json from the earlier run.")
-    base = json.loads(p.read_text())["cases"]
+    base = json.loads(p.read_text(encoding="utf-8"))["cases"]
     worse = [k for k, v in base.items() if v["status"] == "Pass" and RESULTS.get(k, {}).get("status") not in (None, "Pass")]
-    return ok(not worse, f"compared with {json.loads(p.read_text())['run']['describe']}: cases that passed before and do not now: {worse or 'none'}")
+    return ok(not worse, f"compared with {json.loads(p.read_text(encoding="utf-8"))['run']['describe']}: cases that passed before and do not now: {worse or 'none'}")
 
 
 # ================================================================= runner

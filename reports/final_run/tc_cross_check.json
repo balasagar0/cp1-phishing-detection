@@ -1,0 +1,349 @@
+{
+ "date": "2026-11-07T16:26:12+05:30",
+ "build": "cp1-rc1",
+ "commit": "7761903194fea2685560bd6681f33b2c1b7f06ba",
+ "what": "download_data.sh and run_all.sh on the build above (Phase 4.1). Demo cases are hand-written, not a test set.",
+ "email_loco_mean_f1": {
+  "live": 0.8223,
+  "retrained": 0.8213
+ },
+ "simulated_f1_60min": {
+  "live": 0.9205,
+  "retrained": 0.9208
+ },
+ "simulation_pools_identical": {
+  "email": false,
+  "sms": true,
+  "url": true
+ },
+ "adoption_rule_c": {
+  "rule": "the demo cases' alert outcomes are kept",
+  "cases_whose_alert_changes": [
+   "TC-06"
+  ],
+  "met": false
+ },
+ "decision": "not adopted: the account owner chose on 7 Nov 2026 to keep v2's models live, applying the same adoption rule as Phase 3",
+ "cases": {
+  "TC-01": {
+   "live detectors + live correlation": {
+    "status": "ASSESSED",
+    "event_scores": [
+     0.998
+    ],
+    "bundle_risk": 0.998,
+    "alert": true
+   },
+   "live detectors + retrained correlation": {
+    "status": "ASSESSED",
+    "event_scores": [
+     0.998
+    ],
+    "bundle_risk": 0.998,
+    "alert": true
+   },
+   "retrained detectors + live correlation": {
+    "status": "ASSESSED",
+    "event_scores": [
+     0.998
+    ],
+    "bundle_risk": 0.998,
+    "alert": true
+   },
+   "retrained detectors + retrained correlation": {
+    "status": "ASSESSED",
+    "event_scores": [
+     0.998
+    ],
+    "bundle_risk": 0.998,
+    "alert": true
+   }
+  },
+  "TC-02": {
+   "live detectors + live correlation": {
+    "status": "ASSESSED",
+    "event_scores": [
+     1.0
+    ],
+    "bundle_risk": 1.0,
+    "alert": true
+   },
+   "live detectors + retrained correlation": {
+    "status": "ASSESSED",
+    "event_scores": [
+     1.0
+    ],
+    "bundle_risk": 1.0,
+    "alert": true
+   },
+   "retrained detectors + live correlation": {
+    "status": "ASSESSED",
+    "event_scores": [
+     1.0
+    ],
+    "bundle_risk": 1.0,
+    "alert": true
+   },
+   "retrained detectors + retrained correlation": {
+    "status": "ASSESSED",
+    "event_scores": [
+     1.0
+    ],
+    "bundle_risk": 1.0,
+    "alert": true
+   }
+  },
+  "TC-03": {
+   "live detectors + live correlation": {
+    "status": "CANNOT_ASSESS",
+    "event_scores": [
+     null
+    ],
+    "bundle_risk": null,
+    "alert": false
+   },
+   "live detectors + retrained correlation": {
+    "status": "CANNOT_ASSESS",
+    "event_scores": [
+     null
+    ],
+    "bundle_risk": null,
+    "alert": false
+   },
+   "retrained detectors + live correlation": {
+    "status": "CANNOT_ASSESS",
+    "event_scores": [
+     null
+    ],
+    "bundle_risk": null,
+    "alert": false
+   },
+   "retrained detectors + retrained correlation": {
+    "status": "CANNOT_ASSESS",
+    "event_scores": [
+     null
+    ],
+    "bundle_risk": null,
+    "alert": false
+   }
+  },
+  "TC-04": {
+   "live detectors + live correlation": {
+    "status": "ASSESSED",
+    "event_scores": [
+     1.0,
+     0.995,
+     0.998
+    ],
+    "bundle_risk": 1.0,
+    "alert": true
+   },
+   "live detectors + retrained correlation": {
+    "status": "ASSESSED",
+    "event_scores": [
+     1.0,
+     0.995,
+     0.998
+    ],
+    "bundle_risk": 1.0,
+    "alert": true
+   },
+   "retrained detectors + live correlation": {
+    "status": "ASSESSED",
+    "event_scores": [
+     1.0,
+     0.995,
+     0.998
+    ],
+    "bundle_risk": 1.0,
+    "alert": true
+   },
+   "retrained detectors + retrained correlation": {
+    "status": "ASSESSED",
+    "event_scores": [
+     1.0,
+     0.995,
+     0.998
+    ],
+    "bundle_risk": 1.0,
+    "alert": true
+   }
+  },
+  "TC-05": {
+   "live detectors + live correlation": {
+    "status": "ASSESSED",
+    "event_scores": [
+     0.002,
+     0.0,
+     0.0
+    ],
+    "bundle_risk": 0.0,
+    "alert": false
+   },
+   "live detectors + retrained correlation": {
+    "status": "ASSESSED",
+    "event_scores": [
+     0.002,
+     0.0,
+     0.0
+    ],
+    "bundle_risk": 0.0,
+    "alert": false
+   },
+   "retrained detectors + live correlation": {
+    "status": "ASSESSED",
+    "event_scores": [
+     0.002,
+     0.0,
+     0.0
+    ],
+    "bundle_risk": 0.0,
+    "alert": false
+   },
+   "retrained detectors + retrained correlation": {
+    "status": "ASSESSED",
+    "event_scores": [
+     0.002,
+     0.0,
+     0.0
+    ],
+    "bundle_risk": 0.0,
+    "alert": false
+   }
+  },
+  "TC-06": {
+   "live detectors + live correlation": {
+    "status": "ASSESSED",
+    "event_scores": [
+     0.421,
+     0.451,
+     0.204
+    ],
+    "bundle_risk": 0.595,
+    "alert": true
+   },
+   "live detectors + retrained correlation": {
+    "status": "ASSESSED",
+    "event_scores": [
+     0.421,
+     0.451,
+     0.204
+    ],
+    "bundle_risk": 0.456,
+    "alert": false
+   },
+   "retrained detectors + live correlation": {
+    "status": "ASSESSED",
+    "event_scores": [
+     0.421,
+     0.452,
+     0.208
+    ],
+    "bundle_risk": 0.595,
+    "alert": true
+   },
+   "retrained detectors + retrained correlation": {
+    "status": "ASSESSED",
+    "event_scores": [
+     0.421,
+     0.452,
+     0.208
+    ],
+    "bundle_risk": 0.456,
+    "alert": false
+   }
+  },
+  "TC-07": {
+   "live detectors + live correlation": {
+    "status": "ASSESSED",
+    "event_scores": [
+     0.421,
+     0.451,
+     0.204
+    ],
+    "bundle_risk": 0.451,
+    "alert": false
+   },
+   "live detectors + retrained correlation": {
+    "status": "ASSESSED",
+    "event_scores": [
+     0.421,
+     0.451,
+     0.204
+    ],
+    "bundle_risk": 0.451,
+    "alert": false
+   },
+   "retrained detectors + live correlation": {
+    "status": "ASSESSED",
+    "event_scores": [
+     0.421,
+     0.452,
+     0.208
+    ],
+    "bundle_risk": 0.452,
+    "alert": false
+   },
+   "retrained detectors + retrained correlation": {
+    "status": "ASSESSED",
+    "event_scores": [
+     0.421,
+     0.452,
+     0.208
+    ],
+    "bundle_risk": 0.452,
+    "alert": false
+   }
+  },
+  "TC-08": {
+   "live detectors + live correlation": {
+    "status": "ASSESSED",
+    "event_scores": [
+     0.97,
+     0.031
+    ],
+    "bundle_risk": 1.0,
+    "alert": true
+   },
+   "live detectors + retrained correlation": {
+    "status": "ASSESSED",
+    "event_scores": [
+     0.97,
+     0.031
+    ],
+    "bundle_risk": 1.0,
+    "alert": true
+   },
+   "retrained detectors + live correlation": {
+    "status": "ASSESSED",
+    "event_scores": [
+     0.97,
+     0.031
+    ],
+    "bundle_risk": 1.0,
+    "alert": true
+   },
+   "retrained detectors + retrained correlation": {
+    "status": "ASSESSED",
+    "event_scores": [
+     0.97,
+     0.031
+    ],
+    "bundle_risk": 1.0,
+    "alert": true
+   }
+  }
+ },
+ "TC-06": {
+  "live detectors + live correlation": 0.595,
+  "live detectors + retrained correlation": 0.456,
+  "retrained detectors + live correlation": 0.595,
+  "retrained detectors + retrained correlation": 0.456
+ },
+ "TC-07": {
+  "live detectors + live correlation": 0.451,
+  "live detectors + retrained correlation": 0.451,
+  "retrained detectors + live correlation": 0.452,
+  "retrained detectors + retrained correlation": 0.452
+ }
+}
