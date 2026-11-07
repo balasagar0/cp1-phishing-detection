@@ -76,6 +76,17 @@ if WMP.exists():
     L.append(f"\nCampaigns where every event scores below 0.5: {hc2['n']}; flagged by the whole-bundle model {pc(hc2['caught_whole_bundle_model_at_0.5'])}, by the engine with the window {pc(hc2['caught_engine_default_window_at_0.5'])}.")
     L.append(f"\nThe {d0}-minute window and the single-event rule were fixed before this evaluation was run. The other window sizes are shown for information and were not used to pick anything. The model itself was not retrained.")
 
+CMP = R / "comparison_metrics.json"
+if CMP.exists():
+    CM = json.load(open(CMP))
+    L.append("\n### R3-09: correlation against the baselines (SIMULATED bundles, alert line 0.5)\n")
+    L.append("| Method | n | Precision | Recall | F1 (95% CI) | False-positive rate (95% CI) | Simulated campaigns every filter misses, flagged |\n|---|---|---|---|---|---|---|")
+    for k, m in CM["rows"].items():
+        if "f1" not in m: L.append(f"| {m['name']} | – | – | – | – | – | {m['status']} |"); continue
+        L.append(f"| {m['name']} | {m['n']:,} | {pct(m['precision'])} | {pct(m['recall'])} | {pct(m['f1'])} ({pct(m['ci95']['f1'][0])}-{pct(m['ci95']['f1'][1])}) | "
+                 f"{pct(m['false_positive_rate'])} ({pct(m['ci95']['false_positive_rate'][0])}-{pct(m['ci95']['false_positive_rate'][1])}) | {pc(m.get('hard_campaigns_flagged'))} |")
+    L.append(f"\n{CM['title']}. Parallel multi-channel = the same fusion recipe trained without link and timing features (src/eval_comparison.py). Real bundles: {CM['real_bundles']}.")
+
 L.append("\n## 3. How to read these numbers\n")
 L.append("- **Pooled email scores are flattering.** The leave-one-corpus-out rows are the honest estimate: ranking stays fairly good (AUC " + f"{min(v['roc_auc'] for v in E['leave_one_corpus_out'].values()):.2f}-{max(v['roc_auc'] for v in E['leave_one_corpus_out'].values()):.2f}" + ") but a 0.5 threshold does not transfer. False-positive rates on unseen corpora: " + ", ".join(f"{k} {pct(v['false_positive_rate'])}" for k, v in E["leave_one_corpus_out"].items()) + "; recall: " + ", ".join(f"{k} {pct(v['recall'])}" for k, v in E["leave_one_corpus_out"].items()) + ".")
 FP = ["enron", "vince", "louise", "houston", "tony", "opensuse", "perl", "python", "uai", "2001", "2004", "2005", "2007", "2008", "2009", "2010", "numtok", "yeartok"]
@@ -91,7 +102,7 @@ L.append("## 4. Hand-written probes (not an evaluation)\n\n| Channel | Truth | S
 L += [f"| {p['channel']} | {p['truth']} | {p['score']:.2f} | {p['input'][:80]} |" for p in PR]
 L.append("\nLegitimate inputs scoring high (url Google Docs link, sms courier tracking message) are known false positives: legitimate cloud-document links and transactional SMS are under-represented as negatives in the public data.\n")
 L.append("## 5. Known limitations (state these in the review)\n")
-L.append("1. **Email labels are 'unwanted / fraudulent', not strictly phishing.** Corpora used: CEAS_08 (spam + phishing mix), Enron-Spam, a Nigerian-fraud corpus. Nazario (real phishing emails), SpamAssassin and Ling are not in this run; they are on GitHub and can be added (README, 'Retrain from scratch').")
+L.append("1. **Email labels are 'unwanted / fraudulent', not strictly phishing.** Corpora used: CEAS_08 (spam + phishing mix), Enron-Spam, a Nigerian-fraud corpus. Three retrain attempts that added Nazario (real phishing), SpamAssassin, Ling-Spam and legitimate transactional mail all failed the adoption rule (reports/candidates/), so the deployed model still uses these three corpora. Earlier text, kept for the record: Nazario (real phishing emails), SpamAssassin and Ling are not in this run; they are on GitHub and can be added (README, 'Retrain from scratch').")
 L.append("2. **URL login-page fix is partial.** It works for the 10,000 most popular domains; login pages on unknown small sites are still likely to be flagged, and phishing hosted on popular domains is caught less often (section 3).")
 L.append("3. **Known false positives:** legitimate Google Docs links and courier tracking SMS (section 4).")
 L.append("4. **Thresholds are not portable across sources** (email, section 3). The 0.5 operating point was not re-validated on any new environment.")
