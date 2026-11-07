@@ -127,9 +127,9 @@ All 69 items from section 9 of `CP1_FINISH_TASK.md`. Updated at the end of every
 | Status | Items |
 |---|---|
 | done | 8 |
-| partial | 9 |
+| partial | 8 |
 | open | 19 |
-| blocked | 3 |
+| blocked | 4 |
 | people | 30 |
 | **total** | **69** |
 
