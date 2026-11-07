@@ -1,0 +1,74 @@
+{
+ "date": "2026-11-07T16:49:26+05:30",
+ "build": "cp1-rc1-2-g50c3228-dirty",
+ "commit": "50c3228c4014f58f2bcabb1956c6d16c3187f567",
+ "targets": "read from the team workbook's Summary sheet and equal to the constants (6 values checked)",
+ "criteria": [
+  {
+   "n": 1,
+   "criterion": "All High-priority test cases executed",
+   "target": "0 not run",
+   "current": "0 not run",
+   "met": true,
+   "detail": "every High case ran"
+  },
+  {
+   "n": 2,
+   "criterion": "Non-model test cases: pass rate",
+   "target": "95% or more",
+   "current": "95.4% (83 pass, 4 fail)",
+   "met": true,
+   "detail": "N/A and Not run cases are left out, as the workbook's formula does"
+  },
+  {
+   "n": 3,
+   "criterion": "All 12 sample groups meet their targets",
+   "target": "12 of 12",
+   "current": "8 of 12",
+   "met": false,
+   "detail": "email Legitimate Hard case 67% (target 70%); email Legitimate Standard 100% (target 90%); email Phishing Hard case 67% (target 70%); email Phishing Standard 64% (target 90%); sms Legitimate Hard case 50% (target 70%); sms Legitimate Standard 92% (target 90%); sms Phishing Hard case 75% (target 70%); sms Phishing Standard 100% (target 90%); url Legitimate Hard case 80% (target 70%); url Legitimate Standard 100% (target 90%); url Phishing Hard case 100% (target 70%); url Phishing Standard 100% (target 90%). Samples are hand-written, not a test set"
+  },
+  {
+   "n": "4a",
+   "criterion": "Held-out metrics pass (EML-10, SMS-08, URL-10): the plan's held-out split",
+   "target": "3 of 3",
+   "current": "3 of 3",
+   "met": true,
+   "detail": "the plan reads each channel's held-out split against F1 0.90: email pooled random split, SMS spam-or-smishing, URL host-grouped"
+  },
+  {
+   "n": "4b",
+   "criterion": "The same 0.90 line on the honest measures",
+   "target": "3 of 3",
+   "current": "1 of 3",
+   "met": false,
+   "detail": "email: mean leave-one-corpus-out F1 82.2% (not met); SMS: smishing-vs-rest F1 87.1% (not met); URL: host-grouped F1 90.4% (met)"
+  },
+  {
+   "n": 5,
+   "criterion": "Correlation changes a verdict with real models (SYS-14)",
+   "target": "Pass",
+   "current": "Fail",
+   "met": false,
+   "detail": "S-01, S-02 and S-11 already alert on one channel; TC-06 (hand-written) is the case where correlation lifts a bundle, see reports/r2_09_evidence.md"
+  },
+  {
+   "n": 6,
+   "criterion": "Speed tests pass (NFR-01, NFR-02)",
+   "target": "2 of 2",
+   "current": "2 of 2",
+   "met": true,
+   "detail": "scripts/benchmark.py over real HTTP, 100 requests each (AMD Ryzen 7 5800HS with Radeon Graphics (16 logical CPUs), 15.4 GB RAM, Windows-11-10.0.26200-SP0, Pytho"
+  },
+  {
+   "n": 7,
+   "criterion": "No open Critical or High defects",
+   "target": "0",
+   "current": "3",
+   "met": false,
+   "detail": "D-01 (High), D-09 (High), D-17 (High)"
+  }
+ ],
+ "met": 4,
+ "of": 8
+}

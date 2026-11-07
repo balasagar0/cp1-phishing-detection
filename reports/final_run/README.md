@@ -1,8 +1,8 @@
 # Final run record (Phase 4.1)
 
-Written by `scripts/final_run_record.py` on 2026-11-07T16:26:12+05:30. Every number below is computed by that script.
+Written by `scripts/final_run_record.py` on 2026-11-07T16:43:15+05:30. Every number below is computed by that script.
 
-`download_data.sh` and `run_all.sh` ran on `cp1-rc1` (commit `7761903`). This folder holds the reports that run wrote (`*.json`, `results.md`, `log_*.txt`, `run_all_log.txt`). The models it trained are kept on the build laptop in `models/candidates/final_run/` and are not committed; `model_manifest.json` here lists their hashes.
+`download_data.sh` and `run_all.sh` ran on `cp1-rc1` (commit `7761903`). This folder holds the reports that run wrote (`*.json`, `results.md`, `log_*.txt`, `run_all_log.txt`). The models it trained are kept on the build laptop in `models/candidates/final_run/` and are not committed; `model_manifest.json` here lists their hashes. `results.md` here is kept byte for byte as the run wrote it: that build's `make_report.py` used the Windows code page (cp1252), fixed afterwards, so open it as cp1252.
 
 ## Decision
 
