@@ -25,7 +25,7 @@ def test_the_formula_is_not_wired_into_the_api():
     assert "campaign_formula" not in src
 
 
-@pytest.mark.skipif(not CF.PARAMETERS_FROM_SPEC, reason="needs the patent specification (docs/inputs/): section 16's worked example inputs, weights and factors")
+@pytest.mark.skipif(not CF.PARAMETERS_FROM_SPEC, reason="not used: the patent will be written from this build (owner, 7 Nov 2026); the old draft's worked example is not reproduced")
 def test_patent_worked_example_section_16():
     raise AssertionError("fill in from the specification: S about 0.35, then 0.60, then 0.77, and 0.84 after the sequence factor")
 
@@ -33,7 +33,7 @@ def test_patent_worked_example_section_16():
 if __name__ == "__main__":
     ok = True
     for name, fn in sorted((n, f) for n, f in globals().items() if n.startswith("test_") and callable(f)):
-        if name == "test_patent_worked_example_section_16" and not CF.PARAMETERS_FROM_SPEC: print("SKIP", name, "- needs the patent specification"); continue
+        if name == "test_patent_worked_example_section_16" and not CF.PARAMETERS_FROM_SPEC: print("SKIP", name, "- not used: the patent will be written from this build"); continue
         try: fn(); print("PASS", name)
         except Exception as e: ok = False; print("FAIL", name, "-", repr(e)[:400])
     print("ALL PASSED" if ok else "SOME FAILED"); sys.exit(0 if ok else 1)

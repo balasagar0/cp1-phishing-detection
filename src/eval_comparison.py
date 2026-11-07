@@ -6,7 +6,7 @@ Rows, all at the alert line 0.5, with 95% bootstrap intervals over bundles:
      train_fusion.py trains it: same data, same settings, same seed)
   3. the correlation model on the whole bundle (pools events up to 72 hours apart)
   4. the deployed engine: 60-minute windows, a lone event = its detector score, the bundle takes its highest window
-  5. the patent's noisy-OR campaign score (src/campaign_formula.py) on the same windows, when its parameters from the patent spec are in place
+  5. (not evaluated) the old patent draft's noisy-OR score: the owner decided on 7 Nov 2026 that the patent will be written from this build instead
 The real-bundle half of R3-09 is blocked on R2-10. Writes reports/comparison_metrics.json."""
 import sys
 from pathlib import Path
@@ -70,7 +70,7 @@ if patent:
                                       "ci95": boot(y, patent["risk"], patent["threshold"]), "threshold": patent["threshold"], "parameters": patent["parameters"],
                                       "hard_campaigns_flagged": round(float((patent["risk"][hard] >= patent["threshold"]).mean()), 4) if hard.any() else None}
 else:
-    res["rows"]["patent_noisy_or"] = {"name": "Patent noisy-OR campaign score", "status": "blocked: the patent specification is not in docs/inputs/, so its weights, cross-channel and sequence factors cannot be read"}
+    res["rows"]["patent_noisy_or"] = {"name": "Patent noisy-OR campaign score", "status": "not evaluated: the owner decided on 7 Nov 2026 that the patent will be written from this build; the old draft's noisy-OR method and its generated numbers are not used"}
 res["hard_campaigns"] = {"n": int(hard.sum()), "definition": "simulated linked attacks where every event scores below 0.5"}
 res["real_bundles"] = "blocked on R2-10: 0 real bundles collected"
 save_json(res, REPORTS / "comparison_metrics.json")

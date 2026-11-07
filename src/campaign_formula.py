@@ -9,7 +9,7 @@ VALIDATION bundles only; eval_comparison.py then reports it on the test bundles 
 import math
 import numpy as np
 
-PARAMETERS_FROM_SPEC = False
+PARAMETERS_FROM_SPEC = False      # stays False: on 7 Nov 2026 the owner decided the patent will be written from this build; the old draft's numbers are generated
 SPEC = {"weights": None, "cross_channel_factor": None, "sequence_factor": None, "sequence": None}    # filled from the specification, with the paragraph numbers
 
 
