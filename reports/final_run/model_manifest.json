@@ -1,0 +1,42 @@
+{
+  "written": "2026-11-07T15:41:31+05:30",
+  "n_files": 7,
+  "total_bytes": 15850511,
+  "files": [
+    {
+      "file": "models/email_model.joblib",
+      "bytes": 1026212,
+      "sha256": "37fb42d036032f75aa5555da6d7dd83dcf6427702197e6f577877659e120ff67"
+    },
+    {
+      "file": "models/email_model_plain.joblib",
+      "bytes": 3972709,
+      "sha256": "5f4af8cd7d86f1110c009842130e9ae6ec1bf87046f8df402841f5b25714055f"
+    },
+    {
+      "file": "models/fusion_model.joblib",
+      "bytes": 157426,
+      "sha256": "27565edc43611aecb1be4342803b49faf04c69be9dcb6c639fd8310046752865"
+    },
+    {
+      "file": "models/sms_model.joblib",
+      "bytes": 1251556,
+      "sha256": "e9992c44c8757983b290609d4a96bf4e179ee8e8bc01326bedc7ad00850adf4b"
+    },
+    {
+      "file": "models/url_features_all_features.joblib",
+      "bytes": 259097,
+      "sha256": "e877dbc4881f700d4bec7b8c63d7e6b166d06be77617b31ee1034e4b9e9b1904"
+    },
+    {
+      "file": "models/url_features_lexical_only.joblib",
+      "bytes": 379258,
+      "sha256": "58052731be8ad9e79951ea37ec3afe75c6370f325c679bc5b4df9b8582c4f36e"
+    },
+    {
+      "file": "models/url_string_model.joblib",
+      "bytes": 8804253,
+      "sha256": "670623455f507105be9934f1baf381247d43b61546d9dff0269de5352b7937cd"
+    }
+  ]
+}

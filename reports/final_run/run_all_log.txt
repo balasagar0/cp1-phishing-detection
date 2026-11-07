@@ -1,0 +1,95 @@
+using D:\Capstone_HTE Project\prototype\project\.venv\Scripts\python.exe 3.13.0
+[    24s] loaded 74983 emails after cleaning + dedupe; {'rows_before': 83020, 'rows_after': 74983, 'conflicting_texts_dropped': 0}
+[    25s] 
+label           0      1
+source                  
+CEAS_08     17197  18545
+Enron       15533  14464
+FraudEmail   5091   4153
+[    25s] split sizes train/val/test: 59986 7498 7499
+[    65s] vectorised; vocab size 200000
+[    69s] C=1: val F1=0.9838 AUC=0.9988
+[    72s] C=4: val F1=0.9874 AUC=0.9993
+[    77s] C=16: val F1=0.989 AUC=0.9995
+[    77s] chosen C = 16
+[    85s] pooled test: {'n': 7499, 'positives': 3716, 'threshold': 0.5, 'accuracy': 0.9917, 'precision': 0.9911, 'recall': 0.9922, 'f1': 0.9917, 'false_positive_rate': 0.0087, 'tn': 3750, 'fp': 33, 'fn': 29, 'tp': 3687, 'roc_auc': 0.9995, 'pr_auc': 0.9995}
+[    85s] NB baseline test: {'n': 7499, 'positives': 3716, 'threshold': 0.5, 'accuracy': 0.9883, 'precision': 0.9943, 'recall': 0.982, 'f1': 0.9881, 'false_positive_rate': 0.0056, 'tn': 3762, 'fp': 21, 'fn': 67, 'tp': 3649, 'roc_auc': 0.9992, 'pr_auc': 0.9992}
+[   123s] LOCO held-out=CEAS_08: F1=0.8491 recall=0.991 precision=0.7428 AUC=0.9611
+[   169s] LOCO held-out=Enron: F1=0.7469 recall=0.6134 precision=0.9548 AUC=0.9353
+[   226s] LOCO held-out=FraudEmail: F1=0.8699 recall=0.9824 precision=0.7806 AUC=0.9797
+[   289s] saved email model + metrics
+[    46s] loaded 72431 emails after cleaning (numbers masked) + dedupe; {'rows_before': 83042, 'rows_after': 72431, 'conflicting_texts_dropped': 0}
+[    46s] 
+label           0      1
+source                  
+CEAS_08     17046  17248
+Enron       14485  14432
+FraudEmail   5091   4129
+[    88s] features: 400000 candidate terms -> 49052 kept (present in >=2 corpora)
+[    90s] C=1: val F1=0.9846 AUC=0.9985
+[    93s] C=4: val F1=0.9872 AUC=0.999
+[    97s] C=16: val F1=0.988 AUC=0.9992
+[   104s] pooled test: {'n': 7244, 'positives': 3581, 'threshold': 0.5, 'accuracy': 0.988, 'precision': 0.9899, 'recall': 0.9858, 'f1': 0.9878, 'false_positive_rate': 0.0098, 'tn': 3627, 'fp': 36, 'fn': 51, 'tp': 3530, 'roc_auc': 0.999, 'pr_auc': 0.9991}
+[   145s] LOCO held-out=CEAS_08: F1=0.861 recall=0.9647 precision=0.7775 FPR=0.2794 AUC=0.9428
+[   183s] LOCO held-out=Enron: F1=0.7465 recall=0.6062 precision=0.9716 FPR=0.0177 AUC=0.9469
+[   229s] LOCO held-out=FraudEmail: F1=0.8565 recall=0.955 precision=0.7765 FPR=0.2229 AUC=0.9636
+[   230s] top malicious: ['your', '!', '! http', 'http', 'remove', 'sex', 'life', 'man', 'here', 'our', 're numtok', 'com', 'bank', 'men', 'love', 'meds', 'software', 'viagra', 'stock', 'watches']
+[   230s] top legit: ['wrote', 'thanks', 'vince', 'ie', 'numtok yeartok', 'to', 'louise', 'fyi', 'call', 'nz', 'tony', 'on', 'challenge', 'the', 'numtok http', 'org', 'python', 'doc', 'employees', 'houston']
+[   337s] saved robust email model + metrics
+[     0s] LSDST after cleaning + dedupe: 5789 {'rows_before': 5970, 'rows_after': 5789, 'conflicting_texts_dropped': 35} {'ham': 4829, 'spam': 433, 'smishing': 527}
+[    11s] C=2: 5-fold macro-F1 on train = 0.9023
+[    24s] C=8: 5-fold macro-F1 on train = 0.9024
+[    35s] C=32: 5-fold macro-F1 on train = 0.902
+[    45s] C=128: 5-fold macro-F1 on train = 0.9051
+[    53s] smishing vs rest (test): {'n': 1158, 'positives': 105, 'threshold': 0.5, 'accuracy': 0.9775, 'precision': 0.9072, 'recall': 0.8381, 'f1': 0.8713, 'false_positive_rate': 0.0085, 'tn': 1044, 'fp': 9, 'fn': 17, 'tp': 88, 'roc_auc': 0.9851, 'pr_auc': 0.9419} {'precision': [0.8491, 0.957], 'recall': [0.7784, 0.8993], 'f1': [0.8226, 0.9171]}
+[    53s] unwanted vs ham (test): {'n': 1158, 'positives': 192, 'threshold': 0.5, 'accuracy': 0.994, 'precision': 0.9947, 'recall': 0.9688, 'f1': 0.9815, 'false_positive_rate': 0.001, 'tn': 965, 'fp': 1, 'fn': 6, 'tp': 186, 'roc_auc': 0.9964, 'pr_auc': 0.9944}
+[    65s] OOF smishing: {'n': 5789, 'positives': 527, 'threshold': 0.5, 'accuracy': 0.9841, 'precision': 0.9191, 'recall': 0.9051, 'f1': 0.912, 'false_positive_rate': 0.008, 'tn': 5220, 'fp': 42, 'fn': 50, 'tp': 477, 'roc_auc': 0.9904, 'pr_auc': 0.9512}
+[    90s] external check: {'n': 65280, 'positives': 26593, 'threshold': 0.5, 'accuracy': 0.8839, 'precision': 0.9587, 'recall': 0.7472, 'f1': 0.8398, 'false_positive_rate': 0.0221, 'tn': 37832, 'fp': 855, 'fn': 6723, 'tp': 19870, 'roc_auc': 0.9769, 'pr_auc': 0.9544}
+[    93s] saved sms model + metrics
+[     0s] popularity list: 10000 registered domains
+[    28s] URLs: 260000 | bad share 0.151 | hosts 101523 | share of URLs on a top-10k domain: good 0.39 bad 0.03
+[    28s] constructed sets: train login URLs 12000 | held-out-domain login URLs 3000 | brand-impersonation probes 2000
+[    46s] a_ngrams_only | F1 0.9031 AUC 0.9905 | login FPR 0.9223 | probe detection 0.9935 | bad-on-top recall {'n': 381, 'recall': 0.4987}
+[    78s] b_plus_popularity_flags | F1 0.9067 AUC 0.9846 | login FPR 0.688 | probe detection 0.994 | bad-on-top recall {'n': 381, 'recall': 0.3333}
+[   107s] c_plus_login_training_urls_FINAL | F1 0.9044 AUC 0.9848 | login FPR 0.0 | probe detection 0.953 | bad-on-top recall {'n': 381, 'recall': 0.3071}
+[   178s] probes: {'https://www.google.com/search?q=weather': 0.0, 'https://github.com/anthropics': 0.001, 'https://www.paypal.com/signin': 0.236, 'https://en.wikipedia.org/wiki/Phishing': 0.0, 'https://www.amazon.in/gp/your-account': 0.051, 'https://accounts.google.com/signin': 0.001, 'https://login.microsoftonline.com/common/oauth2/authorize': 0.034, 'http://paypal-secure-login.verify-account.xyz/signin': 0.998, 'http://192.168.4.7/login/index.php': 0.997, 'http://sbi-kyc-update.top/verify-now.php': 0.995, 'https://secure-appleid.apple.com.account-verify.ml/login': 0.988, 'http://bit.ly/3xZk9Q': 0.973}
+[   179s] saved deployed URL model
+[   190s] HGB all_features: {'n': 17440, 'positives': 6098, 'threshold': 0.5, 'accuracy': 0.9678, 'precision': 0.9538, 'recall': 0.9542, 'f1': 0.954, 'false_positive_rate': 0.0249, 'tn': 11060, 'fp': 282, 'fn': 279, 'tp': 5819, 'roc_auc': 0.9943, 'pr_auc': 0.99}
+[   200s] HGB lexical_only: {'n': 17440, 'positives': 6098, 'threshold': 0.5, 'accuracy': 0.937, 'precision': 0.926, 'recall': 0.8911, 'f1': 0.9082, 'false_positive_rate': 0.0383, 'tn': 10908, 'fp': 434, 'fn': 664, 'tp': 5434, 'roc_auc': 0.9805, 'pr_auc': 0.9687}
+[   220s] RF all: {'n': 17440, 'positives': 6098, 'threshold': 0.5, 'accuracy': 0.9671, 'precision': 0.9523, 'recall': 0.9536, 'f1': 0.953, 'false_positive_rate': 0.0257, 'tn': 11051, 'fp': 291, 'fn': 283, 'tp': 5815, 'roc_auc': 0.9938, 'pr_auc': 0.9891}
+[   220s] saved url models + metrics
+single_channel_alert_any_event_ge_0.5 {'precision': 0.8708, 'recall': 0.9538, 'f1': 0.9104, 'false_positive_rate': 0.1395}
+fusion_at_matched_fpr {'precision': 0.8723, 'recall': 0.9738, 'f1': 0.9203, 'false_positive_rate': 0.1405}
+fusion_without_correlation_features_at_matched_fpr {'precision': 0.8685, 'recall': 0.9718, 'f1': 0.9173, 'false_positive_rate': 0.1449}
+auc {'single_channel_max_score': 0.9749, 'fusion': 0.9878, 'fusion_without_correlation_features': 0.9852}
+hard campaigns {'n': 26, 'share_of_linked_attacks': 0.0073, 'caught_by_fusion': 0.4231, 'caught_by_fusion_without_correlation_features': 0.3462}
+flag rate fusion {np.str_('attack_linked'): 0.9922, np.str_('attack_single'): 0.9763, np.str_('benign_linked'): 0.0284, np.str_('benign_unlinked'): 0.2138, np.str_('mixed_unlinked'): 0.9147}
+flag rate single {np.str_('attack_linked'): 0.9927, np.str_('attack_single'): 0.893, np.str_('benign_linked'): 0.1547, np.str_('benign_unlinked'): 0.1295, np.str_('mixed_unlinked'): 0.8984}
+0.236 url   legit     https://www.paypal.com/signin
+0.051 url   legit     https://www.amazon.in/gp/your-account
+0.001 url   legit     https://accounts.google.com/signin
+0.000 url   legit     https://en.wikipedia.org/wiki/Phishing
+0.988 url   legit     https://docs.google.com/document/d/1AbCdEf/edit
+0.998 url   malicious http://paypal-secure-login.verify-account.xyz/signin
+0.988 url   malicious https://secure-appleid.apple.com.account-verify.ml/login
+0.995 url   malicious http://sbi-kyc-update.top/verify-now.php
+0.997 url   malicious http://192.168.4.7/login/index.php
+0.838 sms   legit     Your package will arrive tomorrow between 10 and 2. Track it at https:
+0.002 sms   legit     Hey, can we move our project meeting to 4 pm tomorrow?
+1.000 sms   malicious Dear customer, your SBI account will be blocked today. Update your KYC
+0.000 email legit     Thanks for confirming. I wrote up the notes from yesterday. Call me to
+0.995 email malicious Dear customer, your bank account has been suspended. Verify your passw
+single_channel_alert_any_event_ge_0.5      {'precision': 0.8708, 'recall': 0.9538, 'f1': 0.9104, 'false_positive_rate': 0.1395, 'roc_auc': 0.9749}
+whole_bundle_model_at_0.5                  {'precision': 0.9678, 'recall': 0.9333, 'f1': 0.9503, 'false_positive_rate': 0.0306, 'roc_auc': 0.9878}
+engine_no_window_at_0.5                    {'precision': 0.9663, 'recall': 0.9328, 'f1': 0.9493, 'false_positive_rate': 0.0321, 'roc_auc': 0.9863}
+engine_default_window_at_0.5               {'precision': 0.8942, 'recall': 0.9491, 'f1': 0.9208, 'false_positive_rate': 0.1107, 'roc_auc': 0.9792}
+by window: {'15': 0.9145, '30': 0.9176, '60': 0.9208, '120': 0.9253, '240': 0.9304, '1440': 0.9457}
+fit in one window: {np.str_('attack_linked'): 0.9558, np.str_('attack_single'): 1.0, np.str_('benign_linked'): 0.4078, np.str_('benign_unlinked'): 0.3082, np.str_('mixed_unlinked'): 0.0233}
+flag rates: {'single_channel': {np.str_('attack_linked'): 0.9927, np.str_('attack_single'): 0.893, np.str_('benign_linked'): 0.1547, np.str_('benign_unlinked'): 0.1295, np.str_('mixed_unlinked'): 0.8984}, 'whole_bundle_model': {np.str_('attack_linked'): 0.9868, np.str_('attack_single'): 0.8954, np.str_('benign_linked'): 0.0105, np.str_('benign_unlinked'): 0.0438, np.str_('mixed_unlinked'): 0.8088}, 'engine_default_window': {np.str_('attack_linked'): 0.9871, np.str_('attack_single'): 0.893, np.str_('benign_linked'): 0.0836, np.str_('benign_unlinked'): 0.1284, np.str_('mixed_unlinked'): 0.8915}}
+hard campaigns: {'n': 26, 'caught_whole_bundle_model_at_0.5': 0.1923, 'caught_engine_default_window_at_0.5': 0.1923}
+single_channel           {'precision': 0.8708, 'recall': 0.9538, 'f1': 0.9104, 'false_positive_rate': 0.1395}
+parallel_multichannel    {'precision': 0.9703, 'recall': 0.926, 'f1': 0.9476, 'false_positive_rate': 0.028}
+whole_bundle_model       {'precision': 0.9678, 'recall': 0.9333, 'f1': 0.9503, 'false_positive_rate': 0.0306}
+deployed_engine_60min    {'precision': 0.8942, 'recall': 0.9491, 'f1': 0.9208, 'false_positive_rate': 0.1107}
+patent_noisy_or          not evaluated: the owner decided on 7 Nov 2026 that the patent will be written from this build; the old draft's noisy-OR method and its generated numbers are not used
+wrote results.md 15936 chars

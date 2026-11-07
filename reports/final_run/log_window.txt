@@ -1,0 +1,8 @@
+single_channel_alert_any_event_ge_0.5      {'precision': 0.8708, 'recall': 0.9538, 'f1': 0.9104, 'false_positive_rate': 0.1395, 'roc_auc': 0.9749}
+whole_bundle_model_at_0.5                  {'precision': 0.9678, 'recall': 0.9333, 'f1': 0.9503, 'false_positive_rate': 0.0306, 'roc_auc': 0.9878}
+engine_no_window_at_0.5                    {'precision': 0.9663, 'recall': 0.9328, 'f1': 0.9493, 'false_positive_rate': 0.0321, 'roc_auc': 0.9863}
+engine_default_window_at_0.5               {'precision': 0.8942, 'recall': 0.9491, 'f1': 0.9208, 'false_positive_rate': 0.1107, 'roc_auc': 0.9792}
+by window: {'15': 0.9145, '30': 0.9176, '60': 0.9208, '120': 0.9253, '240': 0.9304, '1440': 0.9457}
+fit in one window: {np.str_('attack_linked'): 0.9558, np.str_('attack_single'): 1.0, np.str_('benign_linked'): 0.4078, np.str_('benign_unlinked'): 0.3082, np.str_('mixed_unlinked'): 0.0233}
+flag rates: {'single_channel': {np.str_('attack_linked'): 0.9927, np.str_('attack_single'): 0.893, np.str_('benign_linked'): 0.1547, np.str_('benign_unlinked'): 0.1295, np.str_('mixed_unlinked'): 0.8984}, 'whole_bundle_model': {np.str_('attack_linked'): 0.9868, np.str_('attack_single'): 0.8954, np.str_('benign_linked'): 0.0105, np.str_('benign_unlinked'): 0.0438, np.str_('mixed_unlinked'): 0.8088}, 'engine_default_window': {np.str_('attack_linked'): 0.9871, np.str_('attack_single'): 0.893, np.str_('benign_linked'): 0.0836, np.str_('benign_unlinked'): 0.1284, np.str_('mixed_unlinked'): 0.8915}}
+hard campaigns: {'n': 26, 'caught_whole_bundle_model_at_0.5': 0.1923, 'caught_engine_default_window_at_0.5': 0.1923}

@@ -34,7 +34,7 @@ def shingles(text, n=8):
 
 
 def main():
-    v3 = json.loads((ROOT / "reports" / "candidates" / "email_candidates_v3.json").read_text())
+    v3 = json.loads((ROOT / "reports" / "candidates" / "email_candidates_v3.json").read_text(encoding="utf-8"))
     paths = email_stream.mbox_paths(ROOT / "data" / "raw" / "email_own")
     before = {p.name: P.sha256(p) for p in paths}
     R = {}

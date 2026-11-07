@@ -1,0 +1,112 @@
+{
+  "assumptions": {
+    "bundle_mix": {
+      "attack_linked": 0.3,
+      "attack_single": 0.1,
+      "mixed_unlinked": 0.1,
+      "benign_linked": 0.2,
+      "benign_unlinked": 0.3
+    },
+    "label": "1 if any event in the bundle is truly malicious (attack_linked, attack_single, mixed_unlinked), else 0",
+    "attack_linked": "2-3 malicious events on different channels, shared identity, gaps ~ Exponential(mean 15 min); each event's identity observed with prob 0.85",
+    "benign_linked": "2-3 benign events on different channels, shared identity, gaps Exponential with mean 30 min (50%) or 6 h (50%)",
+    "unlinked_bundles": "events with distinct identities, times uniform over 72 h; with prob 0.08 a spurious shared identity is added",
+    "scores": "each event gets the real held-out score of a randomly drawn real message of the right class and channel"
+  },
+  "n_bundles": {
+    "train": 24000,
+    "val": 8000,
+    "test": 12000
+  },
+  "positive_share_test": 0.496,
+  "single_channel_alert_any_event_ge_0.5": {
+    "n": 12000,
+    "positives": 5956,
+    "threshold": 0.5,
+    "accuracy": 0.9068,
+    "precision": 0.8708,
+    "recall": 0.9538,
+    "f1": 0.9104,
+    "false_positive_rate": 0.1395,
+    "tn": 5201,
+    "fp": 843,
+    "fn": 275,
+    "tp": 5681,
+    "roc_auc": 0.9749,
+    "pr_auc": 0.9782
+  },
+  "fusion_at_matched_fpr": {
+    "n": 12000,
+    "positives": 5956,
+    "threshold": 0.115,
+    "accuracy": 0.9163,
+    "precision": 0.8723,
+    "recall": 0.9738,
+    "f1": 0.9203,
+    "false_positive_rate": 0.1405,
+    "tn": 5195,
+    "fp": 849,
+    "fn": 156,
+    "tp": 5800,
+    "roc_auc": 0.9878,
+    "pr_auc": 0.9896
+  },
+  "fusion_without_correlation_features_at_matched_fpr": {
+    "n": 12000,
+    "positives": 5956,
+    "threshold": 0.1117,
+    "accuracy": 0.913,
+    "precision": 0.8685,
+    "recall": 0.9718,
+    "f1": 0.9173,
+    "false_positive_rate": 0.1449,
+    "tn": 5168,
+    "fp": 876,
+    "fn": 168,
+    "tp": 5788,
+    "roc_auc": 0.9852,
+    "pr_auc": 0.988
+  },
+  "fusion_at_0.5": {
+    "n": 12000,
+    "positives": 5956,
+    "threshold": 0.5,
+    "accuracy": 0.9515,
+    "precision": 0.9678,
+    "recall": 0.9333,
+    "f1": 0.9503,
+    "false_positive_rate": 0.0306,
+    "tn": 5859,
+    "fp": 185,
+    "fn": 397,
+    "tp": 5559,
+    "roc_auc": 0.9878,
+    "pr_auc": 0.9896
+  },
+  "matched_fpr_target": 0.1398,
+  "auc": {
+    "single_channel_max_score": 0.9749,
+    "fusion": 0.9878,
+    "fusion_without_correlation_features": 0.9852
+  },
+  "campaigns_missed_by_every_single_channel_filter": {
+    "n": 26,
+    "share_of_linked_attacks": 0.0073,
+    "caught_by_fusion": 0.4231,
+    "caught_by_fusion_without_correlation_features": 0.3462
+  },
+  "flag_rate_by_bundle_type_fusion": {
+    "attack_linked": 0.9922,
+    "attack_single": 0.9763,
+    "benign_linked": 0.0284,
+    "benign_unlinked": 0.2138,
+    "mixed_unlinked": 0.9147
+  },
+  "flag_rate_by_bundle_type_single_channel": {
+    "attack_linked": 0.9927,
+    "attack_single": 0.893,
+    "benign_linked": 0.1547,
+    "benign_unlinked": 0.1295,
+    "mixed_unlinked": 0.8984
+  }
+}

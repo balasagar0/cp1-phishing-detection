@@ -52,7 +52,7 @@ def main():
     crit(3, "All 12 sample groups meet their targets", "12 of 12", f"{n_met} of {len(gm)}", n_met == TARGETS["sample_groups_met"] and len(gm) == 12,
          "; ".join(f"{k} {a:.0%} (target {t:.0%})" for k, (a, t) in gm.items()) + ". Samples are hand-written, not a test set")
     ho = [k for k in ("EML-10", "SMS-08", "URL-10") if C[k]["status"] == "Pass"]
-    E = json.loads((ROOT / "reports" / "email_metrics.json").read_text()); Sm = json.loads((ROOT / "reports" / "sms_metrics.json").read_text()); U = json.loads((ROOT / "reports" / "url_metrics.json").read_text())
+    E = json.loads((ROOT / "reports" / "email_metrics.json").read_text(encoding="utf-8")); Sm = json.loads((ROOT / "reports" / "sms_metrics.json").read_text(encoding="utf-8")); U = json.loads((ROOT / "reports" / "url_metrics.json").read_text(encoding="utf-8"))
     honest = {"email: mean leave-one-corpus-out F1": sum(v["f1"] for v in E["leave_one_corpus_out"].values()) / len(E["leave_one_corpus_out"]),
               "SMS: smishing-vs-rest F1": Sm["test_smishing_vs_rest"]["f1"], "URL: host-grouped F1": U["string_model"]["grouped_test"]["f1"]}
     crit("4a", "Held-out metrics pass (EML-10, SMS-08, URL-10): the plan's held-out split", "3 of 3", f"{len(ho)} of 3", len(ho) == TARGETS["held_out_pass"],

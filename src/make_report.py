@@ -2,7 +2,7 @@
 import json
 from pathlib import Path
 R = Path(__file__).resolve().parents[1] / "reports"
-L_ = lambda n: json.load(open(R / n))
+L_ = lambda n: json.load(open(R / n, encoding="utf-8"))
 E, EP, S, U, FU, PR = L_("email_metrics.json"), L_("email_metrics_plain.json"), L_("sms_metrics.json"), L_("url_metrics.json"), L_("fusion_metrics.json"), L_("probe_results.json")
 UA, UB = U["string_model"], U["feature_benchmark"]
 pct = lambda x: f"{100 * x:.1f}%"
@@ -64,7 +64,7 @@ L += [f"- {k.replace('_', ' ')}: {v}" if isinstance(v, str) else f"- bundle mix:
 
 WMP = R / "window_metrics.json"; pc = lambda x: pct(x) if x is not None else "n/a"
 if WMP.exists():
-    WM = json.load(open(WMP)); d0 = f"{WM['default_window_minutes']:g}"
+    WM = json.load(open(WMP, encoding="utf-8")); d0 = f"{WM['default_window_minutes']:g}"
     L.append("\n### Correlation engine with the time window (same simulated test bundles, alert line 0.5)\n"); L.append(HDR)
     L.append(row("Single-channel: alert if any event >= 0.5", WM["single_channel_alert_any_event_ge_0.5"]))
     L.append(row("Correlation model on the whole bundle (rows above)", WM["whole_bundle_model_at_0.5"], "no time limit; a lone event is scored by the model"))
@@ -78,14 +78,15 @@ if WMP.exists():
 
 CMP = R / "comparison_metrics.json"
 if CMP.exists():
-    CM = json.load(open(CMP))
+    CM = json.load(open(CMP, encoding="utf-8")); skipped = []
     L.append("\n### R3-09: correlation against the baselines (SIMULATED bundles, alert line 0.5)\n")
     L.append("| Method | n | Precision | Recall | F1 (95% CI) | False-positive rate (95% CI) | Simulated campaigns every filter misses, flagged |\n|---|---|---|---|---|---|---|")
     for k, m in CM["rows"].items():
-        if "f1" not in m: L.append(f"| {m['name']} | – | – | – | – | – | {m['status']} |"); continue
+        if "f1" not in m: skipped.append(m); continue          # no empty cells: a method that was not evaluated gets a sentence below, not a row of dashes
         L.append(f"| {m['name']} | {m['n']:,} | {pct(m['precision'])} | {pct(m['recall'])} | {pct(m['f1'])} ({pct(m['ci95']['f1'][0])}-{pct(m['ci95']['f1'][1])}) | "
                  f"{pct(m['false_positive_rate'])} ({pct(m['ci95']['false_positive_rate'][0])}-{pct(m['ci95']['false_positive_rate'][1])}) | {pc(m.get('hard_campaigns_flagged'))} |")
     L.append(f"\n{CM['title']}. Parallel multi-channel = the same fusion recipe trained without link and timing features (src/eval_comparison.py). Real bundles: {CM['real_bundles']}.")
+    for m in skipped: L.append(f"\n{m['name']}: {m['status']}.")
 
 L.append("\n## 3. How to read these numbers\n")
 L.append("- **Pooled email scores are flattering.** The leave-one-corpus-out rows are the honest estimate: ranking stays fairly good (AUC " + f"{min(v['roc_auc'] for v in E['leave_one_corpus_out'].values()):.2f}-{max(v['roc_auc'] for v in E['leave_one_corpus_out'].values()):.2f}" + ") but a 0.5 threshold does not transfer. False-positive rates on unseen corpora: " + ", ".join(f"{k} {pct(v['false_positive_rate'])}" for k, v in E["leave_one_corpus_out"].items()) + "; recall: " + ", ".join(f"{k} {pct(v['recall'])}" for k, v in E["leave_one_corpus_out"].items()) + ".")
@@ -108,6 +109,15 @@ L.append("3. **Known false positives:** legitimate Google Docs links and courier
 L.append("4. **Thresholds are not portable across sources** (email, section 3). The 0.5 operating point was not re-validated on any new environment.")
 L.append("5. **The correlation model is trained on simulated bundles.** Its numbers describe the simulation, not field performance. The API adds a time window (default 60 minutes, `window_minutes` per request) and judges a lone event by its detector; both came after training, so the model was not retrained, and the window value has to come from real bundles. Refit and evaluate on the Review-2 test-case set.")
 L.append("6. **No real-traffic or time-split evaluation.** All corpora are static public collections.")
-L.append("7. **Voice and video detectors are not trained** (no accessible data).\n")
+L.append("7. **Voice and video detectors are not trained** (no accessible data).")
+FRC = R / "final_run" / "tc_cross_check.json"
+if FRC.exists():   # written by scripts/final_run_record.py from the Phase 4.1 final run
+    X = json.load(open(FRC, encoding="utf-8")); t6 = X["TC-06"]
+    L.append(f"8. **The correlation model is sensitive to small changes in its simulated training data.** A full retrain on this build (`run_all.sh` on `{X['build']}`), where the only training change since v2 is the email text cleaner fix (D-11, D-15), "
+             f"moves the simulated 60-minute engine's F1 from {pct(X['simulated_f1_60min']['live'])} to {pct(X['simulated_f1_60min']['retrained'])}, but moves the hand-written TC-06 bundle from "
+             f"{t6['live detectors + live correlation']:.3f} to {t6['retrained detectors + retrained correlation']:.3f}, below the alert line. The change comes from the correlation model, not the detectors "
+             f"(live correlation with retrained detectors: {t6['retrained detectors + live correlation']:.3f}). The retrain failed the adoption rule and was not adopted; the record is in `reports/final_run/`.\n")
+else: L[-1] += "\n"
 L.append("## 6. Reproduce\n\n```\npip install -r requirements.txt\nbash download_data.sh      # public GitHub sources only\nbash run_all.sh            # trains everything, rewrites reports/\nuvicorn api:app --port 8000\n```\n")
-(R / "results.md").write_text("\n".join(L)); print("wrote results.md", len("\n".join(L)), "chars")
+if FRC.exists(): L.append(f"On this build, `run_all.sh` gives models close to but not identical with the shipped ones, because the email text cleaner was fixed after v2 (D-11, D-15). The shipped models are v2's; `reports/final_run/` holds what a retrain gives.\n")
+(R / "results.md").write_text("\n".join(L), encoding="utf-8"); print("wrote results.md", len("\n".join(L)), "chars")

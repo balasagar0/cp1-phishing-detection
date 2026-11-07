@@ -42,7 +42,7 @@ def main():
                      "events": ", ".join(f"{e['channel']} {e['score']:.3f}" for e in j["events"]), "alone": "yes" if alone else "no",
                      "bundle": f"{j['bundle_risk']:.3f} ({'alert' if final else 'no alert'}; {j['n_windows']} window{'s' if j['n_windows'] > 1 else ''}, shared {', '.join(j['shared_identity_tokens']) or 'none'})",
                      "lift": "yes: no event alerts alone, the bundle does" if final and not alone else ("no: already alerts alone" if alone else "no: stays below the line"), "source": "POST /correlate, run here"})
-    W = json.loads((ROOT / "reports" / "window_metrics.json").read_text()); Fm = json.loads((ROOT / "reports" / "fusion_metrics.json").read_text())
+    W = json.loads((ROOT / "reports" / "window_metrics.json").read_text(encoding="utf-8")); Fm = json.loads((ROOT / "reports" / "fusion_metrics.json").read_text(encoding="utf-8"))
     h = W["campaigns_missed_by_every_single_channel_filter"]; share = Fm["campaigns_missed_by_every_single_channel_filter"]["share_of_linked_attacks"]
     rows.append({"evidence": "Simulated linked attacks where every event is below 0.5", "kind": "SIMULATED bundles (12,000 test bundles; real held-out messages, constructed links)",
                  "events": f"{h['n']} campaigns ({100 * share:.1f}% of simulated linked attacks)", "alone": "no (by definition)",

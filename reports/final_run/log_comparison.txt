@@ -1,0 +1,5 @@
+single_channel           {'precision': 0.8708, 'recall': 0.9538, 'f1': 0.9104, 'false_positive_rate': 0.1395}
+parallel_multichannel    {'precision': 0.9703, 'recall': 0.926, 'f1': 0.9476, 'false_positive_rate': 0.028}
+whole_bundle_model       {'precision': 0.9678, 'recall': 0.9333, 'f1': 0.9503, 'false_positive_rate': 0.0306}
+deployed_engine_60min    {'precision': 0.8942, 'recall': 0.9491, 'f1': 0.9208, 'false_positive_rate': 0.1107}
+patent_noisy_or          not evaluated: the owner decided on 7 Nov 2026 that the patent will be written from this build; the old draft's noisy-OR method and its generated numbers are not used

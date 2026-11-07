@@ -1,0 +1,128 @@
+{
+  "title": "SIMULATED bundles (12,000 test bundles; events are real held-out messages, links are constructed)",
+  "alert_line": 0.5,
+  "n_bundles": 12000,
+  "rows": {
+    "single_channel": {
+      "name": "Single-channel: alert if any event >= 0.5",
+      "n": 12000,
+      "positives": 5956,
+      "threshold": 0.5,
+      "accuracy": 0.9058,
+      "precision": 0.8695,
+      "recall": 0.9533,
+      "f1": 0.9095,
+      "false_positive_rate": 0.141,
+      "tn": 5192,
+      "fp": 852,
+      "fn": 278,
+      "tp": 5678,
+      "roc_auc": 0.9746,
+      "pr_auc": 0.9778,
+      "ci95": {
+        "f1": [
+          0.9044,
+          0.9144
+        ],
+        "false_positive_rate": [
+          0.1323,
+          0.1506
+        ]
+      },
+      "hard_campaigns_flagged": 0.0
+    },
+    "parallel_multichannel": {
+      "name": "Parallel multi-channel: fusion without link and timing features, whole bundle",
+      "n": 12000,
+      "positives": 5956,
+      "threshold": 0.5,
+      "accuracy": 0.9471,
+      "precision": 0.9698,
+      "recall": 0.9221,
+      "f1": 0.9453,
+      "false_positive_rate": 0.0283,
+      "tn": 5873,
+      "fp": 171,
+      "fn": 464,
+      "tp": 5492,
+      "roc_auc": 0.9847,
+      "pr_auc": 0.9876,
+      "ci95": {
+        "f1": [
+          0.9415,
+          0.9492
+        ],
+        "false_positive_rate": [
+          0.0246,
+          0.0331
+        ]
+      },
+      "hard_campaigns_flagged": 0.1111
+    },
+    "whole_bundle_model": {
+      "name": "Correlation model on the whole bundle (pools up to 72 h)",
+      "n": 12000,
+      "positives": 5956,
+      "threshold": 0.5,
+      "accuracy": 0.9507,
+      "precision": 0.9704,
+      "recall": 0.929,
+      "f1": 0.9492,
+      "false_positive_rate": 0.028,
+      "tn": 5875,
+      "fp": 169,
+      "fn": 423,
+      "tp": 5533,
+      "roc_auc": 0.9873,
+      "pr_auc": 0.9893,
+      "ci95": {
+        "f1": [
+          0.9458,
+          0.9529
+        ],
+        "false_positive_rate": [
+          0.0245,
+          0.0322
+        ]
+      },
+      "hard_campaigns_flagged": 0.1852
+    },
+    "deployed_engine_60min": {
+      "name": "Deployed engine: 60-minute windows (what the API does)",
+      "n": 12000,
+      "positives": 5956,
+      "threshold": 0.5,
+      "accuracy": 0.9187,
+      "precision": 0.894,
+      "recall": 0.9486,
+      "f1": 0.9205,
+      "false_positive_rate": 0.1109,
+      "tn": 5374,
+      "fp": 670,
+      "fn": 306,
+      "tp": 5650,
+      "roc_auc": 0.9789,
+      "pr_auc": 0.9821,
+      "ci95": {
+        "f1": [
+          0.9155,
+          0.9251
+        ],
+        "false_positive_rate": [
+          0.1031,
+          0.119
+        ]
+      },
+      "hard_campaigns_flagged": 0.1852
+    },
+    "patent_noisy_or": {
+      "name": "Patent noisy-OR campaign score",
+      "status": "not evaluated: the owner decided on 7 Nov 2026 that the patent will be written from this build; the old draft's noisy-OR method and its generated numbers are not used"
+    }
+  },
+  "hard_campaigns": {
+    "n": 27,
+    "definition": "simulated linked attacks where every event scores below 0.5"
+  },
+  "real_bundles": "blocked on R2-10: 0 real bundles collected"
+}

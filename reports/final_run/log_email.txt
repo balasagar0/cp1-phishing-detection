@@ -1,0 +1,18 @@
+[    46s] loaded 72431 emails after cleaning (numbers masked) + dedupe; {'rows_before': 83042, 'rows_after': 72431, 'conflicting_texts_dropped': 0}
+[    46s] 
+label           0      1
+source                  
+CEAS_08     17046  17248
+Enron       14485  14432
+FraudEmail   5091   4129
+[    88s] features: 400000 candidate terms -> 49052 kept (present in >=2 corpora)
+[    90s] C=1: val F1=0.9846 AUC=0.9985
+[    93s] C=4: val F1=0.9872 AUC=0.999
+[    97s] C=16: val F1=0.988 AUC=0.9992
+[   104s] pooled test: {'n': 7244, 'positives': 3581, 'threshold': 0.5, 'accuracy': 0.988, 'precision': 0.9899, 'recall': 0.9858, 'f1': 0.9878, 'false_positive_rate': 0.0098, 'tn': 3627, 'fp': 36, 'fn': 51, 'tp': 3530, 'roc_auc': 0.999, 'pr_auc': 0.9991}
+[   145s] LOCO held-out=CEAS_08: F1=0.861 recall=0.9647 precision=0.7775 FPR=0.2794 AUC=0.9428
+[   183s] LOCO held-out=Enron: F1=0.7465 recall=0.6062 precision=0.9716 FPR=0.0177 AUC=0.9469
+[   229s] LOCO held-out=FraudEmail: F1=0.8565 recall=0.955 precision=0.7765 FPR=0.2229 AUC=0.9636
+[   230s] top malicious: ['your', '!', '! http', 'http', 'remove', 'sex', 'life', 'man', 'here', 'our', 're numtok', 'com', 'bank', 'men', 'love', 'meds', 'software', 'viagra', 'stock', 'watches']
+[   230s] top legit: ['wrote', 'thanks', 'vince', 'ie', 'numtok yeartok', 'to', 'louise', 'fyi', 'call', 'nz', 'tony', 'on', 'challenge', 'the', 'numtok http', 'org', 'python', 'doc', 'employees', 'houston']
+[   337s] saved robust email model + metrics

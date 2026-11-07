@@ -12,7 +12,7 @@ def test_workbook_example_rows_reach_refit_fusion_and_its_report():
                         "--reports-dir", str(out), "--models-dir", str(ROOT / "models")], capture_output=True, text=True, timeout=600)
     assert p.returncode == 0, p.stderr[-400:]
     assert (out / "real_bundles_report.md").exists() and (out / "real_bundles_metrics.json").exists(), list(out.iterdir())
-    m = json.loads((out / "real_bundles_metrics.json").read_text())
+    m = json.loads((out / "real_bundles_metrics.json").read_text(encoding="utf-8"))
     assert m["window_minutes"] == 60.0 and "H1:" in p.stdout and "time window: 60 minutes" in p.stdout, p.stdout[:400]
     assert not (ROOT / "models" / "fusion_model_real.joblib").exists()          # no --save: nothing is refit
 
