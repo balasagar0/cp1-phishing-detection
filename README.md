@@ -1,85 +1,133 @@
-# CP1 - trained per-channel detectors (email, SMS, URL)
+# AI-Based Multi-Channel Phishing Detection System (CP1 prototype)
 
-Real trained models, no hand-written scoring rules. Each detector returns `score` = probability the item is **not benign**,
-plus the terms/n-grams that pushed the score (so the console can show *why*). Voice and video are not trained (no accessible data).
+Team Y23-HTE-PROJECT-88, B.Tech CSE, KL University. Build: see `reports/FINAL_NUMBERS.md` (tag and commit at the top).
 
-## Run it
+Three trained detectors (email, SMS, URL), a correlation model that combines events inside a 60-minute window, an event store that groups a
+recipient's events into campaigns and raises alerts, and a console. Every score comes from a trained model; there are no hand-written scoring rules.
+
+**Not built:** voice and video detectors (calls and video are shown as "not assessed", never as safe). The correlation model was trained on
+**simulated** bundles, because no public dataset links one attacker's email, SMS and URL events; its risk is not a calibrated probability.
+All measured numbers are in `reports/FINAL_NUMBERS.md` and `reports/results.md`; this README quotes none.
+
+## Install (once, needs the internet)
+
+Python 3.10 or later (tested with 3.13). On Windows use Command Prompt, PowerShell or Git Bash in the project folder. The folder path may contain
+spaces: keep it in quotes.
+
+Windows:
+
+```bat
+python -m venv .venv
+.venv\Scripts\python.exe -m pip install -r requirements.txt
+.venv\Scripts\python.exe -m pytest tests -q
+```
+
+Linux or macOS:
+
 ```bash
-pip install -r requirements.txt           # scikit-learn must be 1.8.0 (models are pickled with it)
-uvicorn api:app --port 8000               # local demo API (CORS open - local use only)
-python src/predict.py url "http://sbi-kyc-update.top/verify-now.php"     # CLI check
+python3 -m venv .venv
+.venv/bin/python -m pip install -r requirements.txt
+.venv/bin/python -m pytest tests -q
 ```
-```js
-// from the React console
-const r = await fetch("http://localhost:8000/score", {method: "POST", headers: {"Content-Type": "application/json"},
-  body: JSON.stringify({channel: "sms", text: "Dear customer your SBI account will be blocked..."})});
-const {score, label, class_probabilities, top_terms_toward_smishing} = await r.json();
+
+scikit-learn must be exactly the version in `requirements.txt` (the models were saved with it). `requirements.lock.txt` lists every package
+version the build was tested with. The trained models ship in `models/`; no data download is needed to run the demo or the tests.
+
+## Run the demo (no internet needed)
+
+Windows: double-click **`start_demo.bat`**. It runs `scripts/preflight.py`, which checks Python, the packages, the model files (against
+`reports/model_manifest.json`) and the built console, starts the API on port 8000, runs TC-01 to TC-08, checks that nothing needs the network,
+prints **GO** or **NO-GO**, and on GO opens the console at http://127.0.0.1:8000/.
+
+Linux or macOS:
+
+```bash
+.venv/bin/python scripts/preflight.py --keep-running --open
 ```
-Endpoints: `GET /health`, `POST /score` (`channel`: email | sms | url; `subject` optional for email), `POST /score/batch`,
-`POST /correlate` (a bundle of events -> per-event scores plus one bundle risk from the correlation model; optional `window_minutes`, see below). Voice/video return HTTP 501.
+
+Or start the API by hand and open http://127.0.0.1:8000/ in a browser:
+
+```bash
+.venv/Scripts/python.exe -m uvicorn api:app --port 8000 --no-access-log     # Windows (Linux: .venv/bin/python)
+```
+
+The console: pick a preset (TC-01 to TC-08, or one of the four Indian stories), press **Analyze events**, and read the side-by-side table (each
+event's score, whether it alerts on its own, the bundle risk). **Replay into event store** sends the same events to the event store and shows the
+campaign, its alert and the timeline. `docs/USER_MANUAL.md` walks through every view with screenshots; `docs/DEMO_SCRIPT.md` is the review script.
+A one-file console is also served at http://127.0.0.1:8000/lite.
+
+## API
+
+| Route | What it does |
+|---|---|
+| `GET /health` | channels loaded, window minutes, what the correlation model was trained on; `status` is `degraded` if a model file is missing |
+| `POST /score` | one message: `{"channel": "email"\|"sms"\|"url", "text": "...", "subject": "..."}`. Calls and video answer HTTP 501 (not built) |
+| `POST /score/batch` | `{"items": [ ... ]}` |
+| `POST /correlate` | a bundle: `{"events": [{"channel", "text", "subject", "identity", "time"}], "window_minutes": 60}`; returns per-event scores, the bundle risk, the windows and shared identity tokens. Nothing assessable gives `status: CANNOT_ASSESS` |
+| `POST /events` | the event store: `{"recipient": "...", "events": [ ... ]}`; stores them, regroups the recipient's campaigns, raises alerts |
+| `GET /campaigns`, `GET /campaigns/{id}` | campaigns (optionally `?recipient=`), and one campaign with its timeline |
+| `GET /alerts`, `POST /alerts/{id}/ack` | open alerts, and acknowledging one |
+| `POST /purge` | retention: `{"older_than_days": 30}` |
+| `GET /presets` | the console presets (hand-written, not a test set) |
+
+Example (Git Bash or Linux):
+
 ```bash
 curl -s localhost:8000/correlate -H 'Content-Type: application/json' -d '{"events":[
   {"channel":"sms","text":"Your account will be blocked, update KYC at http://sbi-kyc-update.top/verify","identity":"+91 98765 43210","time":"0"},
   {"channel":"url","text":"http://sbi-kyc-update.top/verify","time":"4"}]}'
 ```
-Events are linked by identity tokens (registered domains found in the text or URL, phone numbers, the optional `identity` field) and by `time` (minutes, or ISO timestamps).
 
-## Time window, single events and identity tokens
-- **Time window.** Events further apart than `window_minutes` are not combined or linked. The default is 60 minutes (`DEFAULT_WINDOW_MIN` in `src/fusion.py`); send `window_minutes` (above 0, up to 10080) to change it for one request. A refit on real bundles can store its own window (`refit_fusion.py ... --window N --save`) and the API then uses that.
-- **How a bundle is scored.** The events are split into time windows (a window starts at one event and holds every event that follows within the window). Each window is scored on its own and the bundle takes the highest. Response fields: `window_minutes`, `n_windows`, `window_event_indices`, `window_time_span_minutes`, and `in_window` on each event. `bundle_risk_without_correlation` is all events pooled with no link or timing evidence.
-- **A lone event is judged by its detector.** The correlation model was trained on simulated bundles with an assumed 50% attack rate, which made a lone event look worse than its detector says (a URL scoring 0.45 was rated 0.82). A window with one event now returns that event's own score. Windows with two or more events go to the model.
-- **Why 60 minutes.** It is the deck's one-hour window, and about 95% of the simulated linked attack bundles fit in it (`results.md` has the exact figure). It is an assumption until real bundles replace it: `refit_fusion.py` suggests a value (90th percentile of the span of coordinated bundles, rounded up to 5 minutes) once there are 20 such bundles.
-- **What the window costs on the simulation.** The window table in `results.md` shows that, on the simulated bundles, the engine scores lower with a window than when it pools every event of a bundle. The simulation's unlinked bundles hold events up to 72 hours apart and are labelled as a whole, so pooling them helps there; the window stops it. The simulation cannot settle the window, so do not choose it from that table. Quote the row that matches the setting you demo.
-- **Phone numbers.** A number counts as a phone number only in a phone shape: a leading `+` with 10-15 digits, 10 digits, 11 digits starting with 0, or 12 digits starting with 91 and a mobile digit. Links are cut out first, and a number right after words like order, tracking, ref or account is skipped unless the words before it say call or phone. Tracking, order and account numbers and dates are not identities.
-- **Limits.** `/correlate` scores a bundle you give it. It does not group a live stream of events and has no event store. A popular domain shared by two unrelated messages (wikipedia.org, gmail.com) still counts as shared identity; the model learned from simulated benign linked bundles that this is weak evidence, but check it on real benign linked bundles.
-
-## React console
-`console/phishing_correlation_console.jsx` calls `/correlate`; it has no scoring logic of its own.
-```bash
-npm create vite@latest console-app -- --template react && cd console-app && npm install
-cp ../console/phishing_correlation_console.jsx src/App.jsx      # delete the App.css / index.css imports Vite adds
-npm run dev                                                       # backend must be running on :8000
-```
-
-## Review-2 test cases
-`testcases/review2_testcase_workbook.xlsx` is the data-entry workbook for real multi-channel bundles; the rules are in `TESTCASE_FORMAT.md`.
-`python src/refit_fusion.py <file>` checks the file, tests the current correlation model on it, measures the simulation's assumptions, suggests a time window
-and, with enough bundles and `--save`, refits the model (the API then serves `models/fusion_model_real.joblib`).
-
-## Layout
-| Path | What |
-|---|---|
-| `src/train_email.py` | final email model (numbers masked, vocabulary limited to terms seen in >=2 corpora) |
-| `src/train_email_plain.py` | baseline email model, kept for the comparison in the report |
-| `src/train_sms.py`, `src/train_url.py` | SMS (3-class) and URL (string model + feature benchmark) |
-| `src/url_features.py` | URL canonicalisation, domain-popularity flags, constructed test URLs |
-| `src/fusion.py`, `src/train_fusion.py` | correlation model, time windows, single-event rule and the simulated-bundle training |
-| `src/eval_window.py` | evaluates the window and the single-event rule on the same simulated test bundles (`reports/window_metrics.json`) |
-| `src/probes.py` | hand-written probe inputs (not an evaluation) |
-| `src/predict.py`, `api.py` | inference wrapper and FastAPI app |
-| `console/` | React console |
-| `src/testcases.py`, `src/refit_fusion.py`, `src/make_testcase_workbook.py` | Review-2 file reader/validator, real-bundle evaluation and refit, workbook builder |
-| `testcases/`, `tests/` | workbook + example rows; `smoke_test.py` (synthetic rows, all marked `example`) and `test_window_and_ids.py` (window, identity tokens, input checks) |
-| `models/` | trained `.joblib` files (`url_features_*` are offline benchmarks, not used by the API) |
-| `reports/results.md` | **all metrics, with leave-one-corpus-out, confidence intervals and known limitations** |
-| `reports/*_metrics*.json`, `log_*.txt` | raw metrics and training logs |
+`/docs` and `/redoc` are switched off because their pages load files from the internet; the schema is at `/openapi.json`.
+Bad input gets HTTP 422 with a reason (empty text, unknown channel, malformed URL, unreadable time). Privacy: `docs/PRIVACY.md`.
 
 ## Tests
+
 ```bash
-python tests/test_window_and_ids.py   # window, single-event rule, identity tokens, input checks; needs only the shipped models
-python tests/smoke_test.py            # workbook loader, validator, refit script; needs the data from run_all.sh (pools) for its synthetic bundles
+.venv/Scripts/python.exe -m pytest tests -q          # everything except the smoke test (Linux: .venv/bin/python)
+.venv/Scripts/python.exe tests/test_final_cases.py   # the 112 ported test-plan cases; writes reports/final_cases_results.json
+.venv/Scripts/python.exe scripts/fill_final_workbook.py   # fills reports/Test_Cases_and_Test_Data_FINAL.xlsx (needs docs/inputs/)
+.venv/Scripts/python.exe tests/smoke_test.py         # workbook, validator and refit checks; its second half needs data/processed (run_all.sh)
 ```
 
-## Retrain from scratch
-```bash
-bash download_data.sh     # public GitHub sources only (raw data is not in this zip)
-bash run_all.sh           # ~15 min on one CPU core; rewrites models/ and reports/ (including reports/window_metrics.json)
-```
-Nazario (real phishing emails), SpamAssassin and Ling are not in this run. They are on GitHub as well (`rokibulroni/Phishing-Email-Dataset`: `Nazario.csv`, `SpamAssasin.csv`, `Ling.csv`; reachable when this version was prepared).
-To add them, put the CSVs in `data/raw/`, extend `load_email()` in `src/train_email.py`, and run `run_all.sh` again. Check each licence first.
+Failures of the ported cases that are linked to an open defect are reported as expected failures; `reports/defect_log.md` lists every defect.
+`RUN_TESTS.bat` runs all of them on Windows. Checks with their own scripts: `scripts/offline_check.py` (no network at runtime),
+`scripts/ui_checks.py` (console checks UI-01 to UI-07 with Playwright; `pip install -r requirements-dev.txt`), `scripts/benchmark.py` (latency).
 
-## Data sources (check each licence before redistributing the data)
-CEAS_08 (PHP4Life/Phishing-Email-Dataset), Enron-Spam (MWiechmann/enron_spam_data), fraud email corpus (smurlafries1/MachineLearningPhishingDetection),
-LSDST smishing corpus (hcphap/Smishing-Dataset) and a second SMS collection (shaghayegh-hp/Smishing_Dataset) used only as an external check,
-URL strings (faizann24/Using-machine-learning-to-detect-malicious-URLs), URL features (GregaVrbancic/Phishing-Dataset),
-domain popularity list (opendns/public-domain-lists, top 10,000).
+## Retrain from scratch (needs the internet; about 20 minutes)
+
+```bash
+bash download_data.sh     # public datasets; see DATA_SOURCES.md for sources, licences and hashes
+bash run_all.sh           # retrains every model and rewrites reports/ (uses .venv when present)
+```
+
+On Windows run these in Git Bash. `run_all.sh` stops at the first failed step. After a retrain, run the tests, `scripts/make_model_manifest.py`
+and `scripts/preflight.py`.
+
+## Troubleshooting
+
+| Problem | What to do |
+|---|---|
+| `start_demo.bat` says the venv is missing | Run the Install commands once (they need the internet). |
+| NO-GO: port 8000 is taken | Close the other program, or `.venv\Scripts\python.exe scripts\preflight.py --port 8001 --keep-running --open`. |
+| NO-GO: model files do not match | The models were changed or damaged. Restore them with `git checkout -- models` (or retrain and refresh the manifest). |
+| The API will not start, or warns about scikit-learn versions | Reinstall with `pip install -r requirements.txt` in the venv; scikit-learn must match exactly. |
+| Blank page at http://127.0.0.1:8000/ | Hard-refresh the browser (Ctrl+F5). If it persists, open http://127.0.0.1:8000/lite, or rebuild the console: `npm install` and `npm run build` in `console/` (needs Node.js and the internet). |
+| "Cannot reach the API" in the console | The API stopped. Start it again, then press Retry or Analyze. |
+| `/health` says `degraded` | One model file is missing; that channel is "not assessed" until it is restored. |
+| `console.html` opened as a file cannot reach the API | Expected: open http://127.0.0.1:8000/lite instead. |
+
+## Layout
+
+| Path | What |
+|---|---|
+| `api.py` | FastAPI app: scoring, correlation, event store routes, console |
+| `src/predict.py`, `src/fusion.py`, `src/event_store.py` | detectors and identity tokens; correlation model and time windows; event store |
+| `src/train_*.py`, `src/eval_*.py`, `src/make_report.py` | training and evaluation (run by `run_all.sh`) |
+| `src/demo_cases.py` | TC-01 to TC-08 and the Indian stories (hand-written, not a test set) |
+| `console/` | the React console (`console/dist` is the built copy the API serves) |
+| `tests/` | all tests; `tests/data/workbook_cases.json` is copied from the team workbook |
+| `scripts/` | preflight, offline check, UI checks, benchmark, workbook filler, report and document generators |
+| `reports/` | every metric and run record, written by code; start with `FINAL_NUMBERS.md` |
+| `docs/` | user manual, demo script, privacy, diagrams, report chapters and the other documents |
+| `testcases/`, `TESTCASE_FORMAT.md` | the real-bundle workbook (R2-10) and its rules; `src/refit_fusion.py` evaluates and refits on it |

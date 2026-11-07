@@ -1,0 +1,37 @@
+%% As built (R2-14): components of the CP1 prototype. Grey = not built.
+flowchart LR
+  subgraph Browser
+    UI["Console (React)<br/>console/phishing_correlation_console.jsx<br/>served from console/dist"]
+  end
+  subgraph API["FastAPI app (api.py, uvicorn, port 8000)"]
+    R1["/score, /score/batch"]
+    R2["/correlate"]
+    R3["/events, /campaigns, /alerts, /purge"]
+    R4["/health, /presets, / (console), /lite"]
+    CHK["input checks<br/>_check, check_url (422)"]
+  end
+  subgraph Core["src/"]
+    DET["Detectors (predict.py)<br/>email, sms, url models<br/>extract_ids: identity tokens"]
+    FUS["Fusion (fusion.py)<br/>time_windows, window_risks<br/>60-minute window"]
+    ES["EventStore (event_store.py)<br/>HMAC-SHA256 hashing"]
+    DEMO["demo_cases.py<br/>TC-01..TC-08, IN-01..IN-04"]
+  end
+  DB[("SQLite<br/>data/events.db")]
+  M[("models/*.joblib<br/>email, sms, url, fusion")]
+  VOICE["voice / video detector<br/>NOT BUILT"]:::nb
+  UI -->|HTTP JSON| R1 & R2 & R3 & R4
+  R1 & R2 & R3 --> CHK
+  R1 --> DET
+  R2 --> DET --> FUS
+  R3 --> DET
+  R3 --> ES --> FUS
+  ES --> DB
+  R4 --> DEMO
+  DET --> M
+  FUS --> M
+  R2 -. "call / video: not assessed" .-> VOICE
+  subgraph Train["Training (offline, run_all.sh)"]
+    DL["download_data.sh<br/>download_email_extra.sh"] --> RAW[("data/raw")] --> TR["train_email / train_sms / train_url<br/>train_fusion (SIMULATED bundles)"] --> M
+    TR --> REP[("reports/*.json, results.md")]
+  end
+  classDef nb fill:#eeeeee,stroke:#999999,color:#666666,stroke-dasharray: 4 3

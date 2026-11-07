@@ -2,7 +2,7 @@
 
 All 69 items from section 9 of `CP1_FINISH_TASK.md`. Updated at the end of every phase. Nothing is marked done without evidence (a file, a test or a commit).
 
-**Last update:** end of Phase 2 (event store, live console, offline and UI checks), 2 Nov 2026. Tag `test-run-20261102-2`.
+**Last update:** end of Phase 3 (models), 7 Nov 2026. Tag `test-run-20261107-3`.
 
 **Status words:** done (finished, with evidence) · partial (some of it is done; the rest is named) · open (not started) · blocked (waiting on something named) · people (a person does it; tracked here).
 
@@ -15,8 +15,8 @@ All 69 items from section 9 of `CP1_FINISH_TASK.md`. Updated at the end of every
 | 0. Baseline and audit | done | `reports/baseline_check.md`, `reports/model_manifest.json`, `tests/test_demo_cases.py`, tags `v2-baseline` and `test-run-20261102-0` |
 | 1. Port the test suite, re-test defects, code fixes | done | `tests/test_final_cases.py` (112 cases), `reports/final_cases_results.json`, `reports/Test_Cases_and_Test_Data_FINAL.xlsx`, `reports/defect_log.md`, `tests/test_defects.py`; merges of `module/testing-docs`, `module/email-sms`, `module/url`, `module/correlation`, `module/api-console`; tag `test-run-20261102-1` |
 | 2. Event store, live flow, console | done | `src/event_store.py` and its routes, `tests/test_event_store.py`; console in `console/` served at `/`; `scripts/offline_check.py` (`reports/offline_check.md`); `scripts/ui_checks.py` (`reports/ui_checks.json`, `reports/screenshots/`); `reports/r2_09_evidence.md`; tag `test-run-20261102-2` |
-| 3. Models | open | Starts next |
-| 4. Freeze and final run | open | Needs Phases 1 to 3 |
+| 3. Models | done | No model adopted. Email: three attempts, none passed the adoption rule (`reports/candidates/email_candidates*.md`), v3 privacy record in `PRIVACY_AND_ETHICS.md`; URL: no retrain needed (`reports/candidates/url_d01.md`); SMS: no licensed data (`reports/candidates/sms_d09.md`); tag `test-run-20261107-3` |
+| 4. Freeze and final run | open | Starts next; the patent spec unblocks 4.3's patent row |
 | 5. Documents | open | Needs `cp1-final`. PT-03 and PT-04 also need the patent spec |
 | 6. Wrap up | open | Last |
 
@@ -53,13 +53,13 @@ All 69 items from section 9 of `CP1_FINISH_TASK.md`. Updated at the end of every
 | ID | Item | Owner | Who does it | Status | Evidence | Next step |
 |---|---|---|---|---|---|---|
 | R2-01 | URL false alarms on `https://` and a trailing slash (D-01) | V | Code | partial | D-01 Open (`reports/defect_log.md`): the scheme and trailing-slash flips are gone (URL-05, URL-06, URL-02, SYS-13 pass, because `canon()` normalises in training and serving); URL-07 fails on U-H06, a real Google sign-in URL with a long query | Phase 3.2: no retrain for the scheme (it no longer flips). Record U-H06 as the login-page trade-off; the team decides on D-01 |
-| R2-02 | The SMS model catches smishing (D-09) | K | Code; may end as a proposed acceptance | partial | SMS-01 passes (every standard phishing SMS caught); SMS-03 fails on its legitimate half (bank alerts flagged, new defect D-16). `reports/defect_log.md` | Phase 3.3: retrain only with real SMS data whose licence can be checked; otherwise D-09 and D-16 stay open with a proposal |
+| R2-02 | The SMS model catches smishing (D-09) | K | Code; may end as a proposed acceptance | blocked | SMS-01 passes; SMS-03 fails on bank alerts (D-16). No real SMS data with a checkable licence exists, so no retrain (`reports/candidates/sms_d09.md`). D-09 has a written proposal; D-16 stays open | The team decides on the D-09 proposal; D-16 needs licensed or consented legitimate transactional SMS (CP2) |
 | R2-03 | A fixed time window (D-04) | B | Code | done | One line sets the window: `src/fusion.py` line 13 `DEFAULT_WINDOW_MIN = 60.0`. `/correlate` and the event store read it through `Fusion.window` (`api.py` line 42, `src/event_store.py`), `refit_fusion.py` and `eval_window.py` read the same constant, the console takes it from `/health`. Tests: COR-12, SYS-09, `test_D04_*`, `test_window_edges_59_and_61_minutes` | Nothing for code. A refit on real bundles may store its own window (R2-10) |
 | R2-04 | The console calls the API (D-06) | V | Code | done | The console calls the live API on every view (`/health`, `/presets`, `/correlate`, `/events`, `/campaigns`, `/alerts`) and is served by FastAPI at `/` (built files in `console/dist`). CORS names explicit origins. UI-01, UI-02, UI-04 to UI-07 pass in Chrome and Edge (`reports/ui_checks.json`); UI-03 fails on D-18 | Nothing for code. The team decides on D-18 |
 | R2-05 | Event store, identity linking, composite score and alert | B | Code | done | `src/event_store.py` (SQLite, HMAC-hashed recipient and tokens, text only with `CP1_STORE_CONTENT=1`), routes `POST /events`, `GET /campaigns`, `GET /campaigns/{id}`, `GET /alerts`, `POST /alerts/{id}/ack`, `POST /purge`. `tests/test_event_store.py` (12 tests): equal to `/correlate` on TC-04, TC-06, TC-07; linking; 59/61-minute edges; two recipients; one alert; calls in the timeline; purge; restart; privacy | Phase 4.2 end-to-end check on the frozen build |
 | R2-06 | The API rejects bad input (D-02, D-07) | V | Code | done | D-02 and D-07 Closed: empty text, unknown channels and malformed URLs give HTTP 422 with a reason (`check_url`, commits 3ec9530, 658d63c); EML-07, SMS-07, URL-08, API-08 pass; `test_D02_*`, `test_D07_*` | Nothing for code. Re-run in Phase 4 |
 | R2-07 | The remaining correlation defects (D-03, D-05, D-08) | B | Code | done | D-03, D-05, D-08 Closed, and D-13 (found on v2) Closed: calls and video are 'not assessed', nothing assessable is CANNOT_ASSESS (commit 3d42061); SCO-06, VV-03 to VV-05, COR-07, COR-09, COR-14, SYS-07, SYS-08, SYS-11, SYS-12 pass; `test_D03_*`, `test_D05_*`, `test_D08_*`, `test_D13_*` | Nothing for code. Re-run in Phase 4 |
-| R2-08 | The email defects (D-10, D-11) | K | Code | partial | D-11 Closed (cleaner strips scripts and HTML, keeps link targets; commit b151be2; PRE-01). D-10 Open: EML-03 fails on E-H04. New D-17: EML-01 misses 4 of 11 standard phishing emails | Phase 3.1: add Nazario, SpamAssassin and Ling, retrain with the new cleaner, apply the adoption rule |
+| R2-08 | The email defects (D-10, D-11) | K | Code | blocked | D-11 Closed (cleaner fix, commit b151be2, PRE-01). D-10 and D-17 Open. Three email retrain attempts (`reports/candidates/email_candidates.md`, `email_candidates_attempt2.md`, `email_candidates_v3.md`) all failed the adoption rule on (b) and (c); v3 also failed the privacy audit. v2's email model stays live | The team decides how to proceed after three attempts (keep v2 for CP1; real-mail false alarms are a CP2 item) |
 | R2-09 | Correlation changes a verdict with real scores (D-12, SYS-14) | B, M | Code | partial | `reports/r2_09_evidence.md`: S-03 on the old build (fixed scores), S-03 on v2's engine, TC-06 against its control TC-07, TC-05, and the simulated weak campaigns, each labelled. SYS-14 as written still fails (D-12 open, proposal written) | The team decides on the D-12 proposal; real bundles (R2-10) settle the claim |
 | R2-10 | Collect 40 + 40 real bundles (150 to refit) | T | People | people | `testcases/review2_testcase_workbook.xlsx` holds 0 real bundles. The path workbook -> `refit_fusion.py` -> `reports/real_bundles_report.md` works on the example rows (`tests/test_refit_path.py`; smoke test 24 checks pass with the data present) | The team collects 40 coordinated and 40 benign bundles (150 to refit). No bundle is ever generated |
 | R2-11 | Meet the test plan's exit criteria | M | Code | partial | The 112 cases run on this build (`reports/final_cases_results.json`): every failure is linked to an open defect; the console cases now run (Playwright). The FINAL workbook is filled by `scripts/fill_final_workbook.py` | Phase 4.4: judge the 7 exit criteria on the frozen build |
@@ -127,8 +127,16 @@ All 69 items from section 9 of `CP1_FINISH_TASK.md`. Updated at the end of every
 | Status | Items |
 |---|---|
 | done | 8 |
-| partial | 9 |
+| partial | 7 |
 | open | 19 |
-| blocked | 3 |
+| blocked | 5 |
 | people | 30 |
 | **total** | **69** |
+
+## Resume here (session paused during Phase 3, 2 Nov 2026)
+
+- **Email: three attempts, none adopted; v2's email model stays live.** Attempts 1 and 2 (extra phishing and spam corpora; then a raised alert line) and v3 (plus legitimate transactional mail: a generated set, templates, and the owner's own Gmail export, streamed under the owner's privacy spec) all pass the honest measure and fail the adoption rule on (b) and (c). v3 also failed the privacy audit's memorisation check, so it must not be used. Key real-world finding: on the owner's 4,069 legitimate emails, v2's live model raises a false alarm on 23.5% (`reports/candidates/email_candidates_v3.md`). Privacy record: `PRIVACY_AND_ETHICS.md`, `reports/privacy/email_v3_privacy_audit.md`. On 7 Nov the owner chose to keep the v3 model file and the export on this laptop; neither is committed.
+- **Done in Phase 3 so far (not yet merged to main):** extra corpora downloaded from their original sources (`download_email_extra.sh`, `src/email_corpora.py`); `src/train_email.py` importable; URL check: no scheme or slash flip, so no URL retrain (`scripts/check_url_d01.py`); SMS: no new licensed data, D-09 and D-16 stay open (`scripts/sms_lure_report.py`); `DATA_SOURCES.md` generator.
+- **Written ahead for later phases (uncommitted outputs are regenerated):** `scripts/benchmark.py`, `scripts/preflight.py`, `start_demo.bat`, `scripts/nfr05_fresh_clone.py`, `src/eval_comparison.py`, `src/campaign_formula.py` with tests (patent row blocked on the spec), `README.md`, `docs/USER_MANUAL.md`, `docs/PRIVACY.md`, `docs/CP2_BACKLOG.md`, `docs/diagrams/*.mmd` (rendered to SVG and PNG except `events_sequence`).
+- **Plan for the next session and the road to a real-time app:** `PROJECT_STATUS_AND_ROADMAP.md`.
+- **Next:** finish 3.1, then Phase 4 (tag `cp1-rc1`, final run, benchmark, comparison, NFR-05, exit criteria, `cp1-final`), Phase 5 documents, Phase 6 message.
