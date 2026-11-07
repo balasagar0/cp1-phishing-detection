@@ -1,0 +1,590 @@
+{
+  "attempt": 2,
+  "rule_fixed_before_running": "the same data and training as C1 (today's cleaner + Nazario, SpamAssassin, Ling; C chosen on validation in attempt 1). ONLY the alert line moves:\n  t = the lowest line at or above 0.5 at which C2, scoring the LEGITIMATE SpamAssassin and Ling-Spam emails with models that never saw that corpus,\n      raises no more false alarms than the v2 recipe (v2's three corpora, today's cleaner) raises on the same emails.\nThe line is applied as an intercept shift (intercept - logit(t)), so a score of 0.5 from the shifted model means t from the unshifted one and the\nAPI's single 0.5 line stays. t is chosen on those two corpora only: the honest metric (CEAS_08, Enron, FraudEmail held out), the workbook emails and\nthe demo cases are never used to set it; they are only checked afterwards, under the same adoption rule as attempt 1.",
+  "chosen_C": 16,
+  "alert_line_t": 0.62,
+  "calibration": {
+    "corpora": [
+      "SpamAssassin",
+      "LingSpam"
+    ],
+    "legitimate_emails": 6499,
+    "v2_recipe_false_positive_rate": 0.0575,
+    "C2_false_positive_rate_at_0.5": 0.0729,
+    "C2_false_positive_rate_at_t": 0.0571
+  },
+  "held_out_at_t": {
+    "CEAS_08": {
+      "n": 34294,
+      "positives": 17248,
+      "precision": 0.9209,
+      "recall": 0.9612,
+      "f1": 0.9406,
+      "false_positive_rate": 0.0835,
+      "roc_auc": 0.9768
+    },
+    "Enron": {
+      "n": 28917,
+      "positives": 14432,
+      "precision": 0.9384,
+      "recall": 0.7573,
+      "f1": 0.8382,
+      "false_positive_rate": 0.0495,
+      "roc_auc": 0.9523
+    },
+    "FraudEmail": {
+      "n": 9220,
+      "positives": 4129,
+      "precision": 0.8222,
+      "recall": 0.9688,
+      "f1": 0.8895,
+      "false_positive_rate": 0.1699,
+      "roc_auc": 0.9766
+    },
+    "Nazario": {
+      "n": 4914,
+      "positives": 4914,
+      "recall": 0.618,
+      "note": "one class (all phishing): recall only"
+    },
+    "SpamAssassin": {
+      "n": 5807,
+      "positives": 1710,
+      "precision": 0.8383,
+      "recall": 0.9702,
+      "f1": 0.8994,
+      "false_positive_rate": 0.0781,
+      "roc_auc": 0.9894
+    },
+    "LingSpam": {
+      "n": 2866,
+      "positives": 464,
+      "precision": 0.8849,
+      "recall": 0.8448,
+      "f1": 0.8644,
+      "false_positive_rate": 0.0212,
+      "roc_auc": 0.9775
+    }
+  },
+  "mean_f1_at_t": 0.8894,
+  "mean_f1_at_t_ci95": [
+    0.8868,
+    0.8925
+  ],
+  "v2_mean_f1_ci95": [
+    0.8187,
+    0.8257
+  ],
+  "samples_live": {
+    "model": "live v2 model",
+    "samples": {
+      "E-P01": {
+        "score": 0.9998,
+        "predicted": "Phishing",
+        "expected": "Phishing",
+        "group": "Standard"
+      },
+      "E-P02": {
+        "score": 0.8172,
+        "predicted": "Phishing",
+        "expected": "Phishing",
+        "group": "Standard"
+      },
+      "E-P03": {
+        "score": 0.102,
+        "predicted": "Legitimate",
+        "expected": "Phishing",
+        "group": "Standard"
+      },
+      "E-P04": {
+        "score": 0.9953,
+        "predicted": "Phishing",
+        "expected": "Phishing",
+        "group": "Standard"
+      },
+      "E-P05": {
+        "score": 0.9309,
+        "predicted": "Phishing",
+        "expected": "Phishing",
+        "group": "Standard"
+      },
+      "E-P06": {
+        "score": 0.0517,
+        "predicted": "Legitimate",
+        "expected": "Phishing",
+        "group": "Standard"
+      },
+      "E-P07": {
+        "score": 0.2372,
+        "predicted": "Legitimate",
+        "expected": "Phishing",
+        "group": "Standard"
+      },
+      "E-P08": {
+        "score": 0.9547,
+        "predicted": "Phishing",
+        "expected": "Phishing",
+        "group": "Standard"
+      },
+      "E-P09": {
+        "score": 0.2057,
+        "predicted": "Legitimate",
+        "expected": "Phishing",
+        "group": "Standard"
+      },
+      "E-P10": {
+        "score": 0.9004,
+        "predicted": "Phishing",
+        "expected": "Phishing",
+        "group": "Standard"
+      },
+      "E-P11": {
+        "score": 0.9696,
+        "predicted": "Phishing",
+        "expected": "Phishing",
+        "group": "Standard"
+      },
+      "E-H01": {
+        "score": 0.0006,
+        "predicted": "Legitimate",
+        "expected": "Phishing",
+        "group": "Hard case"
+      },
+      "E-H02": {
+        "score": 0.8102,
+        "predicted": "Phishing",
+        "expected": "Phishing",
+        "group": "Hard case"
+      },
+      "E-H03": {
+        "score": 0.9669,
+        "predicted": "Phishing",
+        "expected": "Phishing",
+        "group": "Hard case"
+      },
+      "E-L01": {
+        "score": 0.0022,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Standard"
+      },
+      "E-L02": {
+        "score": 0.096,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Standard"
+      },
+      "E-L03": {
+        "score": 0.0438,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Standard"
+      },
+      "E-L04": {
+        "score": 0.0161,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Standard"
+      },
+      "E-L05": {
+        "score": 0.0004,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Standard"
+      },
+      "E-L06": {
+        "score": 0.0798,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Standard"
+      },
+      "E-L07": {
+        "score": 0.0082,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Standard"
+      },
+      "E-L08": {
+        "score": 0.2801,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Standard"
+      },
+      "E-L09": {
+        "score": 0.041,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Standard"
+      },
+      "E-L10": {
+        "score": 0.0025,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Standard"
+      },
+      "E-L11": {
+        "score": 0.0127,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Standard"
+      },
+      "E-H04": {
+        "score": 0.577,
+        "predicted": "Phishing",
+        "expected": "Legitimate",
+        "group": "Hard case"
+      },
+      "E-H05": {
+        "score": 0.0015,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Hard case"
+      },
+      "E-H06": {
+        "score": 0.0177,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Hard case"
+      }
+    },
+    "EML-01 standard phishing": 0.6364,
+    "EML-02 standard legitimate": 1.0,
+    "EML-03 hard phishing": 0.6667,
+    "EML-03 hard legitimate": 0.6667,
+    "D-10 cases correct": [
+      "E-L08",
+      "E-H06",
+      "E-L06"
+    ],
+    "D-17 cases correct": []
+  },
+  "samples_candidate": {
+    "model": "attempt 2",
+    "samples": {
+      "E-P01": {
+        "score": 1.0,
+        "predicted": "Phishing",
+        "expected": "Phishing",
+        "group": "Standard"
+      },
+      "E-P02": {
+        "score": 0.9968,
+        "predicted": "Phishing",
+        "expected": "Phishing",
+        "group": "Standard"
+      },
+      "E-P03": {
+        "score": 0.9688,
+        "predicted": "Phishing",
+        "expected": "Phishing",
+        "group": "Standard"
+      },
+      "E-P04": {
+        "score": 0.9951,
+        "predicted": "Phishing",
+        "expected": "Phishing",
+        "group": "Standard"
+      },
+      "E-P05": {
+        "score": 0.8898,
+        "predicted": "Phishing",
+        "expected": "Phishing",
+        "group": "Standard"
+      },
+      "E-P06": {
+        "score": 0.8247,
+        "predicted": "Phishing",
+        "expected": "Phishing",
+        "group": "Standard"
+      },
+      "E-P07": {
+        "score": 0.1912,
+        "predicted": "Legitimate",
+        "expected": "Phishing",
+        "group": "Standard"
+      },
+      "E-P08": {
+        "score": 0.9753,
+        "predicted": "Phishing",
+        "expected": "Phishing",
+        "group": "Standard"
+      },
+      "E-P09": {
+        "score": 0.2016,
+        "predicted": "Legitimate",
+        "expected": "Phishing",
+        "group": "Standard"
+      },
+      "E-P10": {
+        "score": 0.9256,
+        "predicted": "Phishing",
+        "expected": "Phishing",
+        "group": "Standard"
+      },
+      "E-P11": {
+        "score": 0.9981,
+        "predicted": "Phishing",
+        "expected": "Phishing",
+        "group": "Standard"
+      },
+      "E-H01": {
+        "score": 0.0408,
+        "predicted": "Legitimate",
+        "expected": "Phishing",
+        "group": "Hard case"
+      },
+      "E-H02": {
+        "score": 0.8969,
+        "predicted": "Phishing",
+        "expected": "Phishing",
+        "group": "Hard case"
+      },
+      "E-H03": {
+        "score": 0.998,
+        "predicted": "Phishing",
+        "expected": "Phishing",
+        "group": "Hard case"
+      },
+      "E-L01": {
+        "score": 0.0032,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Standard"
+      },
+      "E-L02": {
+        "score": 0.2211,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Standard"
+      },
+      "E-L03": {
+        "score": 0.032,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Standard"
+      },
+      "E-L04": {
+        "score": 0.0344,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Standard"
+      },
+      "E-L05": {
+        "score": 0.0006,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Standard"
+      },
+      "E-L06": {
+        "score": 0.1116,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Standard"
+      },
+      "E-L07": {
+        "score": 0.0119,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Standard"
+      },
+      "E-L08": {
+        "score": 0.8148,
+        "predicted": "Phishing",
+        "expected": "Legitimate",
+        "group": "Standard"
+      },
+      "E-L09": {
+        "score": 0.0362,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Standard"
+      },
+      "E-L10": {
+        "score": 0.0051,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Standard"
+      },
+      "E-L11": {
+        "score": 0.0347,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Standard"
+      },
+      "E-H04": {
+        "score": 0.9913,
+        "predicted": "Phishing",
+        "expected": "Legitimate",
+        "group": "Hard case"
+      },
+      "E-H05": {
+        "score": 0.005,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Hard case"
+      },
+      "E-H06": {
+        "score": 0.2154,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Hard case"
+      }
+    },
+    "EML-01 standard phishing": 0.8182,
+    "EML-02 standard legitimate": 0.9091,
+    "EML-03 hard phishing": 0.6667,
+    "EML-03 hard legitimate": 0.6667,
+    "D-10 cases correct": [
+      "E-H06",
+      "E-L06"
+    ],
+    "D-17 cases correct": [
+      "E-P03",
+      "E-P06"
+    ]
+  },
+  "demo_cases": {
+    "TC-01": {
+      "live": {
+        "risk": 0.9975,
+        "alert": true,
+        "scores": [
+          0.9975
+        ]
+      },
+      "candidate": {
+        "risk": 0.9999,
+        "alert": true,
+        "scores": [
+          1.0
+        ]
+      }
+    },
+    "TC-02": {
+      "live": {
+        "risk": 0.9999,
+        "alert": true,
+        "scores": [
+          1.0
+        ]
+      },
+      "candidate": {
+        "risk": 0.9999,
+        "alert": true,
+        "scores": [
+          1.0
+        ]
+      }
+    },
+    "TC-03": {
+      "live": null,
+      "candidate": null
+    },
+    "TC-04": {
+      "live": {
+        "risk": 0.9999,
+        "alert": true,
+        "scores": [
+          1.0,
+          0.9952,
+          0.9975
+        ]
+      },
+      "candidate": {
+        "risk": 0.9999,
+        "alert": true,
+        "scores": [
+          1.0,
+          0.9952,
+          1.0
+        ]
+      }
+    },
+    "TC-05": {
+      "live": {
+        "risk": 0.0001,
+        "alert": false,
+        "scores": [
+          0.0017,
+          0.0,
+          0.0001
+        ]
+      },
+      "candidate": {
+        "risk": 0.0001,
+        "alert": false,
+        "scores": [
+          0.0017,
+          0.0,
+          0.0001
+        ]
+      }
+    },
+    "TC-06": {
+      "live": {
+        "risk": 0.5954,
+        "alert": true,
+        "scores": [
+          0.4211,
+          0.451,
+          0.204
+        ]
+      },
+      "candidate": {
+        "risk": 0.5902,
+        "alert": true,
+        "scores": [
+          0.4211,
+          0.451,
+          0.6005
+        ]
+      }
+    },
+    "TC-07": {
+      "live": {
+        "risk": 0.451,
+        "alert": false,
+        "scores": [
+          0.4211,
+          0.451,
+          0.204
+        ]
+      },
+      "candidate": {
+        "risk": 0.6005,
+        "alert": true,
+        "scores": [
+          0.4211,
+          0.451,
+          0.6005
+        ]
+      }
+    },
+    "TC-08": {
+      "live": {
+        "risk": 0.9995,
+        "alert": true,
+        "scores": [
+          0.9702,
+          0.031
+        ]
+      },
+      "candidate": {
+        "risk": 0.9995,
+        "alert": true,
+        "scores": [
+          0.9702,
+          0.5079
+        ]
+      }
+    }
+  },
+  "adoption": {
+    "a_honest_metric_not_worse_than_v2_beyond_ci": true,
+    "a_detail": "attempt 2 mean held-out F1 0.8894 vs v2 95% interval [0.8187, 0.8257]",
+    "b_target_defect_cases_improve": false,
+    "c_demo_cases_keep_alert_outcome": false,
+    "d_every_test_passes": "checked after adoption by running the tests",
+    "decision": "keep v2's model; attempt 2 is a negative result (second failed attempt: the team decides next, per the brief)"
+  }
+}

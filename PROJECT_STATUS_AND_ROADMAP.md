@@ -55,11 +55,11 @@ The work follows `CP1_FINISH_TASK.md`. Item-by-item status for all 69 checklist 
 
 ### Phase 3: models (partly done)
 
-- **Email (3.1), attempt 1 finished.** The Nazario, SpamAssassin and Ling corpora were downloaded from their original sources (`download_email_extra.sh`, licences in `DATA_SOURCES.md`). The candidate improves the honest email measure well beyond v2's interval. It still fails the adoption rule:
+- **Email (3.1): two attempts, both failed the adoption rule.** The Nazario, SpamAssassin and Ling corpora were downloaded from their original sources (`download_email_extra.sh`, licences in `DATA_SOURCES.md`). Attempt 1 added them. Attempt 2 kept that and also raised the alert line, with the rule fixed before it ran. Both lift the honest email measure well beyond v2's interval and catch more standard phishing. Both still fail the rule:
   - (b) a legitimate payment receipt (E-L08) becomes a false alarm;
-  - (c) TC-07 starts alerting, because the candidate scores its parcel email as phishing on its own.
+  - (c) TC-07 starts alerting, because its parcel email alone now crosses the line.
 
-  So v2's email model stays live. Full results: `reports/candidates/email_candidates.md`.
+  So v2's email model stays live, and the brief leaves the next step to the team. Results: `reports/candidates/email_candidates.md` and `email_candidates_attempt2.md`.
 - **URL (3.2) done.** The scheme and the trailing slash no longer change any label, so no retrain is needed (`reports/candidates/url_d01.md`).
 - **SMS (3.3) done.** No new SMS data with a checkable licence exists, so D-09 and D-16 stay open (`reports/candidates/sms_d09.md`). v2's SMS training data was traced to its source and licence (CC BY 4.0).
 
@@ -74,7 +74,7 @@ The work follows `CP1_FINISH_TASK.md`. Item-by-item status for all 69 checklist 
 ### Before the session (team)
 
 1. Put the patent specification (`Patent_Complete_Specification_Form2`, .docx or .md) in `docs/inputs/cp1_inputs/`. It unblocks PT-03, PT-04 and the patent row of the R3-09 comparison.
-2. Decide on the email candidate: allow a second attempt (step 4 below), or keep v2's email model and record the candidate as a negative result.
+2. Decide on the email model after two failed attempts: keep v2's email model (both attempts recorded as negative results), or adopt attempt 2 with written reasons. Adopting it means overriding the adoption rule on (b) and (c), and TC-07 would no longer show 'no alert'.
 3. Optional: put `Test_Plan_Phishing_Detection.docx` and `SRS_Phishing_Detection_v1.0.md` in the same folder, so `docs/BUILT_VS_DESCRIBED.md` can cover the SRS too.
 
 ### Start the session
@@ -90,7 +90,7 @@ Open Claude Code in the project folder and send:
 | 1 | Commit the email candidate report, keep `models/candidates/` out of git, and merge `module/email-sms` into `main` | 3.1 | Phase 3 work on `main` |
 | 2 | Read the patent spec. Fill the channel weights and the cross-channel and sequence factors into `src/campaign_formula.py` from the spec, and write the section 16 worked-example test | 4.3 | `tests/test_campaign_formula.py` passes in full |
 | 3 | Point `scripts/compare_reports.py` and `src/make_report.py` at the honest email figure over the three original corpora, so they still work if more corpora are added | 3.1, 5 | correct headline figure in every report |
-| 4 | If the team allows it: email attempt 2 (for example, the extra corpora with a separate alert line chosen on validation data, or Nazario only). Same adoption rule. If it fails again, stop and ask (brief, section 3) | 3.1 | `reports/candidates/email_candidates.md`, attempt 2 |
+| 4 | Apply the team's email decision. If attempt 2 is adopted: make `train_email.py` reproduce it (extra corpora and the alert-line rule), refresh `reports/model_manifest.json`, update `tests/test_demo_cases.py` with the reason, and run every test (rule d) | 3.1 | the email model on `main` |
 | 5 | Add `eval_comparison.py` to `run_all.sh`. Tag `cp1-rc1`. Run `download_data.sh` and `run_all.sh` on it. Commit the regenerated models and reports as "final run" | 4.1 | final models and reports |
 | 6 | If the final run moved any demo-case score, update `tests/test_demo_cases.py` with the new values and the reason. Alert outcomes must not change | 4.1 | TC-01 to TC-08 pass |
 | 7 | Run everything on the final build: all tests, the ported suite, the offline check, the UI checks, an end-to-end check, and `scripts/benchmark.py` over real HTTP | 4.2 | `reports/benchmark.md`, fresh `reports/ui_checks.json` |
