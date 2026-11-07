@@ -67,7 +67,7 @@ The work follows `CP1_FINISH_TASK.md`. Item-by-item status for all 69 checklist 
 
 ### Written ahead for later phases (code ready, not yet run on the final build)
 
-`scripts/benchmark.py`, `scripts/preflight.py`, `start_demo.bat`, `scripts/nfr05_fresh_clone.py`, `src/eval_comparison.py`, `src/campaign_formula.py` (patent formula; its worked-example test waits for the spec), `README.md`, `docs/USER_MANUAL.md`, `docs/PRIVACY.md`, `docs/CP2_BACKLOG.md`, `DATA_SOURCES.md`, and the diagrams in `docs/diagrams/` (all four rendered to SVG and PNG).
+`scripts/benchmark.py`, `scripts/preflight.py`, `start_demo.bat`, `scripts/nfr05_fresh_clone.py`, `src/eval_comparison.py`, `src/campaign_formula.py` (the old patent draft's noisy-OR formula, kept unused: the patent will be written from this build), `README.md`, `docs/USER_MANUAL.md`, `docs/PRIVACY.md`, `docs/CP2_BACKLOG.md`, `DATA_SOURCES.md`, and the diagrams in `docs/diagrams/` (all four rendered to SVG and PNG).
 
 ---
 
@@ -75,7 +75,7 @@ The work follows `CP1_FINISH_TASK.md`. Item-by-item status for all 69 checklist 
 
 ### Before the session (team)
 
-1. Put the patent specification (`Patent_Complete_Specification_Form2`, .docx or .md) in `docs/inputs/cp1_inputs/`. It unblocks PT-03, PT-04 and the patent row of the R3-09 comparison.
+1. Nothing to add for the patent: on 7 Nov 2026 the owner decided the patent will be written from this build, because the old draft's data is generated. Phase 5 prepares `docs/PATENT_BASIS.md` for it.
 2. Email model: settled for CP1. v2's email model stays live after three failed attempts. The owner keeps the v3 model file and the export on this laptop, never committed.
 3. Optional: put `Test_Plan_Phishing_Detection.docx` and `SRS_Phishing_Detection_v1.0.md` in the same folder, so `docs/BUILT_VS_DESCRIBED.md` can cover the SRS too.
 
@@ -102,23 +102,23 @@ Open Claude Code in the project folder and send:
 | # | Step | Brief section | Result |
 |---|---|---|---|
 | 1 | Done on 7 Nov: Phase 3 merged into `main`, tag `test-run-20261107-3` | 3 | Phase 3 on `main` |
-| 2 | Read the patent spec. Fill the channel weights and the cross-channel and sequence factors into `src/campaign_formula.py` from the spec, and write the section 16 worked-example test | 4.3 | `tests/test_campaign_formula.py` passes in full |
+| 2 | Nothing to do: the old draft's noisy-OR row is not evaluated, because the patent will be written from this build | 4.3 | no change |
 | 3 | Point `scripts/compare_reports.py` and `src/make_report.py` at the honest email figure over the three original corpora, so they still work if more corpora are added | 3.1, 5 | correct headline figure in every report |
 | 4 | Done on 7 Nov: the email decision is applied (v2 stays live; nothing to change in the code) | 3.1 | no change |
 | 5 | Add `eval_comparison.py` to `run_all.sh`. Tag `cp1-rc1`. Run `download_data.sh` and `run_all.sh` on it. Commit the regenerated models and reports as "final run" | 4.1 | final models and reports |
 | 6 | If the final run moved any demo-case score, update `tests/test_demo_cases.py` with the new values and the reason. Alert outcomes must not change | 4.1 | TC-01 to TC-08 pass |
 | 7 | Run everything on the final build: all tests, the ported suite, the offline check, the UI checks, an end-to-end check, and `scripts/benchmark.py` over real HTTP | 4.2 | `reports/benchmark.md`, fresh `reports/ui_checks.json` |
-| 8 | The R3-09 comparison, titled "simulated", including the patent row | 4.3 | `reports/comparison_metrics.json` |
+| 8 | The R3-09 comparison, titled "simulated": single-channel, parallel multi-channel, whole bundle, and the deployed 60-minute engine | 4.3 | `reports/comparison_metrics.json` |
 | 9 | NFR-05 (`scripts/nfr05_fresh_clone.py`) and NFR-07 (regression against the earlier run). Fill the FINAL workbook. Judge the 7 exit criteria against the plan's own targets | 4.4 | exit criteria table |
 | 10 | Tag `cp1-final`. Write the tag and commit into the workbook, `FINAL_NUMBERS.md` and `README.md` | 4.5 | the build every number comes from |
-| 11 | Phase 5 documents, all generated from `cp1-final`: `FINAL_NUMBERS.md`, `FINAL_TEST_REPORT.md`, figures, `DEMO_SCRIPT.md`, `BUILT_VS_DESCRIBED.md`, `PATENT_NUMBERS.md`, `MANUSCRIPT_METHOD_RESULTS.md`, `DIARY_ENTRIES.md`, `docs/report/`, `VIVA_BY_MODULE.md`, plus a search for the retired numbers | 5 | the documents |
+| 11 | Phase 5 documents, all generated from `cp1-final`: `FINAL_NUMBERS.md`, `FINAL_TEST_REPORT.md`, figures, `DEMO_SCRIPT.md`, `PATENT_BASIS.md` (the technical basis for the new patent: what is built, with code and tests; every number from `cp1-final` with its source; what is not built), `MANUSCRIPT_METHOD_RESULTS.md`, `DIARY_ENTRIES.md`, `docs/report/`, `VIVA_BY_MODULE.md`, plus a search for the retired numbers | 5 | the documents |
 | 12 | Finish `CHECKLIST_STATUS.md` and send the Phase 6 summary | 6 | the hand-over message |
 
 ### Decisions the team owns
 
 - Whether to accept the proposed defects in writing: D-09, D-12 and D-18 have written proposals. D-01, D-10, D-16 and D-17 stay open until a model change fixes them.
 - Voice scope for CP1 (`VOICE_IN_CP1` is `no`).
-- The patent: rewrite it around this build, or build what it claims. Phase 5 produces `BUILT_VS_DESCRIBED.md` and `PATENT_NUMBERS.md` to support that choice.
+- The patent: **decided on 7 Nov 2026**. It will be written from this build. Bala and KL IPFC draft the claims from `docs/PATENT_BASIS.md`; the old draft's generated numbers are not used anywhere.
 
 ### Work only people can do
 

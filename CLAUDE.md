@@ -155,6 +155,14 @@ Note on paths: the inputs were unzipped into `docs/inputs/cp1_inputs/`, not stra
 | Time window | 60 minutes | What v2 ships. Don't re-derive it from the simulation; `src/refit_fusion.py` suggests one once real bundles exist. |
 | Git | local only | No remote, no push. The patent is not filed. |
 
+### Decisions made after the brief (by the owner)
+
+| Date | Decision | What it means for you |
+|---|---|---|
+| 7 Nov 2026 | **The patent will be written from this build.** The old patent spec's data is generated, not measured. | Don't ask for or use the old spec. Phase 4.3's noisy-OR "patent row" is not evaluated. Phase 5 writes `docs/PATENT_BASIS.md` (what is built, with code and tests; every number from `cp1-final` with its source; what is not built) instead of `BUILT_VS_DESCRIBED.md` and `PATENT_NUMBERS.md`. Claims are drafted with KL IPFC, not here. |
+| 7 Nov 2026 | Email model: three retrain attempts failed the adoption rule; **v2's email model stays live** for CP1. | Don't retrain email again in CP1 without the owner's go-ahead. |
+| 7 Nov 2026 | The owner's Gmail export and the v3 model trained on it are **kept on this laptop, never committed**. | Read the export only through `src/private_email_training.py` and follow `PRIVACY_AND_ETHICS.md`. Never print or read mail content. |
+
 ## 1. What you're working with
 
 ### 1.1 The build

@@ -22,7 +22,7 @@ All 69 items from section 9 of `CP1_FINISH_TASK.md`. Updated at the end of every
 
 ## Things found in Phase 0 that a person should know
 
-1. **The patent spec is not in `docs/inputs/`.** `Patent_Complete_Specification_Form2` (.docx or .md) was not added. PT-03, PT-04 and the patent row of R3-09 (Phase 4.3) need it. A different file, `D:\Capstone_HTE Project\cla\Patent_Disclosure_Draft.docx`, exists; it was not used, because it is not the document the brief names. S should add the complete specification to `docs/inputs/`.
+1. **The patent spec is not in `docs/inputs/`, and is no longer needed** (decision of 7 Nov 2026: the patent will be written from this build). `Patent_Complete_Specification_Form2` (.docx or .md) was not added. PT-03, PT-04 and the patent row of R3-09 (Phase 4.3) need it. A different file, `D:\Capstone_HTE Project\cla\Patent_Disclosure_Draft.docx`, exists; it was not used, because it is not the document the brief names. S should add the complete specification to `docs/inputs/`.
 2. **The inputs sit in `docs/inputs/cp1_inputs/`**, one folder deeper than the brief says. Everything reads them from there.
 3. **The optional inputs are not in `docs/inputs/`.** `Test_Plan_Phishing_Detection.docx` exists at `D:\Capstone_HTE Project\Claude files\` and the SRS was not found. The workbook carries the targets and exit criteria that Phase 1 needs, so neither blocks work.
 4. **Files from section 1.4 (wrong material).** None is inside this project folder. Elsewhere under `D:\Capstone_HTE Project` there are `Claude files\CP1_Team_Study_Guide.md`, `Claude files\TRAINING_REPORT.md`, `Claude files\AI-Based-Multi-Channel-Phishing-Detection-System_Review2.pptx` and `AI-Based-Multi-Channel-Phishing-Detection-System [Autosaved].pptx`. They were not opened, used, edited or deleted.
@@ -75,7 +75,7 @@ All 69 items from section 9 of `CP1_FINISH_TASK.md`. Updated at the end of every
 | R3-06 | A review-proof demo laptop | V | Code, plus one real Wi-Fi-off run by a person | partial | `scripts/offline_check.py` passes: no outbound socket while every demo case and story runs; tldextract uses its bundled list; the console fetches nothing from outside (`reports/offline_check.md`). The UI checks saw no request leave the machine | Phase 5: `scripts/preflight.py` and `start_demo.bat`. Viraj does one real Wi-Fi-off run on the demo laptop |
 | R3-07 | Re-run every test case on the final build | M | Code | partial | Every ported case runs on this build (`tests/test_final_cases.py`, `reports/final_cases_results.json`) | Phase 4.2: re-run everything on `cp1-rc1` / `cp1-final` |
 | R3-08 | Final metrics for each channel | K, V | Code | open | v2 figures reproduce (`reports/baseline_check.md`); final figures come from `cp1-final` | Phase 4.1 and `reports/FINAL_NUMBERS.md` |
-| R3-09 | Correlation against the baselines | B, M | Code for the simulated half; the real half is blocked on R2-10 | partial | v2's window table on 12,000 simulated bundles (`reports/results.md`, `reports/window_metrics.json`) | Phase 4.3: add parallel multi-channel and the patent's noisy-OR row (needs the patent spec) |
+| R3-09 | Correlation against the baselines | B, M | Code for the simulated half; the real half is blocked on R2-10 | partial | Simulated half: the window table in `reports/results.md`; `src/eval_comparison.py` adds single-channel, parallel multi-channel, whole-bundle and the deployed engine on the same simulated bundles. The noisy-OR patent row is not evaluated: the patent will be written from this build (owner, 7 Nov 2026). The real half is blocked on R2-10 | Phase 4.3: run the comparison on the final build, titled simulated |
 | R3-10 | Timing on the demo laptop | M | Code | open | Not measured | Phase 4.2: `scripts/benchmark.py` |
 | R3-11 | The final test report | M | Code | open | Not written | Phase 5: `reports/FINAL_TEST_REPORT.md` |
 | R3-12 | One set of numbers everywhere | T | Code for FINAL_NUMBERS; restating it is People | open | Not written | Phase 5: `reports/FINAL_NUMBERS.md`. The team copies it into the deck, report, patent and paper |
@@ -96,8 +96,8 @@ All 69 items from section 9 of `CP1_FINISH_TASK.md`. Updated at the end of every
 | R3-27 | All four present, in formal attire, with the signed diary | T | People | people | Not a code item | The team |
 | PT-01 | Choose the filing route with KL IPFC | B | People | people | Not a code item | Bala |
 | PT-02 | Confirm the applicant and the inventors | B | People | people | Not a code item | Bala |
-| PT-03 | Match every measured number to the final run | B, M | Inputs: PATENT_NUMBERS | blocked | The patent spec is not in `docs/inputs/` | S adds the spec; then Phase 5 writes `docs/PATENT_NUMBERS.md` |
-| PT-04 | Know what is built and what is only described | T | Inputs: BUILT_VS_DESCRIBED | blocked | The patent spec is not in `docs/inputs/` | S adds the spec; then Phase 5 writes `docs/BUILT_VS_DESCRIBED.md` |
+| PT-03 | Match every measured number to the final run | B, M | Inputs: PATENT_NUMBERS | open | The owner decided on 7 Nov 2026 that the patent will be written from this build; the old spec's data is generated. Phase 5 writes `docs/PATENT_BASIS.md`: every measured number from `cp1-final` with its source file | Phase 5: `docs/PATENT_BASIS.md`. Bala and KL IPFC write the new patent from it |
+| PT-04 | Know what is built and what is only described | T | Inputs: BUILT_VS_DESCRIBED | open | The new patent describes this build only. `docs/PATENT_BASIS.md` (Phase 5) lists what is built, with file, function and test, and what is not built | Phase 5: `docs/PATENT_BASIS.md` |
 | PT-05 | Go over prior art with KL IPFC | B | People | people | Not a code item | Bala |
 | PT-06 | Check the fees | B | People | people | Not a code item | Bala |
 | PT-07 | Finish the formatting | M | People | people | Not a code item | Manoj |
@@ -128,8 +128,8 @@ All 69 items from section 9 of `CP1_FINISH_TASK.md`. Updated at the end of every
 |---|---|
 | done | 8 |
 | partial | 7 |
-| open | 19 |
-| blocked | 5 |
+| open | 21 |
+| blocked | 3 |
 | people | 30 |
 | **total** | **69** |
 
