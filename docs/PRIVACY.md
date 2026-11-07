@@ -32,6 +32,8 @@ See `DATA_SOURCES.md`: every public dataset, its source, its licence or terms as
 
 ## The team's own emails (email model v3)
 
+The full account of this pipeline, with each claim's test and status, is `PRIVACY_AND_ETHICS.md` at the project root. In short:
+
 - The v3 email attempt can train on the account owner's own legitimate emails (receipts, bank, order, shipping, OTP and account notices), exported by them as .mbox into `data/raw/email_own/`. This is used only with the owner's consent, which was given on 7 Nov 2026.
 - The export stays on this laptop: `data/` is gitignored, and nothing from it is committed, uploaded or used as a test case. Delete the folder to withdraw it; retrain afterwards.
 - The model keeps only words that appear in at least five emails of at least two different sources, and numbers are masked, so names, order numbers and amounts from one inbox do not enter the model. The trained model file still derives from the mail: do not publish it while the export is in its training data.
