@@ -105,22 +105,14 @@ def load_templates(d=LEGIT / "templates"):
 
 
 def load_own_inbox(d=OWN):
-    """The team's own LEGITIMATE emails (receipts, bank, order, shipping, OTP and account notices), exported by the account owner as .mbox
-    (for Gmail: Google Takeout, Mail, one label holding only known-legitimate mail) into data/raw/email_own/. Basis: the account owner's own
-    consent, recorded in DATA_SOURCES.md. Messages Gmail filed as Spam or Trash are skipped. Never committed; never used as a test case."""
-    rows = []
-    for f in sorted(Path(d).glob("*.mbox")) if Path(d).exists() else []:
-        try: msgs = list(_mbox(f))
-        except OSError as e: SKIPPED.append(f"{f.name}: {e.__class__.__name__} {e}"); continue
-        for m in msgs:
-            if re.search(r"\b(Spam|Trash)\b", str(m.get("X-Gmail-Labels", ""))): continue
-            try: rows.append({"source": "OwnInbox", "raw": _text(m), "label": 0, "file": f.name})
-            except Exception: continue
-    return pd.DataFrame(rows, columns=["source", "raw", "label", "file"])
+    """Removed on purpose: the account owner's mail is read ONLY through the streaming, privacy-first path (src/email_stream.py and
+    src/private_email_training.py), never into a table of texts. See PRIVACY_AND_ETHICS.md."""
+    raise RuntimeError("the own inbox is read only by src/private_email_training.py (streaming); see PRIVACY_AND_ETHICS.md")
 
 
 def load_legit_extra():
-    return pd.concat([load_generated(), load_templates(), load_own_inbox()], ignore_index=True)
+    """The PUBLIC legitimate sources only (generated and templates). The own inbox never enters a table: see src/private_email_training.py."""
+    return pd.concat([load_generated(), load_templates()], ignore_index=True)
 
 
 if __name__ == "__main__":

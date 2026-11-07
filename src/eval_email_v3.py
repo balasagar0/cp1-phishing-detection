@@ -17,54 +17,92 @@ D-17 workbook cases improve and no EML group falls; (c) TC-01 to TC-08 keep thei
 Reported beside the rule, not part of it: the false-alarm rate on each legitimate source held out (OwnInbox held out = real receipts the model never
 saw), for v3 and for v2's live model. Needs at least 100 own-inbox emails after cleaning; with fewer it stops without training.
 The workbook emails, the scenarios and TC-01 to TC-08 are never trained on and never used to set anything; they are only checked afterwards.
+Data path (changed BEFORE the first run, 7 Nov 2026, to follow the owner's privacy spec; the rule above is unchanged): the own inbox is never
+loaded into a table of texts. src/private_email_training.py streams the .mbox read-only, one message at a time, keeps only integer n-gram counts
+for n-grams already in the public candidate vocabulary, and drops each text. The run blocks outbound sockets, checks the archive is byte-identical
+before and after, logs counts and metrics only, and saves the model with access limited to the current user. See PRIVACY_AND_ETHICS.md.
 Writes reports/candidates/email_candidates_v3.md and .json, and models/candidates/email_model_v3.joblib (git-ignored)."""
-import sys, json, math
+import sys, json, math, socket
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent)); sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from common import *
 import joblib
+from scipy import sparse
 import train_email as TE
 import eval_email_candidates as E1
 from eval_email_attempt2 import boot_mean_f1_at, CAL
+import private_email_training as P
+import email_stream
 
 LEGIT_SRC = ["GeneratedLegit", "Templates", "OwnInbox"]
 MIN_OWN = 100
 log = TE.log
 
 
+class Offline:
+    """Blocks every outbound connection in this process for the whole run, and counts any attempt."""
+    def __init__(self): self.attempts = 0
+    def __enter__(self):
+        self.real = (socket.socket.connect, socket.create_connection, socket.getaddrinfo)
+        def block(*a, **k):
+            self.attempts += 1; raise OSError("outbound connection blocked (private training run)")
+        socket.socket.connect = lambda sock, *a, **k: block(); socket.create_connection = block; socket.getaddrinfo = block
+        return self
+    def __exit__(self, *e): socket.socket.connect, socket.create_connection, socket.getaddrinfo = self.real
+
+
 def main():
-    d3, dd = TE.load_email(extra=True, legit=True)
-    n_own = int((d3.source == "OwnInbox").sum())
-    if n_own < MIN_OWN:
-        sys.exit(f"Only {n_own} own-inbox emails after cleaning (need {MIN_OWN}). Export legitimate mail as .mbox into data/raw/email_own/ (see PROJECT_STATUS_AND_ROADMAP.md) and run again. Nothing was trained.")
+    with Offline() as net:
+        run(net)
+
+
+def run(net):
+    paths = email_stream.mbox_paths(ROOT / "data" / "raw" / "email_own")
+    before = {p.name: P.sha256(p) for p in paths}
+    d_pub, dd = TE.load_email(extra=True, legit=True)                 # public sources only; the inbox never enters this table
+    cv, Xp = P.candidate_vocab(d_pub.text)
+    Xo, st = P.stream_private(paths, cv)
+    log("own inbox stream (counts only):", st)
+    if st["kept"] < MIN_OWN:
+        sys.exit(f"Only {st['kept']} own-inbox emails after cleaning (need {MIN_OWN}). Nothing was trained.")
+    X = sparse.vstack([Xp, Xo]).tocsr(); y = np.concatenate([d_pub.label.values.astype(int), np.zeros(Xo.shape[0], dtype=int)])
+    src = np.concatenate([d_pub.source.values.astype(object), np.array(["OwnInbox"] * Xo.shape[0], dtype=object)])
     a1 = json.loads((REPORTS / "candidates" / "email_candidates.json").read_text())
     C = a1["C1_candidate"]["chosen_C"]; v2_ci = a1["B0_v2_recipe"]["mean_f1_ci95"]
-    counts = d3.groupby(["source", "label"]).size().unstack(fill_value=0)
-    log("data:", counts.to_dict())
+    counts = {s_: {0: int(((src == s_) & (y == 0)).sum()), 1: int(((src == s_) & (y == 1)).sum())} for s_ in sorted(set(src.tolist()))}
+    log("data:", counts)
     d1, _ = TE.load_email(extra=False, legit=False)
     ref = E1.final_model(d1, 16)
-    legit_cal = d3[d3.source.isin(CAL) & (d3.label == 0)]
+    legit_cal = d_pub[d_pub.source.isin(CAL) & (d_pub.label == 0)]
     ref_fpr = float((E1.score_with(ref, legit_cal.text) >= .5).mean())
     log("v3 held-out scores (each source scored by a model trained without it)")
-    held, preds = E1.held_out(d3, C, E1.V2_CORPORA + E1.NEW + LEGIT_SRC)
-    cal_neg = np.concatenate([preds[s][1][preds[s][0] == 0] for s in CAL])
+    held, preds = P.held_out(X, y, src, C, E1.V2_CORPORA + E1.NEW + LEGIT_SRC, E1.measure, log)
+    cal_neg = np.concatenate([preds[s_][1][preds[s_][0] == 0] for s_ in CAL])
     t = next((float(x) for x in np.round(np.arange(0.5, 0.9951, 0.005), 3) if (cal_neg >= x).mean() <= ref_fpr), 0.995)
     shift = lambda p: 1 / (1 + np.exp(-(np.log(np.clip(p, 1e-12, 1 - 1e-12) / (1 - np.clip(p, 1e-12, 1 - 1e-12))) - math.log(t / (1 - t)))))
-    at_t = {s: E1.measure(preds[s][0], shift(preds[s][1])) for s in preds}
-    mean_t = round(float(np.mean([at_t[s]["f1"] for s in E1.V2_CORPORA])), 4)
+    at_t = {s_: E1.measure(preds[s_][0], shift(preds[s_][1])) for s_ in preds}
+    mean_t = round(float(np.mean([at_t[s_]["f1"] for s_ in E1.V2_CORPORA])), 4)
     log(f"alert line t={t}; honest mean F1 {mean_t}")
-    cand = E1.final_model(d3, C); cand["clf"].intercept_ = cand["clf"].intercept_ - math.log(t / (1 - t))
-    cand["meta"].update({"variant": "v3: robust + extra phishing/spam corpora + legitimate transactional sources, alert line moved", "alert_line_t": t,
-                         "sources": sorted(d3.source.unique())})
-    joblib.dump(cand, E1.OUTM / "email_model_v3.joblib", compress=3)
+    F = P.MatrixFeat(X, src, np.arange(X.shape[0])); clf = P.fit_lr(F.Xtrain, y, C); clf.intercept_ = clf.intercept_ - math.log(t / (1 - t))
+    cand = P.text_model(cv, F, clf, {"channel": "email", "trained_with_private_mail": True, "private_emails": int(Xo.shape[0]),
+                                     "sources": sorted(set(src.tolist())), "C": C})
+    saved = P.save_private(cand, E1.OUTM / "email_model_v3.joblib")
     live = joblib.load(MODELS / "email_model.joblib")
-    live_fpr = {s: round(float((E1.score_with(live, d3[d3.source == s].text) >= .5).mean()), 4) for s in LEGIT_SRC}
-    res = {"attempt": "v3 (third, authorised by the project owner on 7 Nov 2026)", "rule_fixed_before_running": __doc__.split("v3 = ")[1].split("Writes")[0].strip(),
-           "chosen_C": C, "alert_line_t": t, "data": {"dedupe": dd, "counts": {s: {int(k): int(v) for k, v in r.items()} for s, r in counts.iterrows()}},
+    live_fpr = {s_: round(float((E1.score_with(live, d_pub[d_pub.source == s_].text) >= .5).mean()), 4) for s_ in ("GeneratedLegit", "Templates")}
+    flagged, n_seen, seen = 0, 0, set()                                 # the live model on the inbox: streamed again, counts only
+    for text in email_stream.iter_texts(paths):
+        c_ = clean_text(text, mask_numbers=True); text = None
+        if len(c_) < 25 or norm_key(c_) in seen: c_ = None; continue
+        seen.add(norm_key(c_)); n_seen += 1; flagged += int(E1.score_with(live, [c_])[0] >= .5); c_ = None
+    live_fpr["OwnInbox"] = round(flagged / max(n_seen, 1), 4)
+    after = {p.name: P.sha256(p) for p in paths}
+    res = {"attempt": "v3 (third, authorised by the project owner on 7 Nov 2026)", "rule_fixed_before_running": __doc__.split("v3 = ")[1].split("Data path")[0].strip(),
+           "chosen_C": C, "alert_line_t": t, "data": {"public_dedupe": dd, "own_inbox_stream": st, "counts": counts},
+           "privacy": {"outbound_connection_attempts": net.attempts, "archive_unchanged": before == after, "archives": len(paths), "model_file": saved},
            "calibration": {"corpora": CAL, "v2_recipe_false_positive_rate": round(ref_fpr, 4), "v3_false_positive_rate_at_0.5": round(float((cal_neg >= .5).mean()), 4),
                            "v3_false_positive_rate_at_t": round(float((cal_neg >= t).mean()), 4)},
-           "held_out_at_t": at_t, "mean_f1_at_t": mean_t, "mean_f1_at_t_ci95": boot_mean_f1_at({s: preds[s] for s in E1.V2_CORPORA}, t), "v2_mean_f1_ci95": v2_ci,
-           "legit_sources_false_alarms": {s: {"v3_held_out": at_t[s].get("false_positive_rate"), "live_v2": live_fpr[s], "n": at_t[s]["n"]} for s in LEGIT_SRC},
+           "held_out_at_t": at_t, "mean_f1_at_t": mean_t, "mean_f1_at_t_ci95": boot_mean_f1_at({s_: preds[s_] for s_ in E1.V2_CORPORA}, t), "v2_mean_f1_ci95": v2_ci,
+           "legit_sources_false_alarms": {s_: {"v3_held_out": at_t[s_].get("false_positive_rate"), "live_v2": live_fpr[s_], "n": at_t[s_]["n"]} for s_ in LEGIT_SRC},
            "samples_live": E1.sample_checks(live, "live v2 model"), "samples_candidate": E1.sample_checks(cand, "v3")}
     res["demo_cases"] = E1.demo_outcomes(cand)
     sl, sc = res["samples_live"], res["samples_candidate"]
@@ -74,17 +112,24 @@ def main():
     c = all(v["live"] is None and v["candidate"] is None or (v["live"] and v["candidate"] and v["live"]["alert"] == v["candidate"]["alert"]) for v in res["demo_cases"].values())
     res["adoption"] = {"a_honest_metric_not_worse_than_v2_beyond_ci": a, "a_detail": f"v3 mean held-out F1 {mean_t} vs v2 95% interval {v2_ci}",
                        "b_target_defect_cases_improve": b, "c_demo_cases_keep_alert_outcome": c, "d_every_test_passes": "checked after adoption by running the tests",
-                       "decision": "v3 passes (a) to (c)" if a and b and c else "keep v2's model; v3 is a negative result"}
-    save_json(res, E1.OUTR / "email_candidates_v3.json"); write_md(res); log("decision:", res["adoption"])
+                       "privacy_audit": "scripts/privacy_audit_email.py must pass before the model is used (PRIVACY_AND_ETHICS.md)",
+                       "decision": "v3 passes (a) to (c); the privacy audit comes next" if a and b and c else "keep v2's model; v3 is a negative result"}
+    save_json(res, E1.OUTR / "email_candidates_v3.json"); write_md(res); log("decision:", res["adoption"]["decision"])
 
 
 def write_md(r):
     pct = lambda x: "–" if x is None else f"{100 * x:.1f}%"
-    cal = r["calibration"]
+    cal, pv = r["calibration"], r["privacy"]
     L = ["# Email model v3 (Phase 3.1, third attempt)\n", "Written by `src/eval_email_v3.py`. Its rule was fixed in the script before it ran:\n", "> " + r["rule_fixed_before_running"].replace("\n", " ") + "\n",
          "## Training data\n", "| Source | Legitimate | Unwanted |", "|---|---|---|"]
     for s, c in r["data"]["counts"].items(): L.append(f"| {s} | {c.get(0, 0):,} | {c.get(1, 0):,} |")
-    L += ["", "GeneratedLegit is synthetic (GPT-3.5). Templates are company templates with placeholders removed. OwnInbox is the account owner's own legitimate mail, used with their consent and never committed.", "",
+    st = r["data"]["own_inbox_stream"]
+    L += ["", "GeneratedLegit is synthetic (GPT-3.5). Templates are company templates with placeholders removed. OwnInbox is the account owner's own legitimate mail, "
+          "used with their consent, streamed (never stored as text) and never committed.", "",
+          f"Own-inbox stream: {st['read']:,} messages read, {st['skipped_spam_trash']:,} skipped as Spam or Trash, {st['failed']:,} unreadable, {st['empty'] + st['too_short']:,} too short, "
+          f"{st['duplicates_dropped']:,} exact duplicates, {st['kept']:,} used.", "",
+          f"Privacy of this run: outbound connection attempts {pv['outbound_connection_attempts']}; archive byte-identical before and after: {pv['archive_unchanged']}; "
+          f"model file: {pv['model_file']['permissions']}, encrypted: {pv['model_file']['encrypted']}.", "",
           f"## The alert line\n\nFalse alarms on held-out legitimate {', '.join(cal['corpora'])} emails: v2 recipe {pct(cal['v2_recipe_false_positive_rate'])}; v3 at 0.5 {pct(cal['v3_false_positive_rate_at_0.5'])}; "
           f"v3 at the chosen line {pct(cal['v3_false_positive_rate_at_t'])}. Chosen line t = **{r['alert_line_t']}** (an intercept shift, so the API keeps 0.5).", "",
           "## Held-out sources at the chosen line\n", "| Source held out | v3 |", "|---|---|"]
@@ -107,7 +152,7 @@ def write_md(r):
     a = r["adoption"]
     L += ["", "## Adoption rule\n", f"- (a) honest metric not worse than v2's beyond its 95% interval: **{a['a_honest_metric_not_worse_than_v2_beyond_ci']}** ({a['a_detail']})",
           f"- (b) the target defects' cases improve (D-10, D-17): **{a['b_target_defect_cases_improve']}**", f"- (c) TC-01 to TC-08 keep their alert outcome: **{a['c_demo_cases_keep_alert_outcome']}**",
-          f"- (d) every test passes: {a['d_every_test_passes']}", f"\n**Decision: {a['decision']}.**"]
+          f"- (d) every test passes: {a['d_every_test_passes']}", f"- privacy: {a['privacy_audit']}", f"\n**Decision: {a['decision']}.**"]
     (E1.OUTR / "email_candidates_v3.md").write_text("\n".join(L) + "\n", encoding="utf-8")
 
 
