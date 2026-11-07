@@ -135,6 +135,16 @@ def test_no_external_network_transmission():
         assert not re.search(r"^\s*(import|from)\s+(requests|httpx|urllib|http\.client|socket|aiohttp|boto3|openai|anthropic)\b", src, re.M), f
 
 
+def test_network_guard_blocks_outbound_and_allows_loopback():
+    from network_guard import NoExternalNetwork
+    with NoExternalNetwork() as n:
+        x, y = socket.socketpair(); x.close(); y.close()                         # loopback stays allowed (asyncio needs it on Windows)
+        for target in (("example.com", 80), ("93.184.215.14", 443)):
+            try: socket.create_connection(target, timeout=2); raise AssertionError(f"not blocked: {target}")
+            except OSError: pass
+    assert n.attempts == 2, n.attempts
+
+
 def test_no_persistent_extracted_dataset():
     with tempfile.TemporaryDirectory() as tmp:
         mbox = Path(tmp) / "synthetic.mbox"; write_mbox(mbox); texts, labels, sources = public_corpora()

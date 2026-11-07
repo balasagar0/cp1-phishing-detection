@@ -39,17 +39,7 @@ MIN_OWN = 100
 log = TE.log
 
 
-class Offline:
-    """Blocks every outbound connection in this process for the whole run, and counts any attempt."""
-    def __init__(self): self.attempts = 0
-    def __enter__(self):
-        self.real = (socket.socket.connect, socket.create_connection, socket.getaddrinfo)
-        def block(*a, **k):
-            self.attempts += 1; raise OSError("outbound connection blocked (private training run)")
-        socket.socket.connect = lambda sock, *a, **k: block(); socket.create_connection = block; socket.getaddrinfo = block
-        return self
-    def __exit__(self, *e): socket.socket.connect, socket.create_connection, socket.getaddrinfo = self.real
-
+from network_guard import NoExternalNetwork as Offline          # blocks every connection that would leave the machine; loopback allowed
 
 def main():
     with Offline() as net:
@@ -98,7 +88,8 @@ def run(net):
     after = {p.name: P.sha256(p) for p in paths}
     res = {"attempt": "v3 (third, authorised by the project owner on 7 Nov 2026)", "rule_fixed_before_running": __doc__.split("v3 = ")[1].split("Data path")[0].strip(),
            "chosen_C": C, "alert_line_t": t, "data": {"public_dedupe": dd, "own_inbox_stream": st, "counts": counts},
-           "privacy": {"outbound_connection_attempts": net.attempts, "archive_unchanged": before == after, "archives": len(paths), "model_file": saved},
+           "privacy": {"outbound_connection_attempts": net.attempts, "archive_unchanged": before == after, "archives": len(paths), "model_file": saved,
+                       "note": "The first run (7 Nov 2026) stopped at the demo-case step: its network guard also blocked loopback, which Windows' asyncio needs. This run is the same procedure; the guard now allows loopback and still blocks and counts everything that would leave the machine."},
            "calibration": {"corpora": CAL, "v2_recipe_false_positive_rate": round(ref_fpr, 4), "v3_false_positive_rate_at_0.5": round(float((cal_neg >= .5).mean()), 4),
                            "v3_false_positive_rate_at_t": round(float((cal_neg >= t).mean()), 4)},
            "held_out_at_t": at_t, "mean_f1_at_t": mean_t, "mean_f1_at_t_ci95": boot_mean_f1_at({s_: preds[s_] for s_ in E1.V2_CORPORA}, t), "v2_mean_f1_ci95": v2_ci,
@@ -129,7 +120,7 @@ def write_md(r):
           f"Own-inbox stream: {st['read']:,} messages read, {st['skipped_spam_trash']:,} skipped as Spam or Trash, {st['failed']:,} unreadable, {st['empty'] + st['too_short']:,} too short, "
           f"{st['duplicates_dropped']:,} exact duplicates, {st['kept']:,} used.", "",
           f"Privacy of this run: outbound connection attempts {pv['outbound_connection_attempts']}; archive byte-identical before and after: {pv['archive_unchanged']}; "
-          f"model file: {pv['model_file']['permissions']}, encrypted: {pv['model_file']['encrypted']}.", "",
+          f"model file: {pv['model_file']['permissions']}, encrypted: {pv['model_file']['encrypted']}. {pv['note']}", "",
           f"## The alert line\n\nFalse alarms on held-out legitimate {', '.join(cal['corpora'])} emails: v2 recipe {pct(cal['v2_recipe_false_positive_rate'])}; v3 at 0.5 {pct(cal['v3_false_positive_rate_at_0.5'])}; "
           f"v3 at the chosen line {pct(cal['v3_false_positive_rate_at_t'])}. Chosen line t = **{r['alert_line_t']}** (an intercept shift, so the API keeps 0.5).", "",
           "## Held-out sources at the chosen line\n", "| Source held out | v3 |", "|---|---|"]

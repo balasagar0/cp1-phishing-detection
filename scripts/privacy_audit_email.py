@@ -26,16 +26,7 @@ from test_private_email_pipeline import CANARIES, HELDOUT, canary_text
 OUT = ROOT / "reports" / "privacy"; MODEL = ROOT / "models" / "candidates" / "email_model_v3.joblib"
 
 
-class Offline:
-    def __init__(self): self.attempts = 0
-    def __enter__(self):
-        self.real = (socket.socket.connect, socket.create_connection, socket.getaddrinfo)
-        def block(*a, **k):
-            self.attempts += 1; raise OSError("blocked")
-        socket.socket.connect = lambda s, *a, **k: block(); socket.create_connection = block; socket.getaddrinfo = block
-        return self
-    def __exit__(self, *e): socket.socket.connect, socket.create_connection, socket.getaddrinfo = self.real
-
+from network_guard import NoExternalNetwork as Offline          # blocks every connection that would leave the machine; loopback allowed
 
 def shingles(text, n=8):
     w = re.findall(r"\w+", text.lower())
