@@ -90,7 +90,7 @@ The model is a bag-of-words classifier. Single words and word pairs are weighted
 | Memory release | UNVERIFIED | as described above |
 
 **Decision:** the v3 model is not used. It failed the project's adoption rule, (b) and (c), and the privacy audit's memorisation check. It
-stays at `models/candidates/email_model_v3.joblib`, current-user access only and gitignored, until the owner decides whether to delete it.
+stays at `models/candidates/email_model_v3.joblib`, current-user access only and gitignored. On 7 Nov 2026 the owner chose to **keep** it and the export (`data/raw/email_own/`) on this laptop. Neither is committed: weights derived from private mail stay local (this spec, section 6), and git history is permanent. To withdraw later, follow 'Deleting the training artefacts' below.
 
 **Lesson for the next attempt:** a stronger guarantee needs one of these:
 - formal privacy noise during training (differential privacy);

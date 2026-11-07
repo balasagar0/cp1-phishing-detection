@@ -76,7 +76,7 @@ The work follows `CP1_FINISH_TASK.md`. Item-by-item status for all 69 checklist 
 ### Before the session (team)
 
 1. Put the patent specification (`Patent_Complete_Specification_Form2`, .docx or .md) in `docs/inputs/cp1_inputs/`. It unblocks PT-03, PT-04 and the patent row of the R3-09 comparison.
-2. Email model: after three failed attempts, keep v2's email model for CP1 (recommended), and decide whether to delete `models/candidates/email_model_v3.joblib` and the export in `data/raw/email_own/`.
+2. Email model: settled for CP1. v2's email model stays live after three failed attempts. The owner keeps the v3 model file and the export on this laptop, never committed.
 3. Optional: put `Test_Plan_Phishing_Detection.docx` and `SRS_Phishing_Detection_v1.0.md` in the same folder, so `docs/BUILT_VS_DESCRIBED.md` can cover the SRS too.
 
 ### Email model v3: what the owner does (one time)
@@ -101,10 +101,10 @@ Open Claude Code in the project folder and send:
 
 | # | Step | Brief section | Result |
 |---|---|---|---|
-| 1 | Commit the email candidate report, keep `models/candidates/` out of git, and merge `module/email-sms` into `main` | 3.1 | Phase 3 work on `main` |
+| 1 | Done on 7 Nov: Phase 3 merged into `main`, tag `test-run-20261107-3` | 3 | Phase 3 on `main` |
 | 2 | Read the patent spec. Fill the channel weights and the cross-channel and sequence factors into `src/campaign_formula.py` from the spec, and write the section 16 worked-example test | 4.3 | `tests/test_campaign_formula.py` passes in full |
 | 3 | Point `scripts/compare_reports.py` and `src/make_report.py` at the honest email figure over the three original corpora, so they still work if more corpora are added | 3.1, 5 | correct headline figure in every report |
-| 4 | Apply the team's email decision. If attempt 2 is adopted: make `train_email.py` reproduce it (extra corpora and the alert-line rule), refresh `reports/model_manifest.json`, update `tests/test_demo_cases.py` with the reason, and run every test (rule d) | 3.1 | the email model on `main` |
+| 4 | Done on 7 Nov: the email decision is applied (v2 stays live; nothing to change in the code) | 3.1 | no change |
 | 5 | Add `eval_comparison.py` to `run_all.sh`. Tag `cp1-rc1`. Run `download_data.sh` and `run_all.sh` on it. Commit the regenerated models and reports as "final run" | 4.1 | final models and reports |
 | 6 | If the final run moved any demo-case score, update `tests/test_demo_cases.py` with the new values and the reason. Alert outcomes must not change | 4.1 | TC-01 to TC-08 pass |
 | 7 | Run everything on the final build: all tests, the ported suite, the offline check, the UI checks, an end-to-end check, and `scripts/benchmark.py` over real HTTP | 4.2 | `reports/benchmark.md`, fresh `reports/ui_checks.json` |
