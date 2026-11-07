@@ -8,16 +8,16 @@ sequenceDiagram
   participant F as fusion.window_risks
   participant B as SQLite
   C->>A: POST /events {recipient, events[]}
-  A->>D: _assess (same checks and scoring as /correlate; no time = server clock)
+  A->>D: _assess (same checks and scoring as /correlate, no time = server clock)
   A->>S: add(recipient, scored events)
   S->>S: HMAC-SHA256 of the recipient and each identity token
-  S->>B: INSERT events (channel, time, score, label, model version, hashed tokens; text only if CP1_STORE_CONTENT=1)
+  S->>B: INSERT events (channel, time, score, label, model version, hashed tokens, text only if CP1_STORE_CONTENT=1)
   S->>B: SELECT the recipient's assessed events
   S->>F: window_risks(model, events, 60)
   F-->>S: each window with its risk (one window = one campaign)
-  S->>B: UPSERT campaigns (key: recipient, first event); absorbed windows -> inactive
+  S->>B: UPSERT campaigns (key: recipient, first event), absorbed windows -> inactive
   opt a campaign reaches 0.5 for the first time
-    S->>B: INSERT alert (events, shared tokens, reason); campaign.alerted = 1
+    S->>B: INSERT alert (events, shared tokens, reason), campaign.alerted = 1
   end
   S-->>A: event ids, new alerts
   A-->>C: campaigns, highest campaign risk, new alerts

@@ -65,7 +65,7 @@ The work follows `CP1_FINISH_TASK.md`. Item-by-item status for all 69 checklist 
 
 ### Written ahead for later phases (code ready, not yet run on the final build)
 
-`scripts/benchmark.py`, `scripts/preflight.py`, `start_demo.bat`, `scripts/nfr05_fresh_clone.py`, `src/eval_comparison.py`, `src/campaign_formula.py` (patent formula; its worked-example test waits for the spec), `README.md`, `docs/USER_MANUAL.md`, `docs/PRIVACY.md`, `docs/CP2_BACKLOG.md`, `DATA_SOURCES.md`, and the diagrams in `docs/diagrams/`. The `events_sequence` diagram did not render; re-run `mmdc` on it.
+`scripts/benchmark.py`, `scripts/preflight.py`, `start_demo.bat`, `scripts/nfr05_fresh_clone.py`, `src/eval_comparison.py`, `src/campaign_formula.py` (patent formula; its worked-example test waits for the spec), `README.md`, `docs/USER_MANUAL.md`, `docs/PRIVACY.md`, `docs/CP2_BACKLOG.md`, `DATA_SOURCES.md`, and the diagrams in `docs/diagrams/` (all four rendered to SVG and PNG).
 
 ---
 
