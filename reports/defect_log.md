@@ -1,6 +1,6 @@
 # Defect log
 
-Written by `scripts/fill_final_workbook.py` from the run of 2026-11-07 16:49 on `cp1-rc1-2-g50c3228-dirty`. Status comes from the run: Closed only when every linked case passes. Accepting a defect is the team's call.
+Written by `scripts/fill_final_workbook.py` from the run of 2026-11-07 17:11 on `cp1-final`. Status comes from the run: Closed only when every linked case passes. Accepting a defect is the team's call.
 
 | Defect | Severity | Module | Status | Linked cases on this run | Fixed by | Fix summary |
 |---|---|---|---|---|---|---|

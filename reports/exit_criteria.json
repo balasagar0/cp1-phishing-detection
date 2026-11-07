@@ -1,7 +1,7 @@
 {
- "date": "2026-11-07T16:49:26+05:30",
- "build": "cp1-rc1-2-g50c3228-dirty",
- "commit": "50c3228c4014f58f2bcabb1956c6d16c3187f567",
+ "date": "2026-11-07T17:11:33+05:30",
+ "build": "cp1-final",
+ "commit": "18ba1d94b103ebeac3aefd775f4d9673c039b451",
  "targets": "read from the team workbook's Summary sheet and equal to the constants (6 values checked)",
  "criteria": [
   {
