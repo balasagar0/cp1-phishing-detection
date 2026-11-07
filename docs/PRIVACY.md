@@ -38,6 +38,9 @@ The full account of this pipeline, with each claim's test and status, is `PRIVAC
 - The export stays on this laptop: `data/` is gitignored, and nothing from it is committed, uploaded or used as a test case. Delete the folder to withdraw it; retrain afterwards.
 - The model keeps only words that appear in at least five emails of at least two different sources, and numbers are masked, so names, order numbers and amounts from one inbox do not enter the model. The trained model file still derives from the mail: do not publish it while the export is in its training data.
 - Only mail the owner has checked is legitimate goes in. Messages Gmail filed as Spam or Trash are skipped.
+- **Outcome:** v3 was not adopted. It failed the adoption rule and its privacy audit (`reports/privacy/email_v3_privacy_audit.md`). The live
+  email model is v2's, which never saw this mail. The v3 model file and the export stay on this laptop only, outside git; deleting them is the
+  owner's choice.
 
 ## Ethics notes
 

@@ -2,7 +2,7 @@
 
 All 69 items from section 9 of `CP1_FINISH_TASK.md`. Updated at the end of every phase. Nothing is marked done without evidence (a file, a test or a commit).
 
-**Last update:** end of Phase 4 (freeze and final run), 7 Nov 2026. Tag `cp1-final` (commit `18ba1d9`).
+**Last update:** end of Phase 5 (documents), 7 Nov 2026. Build `cp1-final` (commit `18ba1d9`); documents generated from it.
 
 **Status words:** done (finished, with evidence) · partial (some of it is done; the rest is named) · open (not started) · blocked (waiting on something named) · people (a person does it; tracked here).
 
@@ -17,7 +17,7 @@ All 69 items from section 9 of `CP1_FINISH_TASK.md`. Updated at the end of every
 | 2. Event store, live flow, console | done | `src/event_store.py` and its routes, `tests/test_event_store.py`; console in `console/` served at `/`; `scripts/offline_check.py` (`reports/offline_check.md`); `scripts/ui_checks.py` (`reports/ui_checks.json`, `reports/screenshots/`); `reports/r2_09_evidence.md`; tag `test-run-20261102-2` |
 | 3. Models | done | No model adopted. Email: three attempts, none passed the adoption rule (`reports/candidates/email_candidates*.md`), v3 privacy record in `PRIVACY_AND_ETHICS.md`; URL: no retrain needed (`reports/candidates/url_d01.md`); SMS: no licensed data (`reports/candidates/sms_d09.md`); tag `test-run-20261107-3` |
 | 4. Freeze and final run | done | Tags `cp1-rc1` and `cp1-final`. Final run on `cp1-rc1` recorded and not adopted (`reports/final_run/README.md`, `reports/final_run_check.md`); R3-09 comparison on the live models (`reports/comparison_metrics.json`); every check on `cp1-final`: `reports/final_cases_results.json`, `reports/e2e_check.md`, `reports/ui_checks.json`, `reports/offline_check.md`, `reports/benchmark.md`, `reports/nfr05_fresh_clone.json`, `reports/exit_criteria.md`, the FINAL workbook |
-| 5. Documents | open | Starts next, from `cp1-final`. `docs/PATENT_BASIS.md` replaces `BUILT_VS_DESCRIBED.md` and `PATENT_NUMBERS.md` (owner, 7 Nov 2026) |
+| 5. Documents | done | All generated from `cp1-final` by `scripts/make_documents.py` (no number typed): `reports/FINAL_NUMBERS.md`, `reports/FINAL_TEST_REPORT.md`, `reports/figures/`, `docs/DEMO_SCRIPT.md`, `docs/PATENT_BASIS.md`, `docs/MANUSCRIPT_METHOD_RESULTS.md`, `docs/VIVA_BY_MODULE.md`, `docs/DIARY_ENTRIES.md`, `docs/report/`; templates in `docs/templates/`; checked by `tests/test_documents.py`. Also `README.md`, `docs/USER_MANUAL.md`, `docs/PRIVACY.md`, `docs/CP2_BACKLOG.md`, `docs/diagrams/` |
 | 6. Wrap up | open | Last |
 
 ## Things found in Phase 0 that a person should know
@@ -65,39 +65,39 @@ All 69 items from section 9 of `CP1_FINISH_TASK.md`. Updated at the end of every
 | R2-11 | Meet the test plan's exit criteria | M | Code | partial | Judged on `cp1-final` against the plan's own targets (`reports/exit_criteria.md`, `scripts/exit_criteria.py`). Met: 1, 2, 4a, 6. Not met: 3 (sample groups), 4b (honest measures), 5 (SYS-14), 7 (open High defects D-01, D-09, D-17). FINAL workbook filled (`reports/Test_Cases_and_Test_Data_FINAL.xlsx`, run record names `cp1-final`) | The team decides on the open defects and the written proposals in `reports/defect_log.md`. Criterion 5 needs real bundles (R2-10); 3 and 4b need better models (CP2) |
 | R2-12 | A private git repo with real history | M | Code | done | Local repo with real history: `v2-baseline` is v2 byte for byte; every commit uses the configured identity and the Claude co-author line; module branches merged into `main` with `--no-ff`; tags per phase; `git remote -v` is empty | Keep committing at each phase end; never push |
 | R2-13 | Literature survey of at least 10 papers | T | People | people | Not a code item | The team writes it |
-| R2-14 | SRS, ER and UML diagrams | M, B | Inputs: as-built diagrams | open | No as-built diagrams yet | Phase 5: Mermaid diagrams in `docs/diagrams/`. The guide signs off |
+| R2-14 | SRS, ER and UML diagrams | M, B | Inputs: as-built diagrams | partial | As-built Mermaid diagrams, rendered to SVG and PNG: components, the `/correlate` sequence, the `/events` sequence, the event-store ER diagram (`docs/diagrams/`) | The guide signs off the diagrams (Manoj and Bala take them to the guide) |
 | R2-15 | Record the Review-2 feedback and the fixes | B | People | people | Not a code item | Bala records it |
 | R3-01 | Agree the CP1 scope with the guide | B | People | people | Not a code item | Bala meets the guide; `docs/BUILT_VS_DESCRIBED.md` (Phase 5) supports it |
 | R3-02 | Freeze one final build | M | Code | done | Tags `cp1-rc1` (commit `7761903`) and `cp1-final` (commit `18ba1d9`). The final run on `cp1-rc1` is recorded in `reports/final_run/`; its models were not adopted (owner, 7 Nov 2026), so `cp1-final` ships v2's models | None. Every later number comes from `cp1-final` |
 | R3-03 | Run the whole flow live | V, B | Code | done | `scripts/e2e_check.py` walks API -> correlation -> event store -> alert -> console over real HTTP: every step passes (`reports/e2e_check.md`). The console's screens are checked in Chrome and Edge (`reports/ui_checks.json`, `reports/screenshots/`) | Viraj and Bala show it live in the review (R3-05) |
 | R3-04 | The voice module, if it stays in CP1 | K | Code only if `VOICE_IN_CP1` is `yes` | people | `VOICE_IN_CP1` is `no`. Calls answer HTTP 501 on `/score` (`tests/test_demo_cases.py::test_tc03_voice_call_is_not_assessed`) | S and the team confirm voice scope. If it becomes `yes`, Appendix A |
-| R3-05 | Script and rehearse the demo | V, B | Inputs; the rehearsal is People | open | No script yet | Phase 5: `docs/DEMO_SCRIPT.md`. Viraj and Bala rehearse |
-| R3-06 | A review-proof demo laptop | V | Code, plus one real Wi-Fi-off run by a person | partial | `scripts/offline_check.py` passes: no outbound socket while every demo case and story runs; tldextract uses its bundled list; the console fetches nothing from outside (`reports/offline_check.md`). The UI checks saw no request leave the machine | Phase 5: `scripts/preflight.py` and `start_demo.bat`. Viraj does one real Wi-Fi-off run on the demo laptop |
+| R3-05 | Script and rehearse the demo | V, B | Inputs; the rehearsal is People | partial | `docs/DEMO_SCRIPT.md` (generated from `cp1-final` by `scripts/make_documents.py`; `tests/test_documents.py` checks it is current and carries no typed or retired number): order TC-06, TC-07, TC-05, then the rest, expected values, what to say at TC-03, fallbacks; `scripts/preflight.py` and `start_demo.bat` give GO or NO-GO | Viraj and Bala rehearse it twice on the demo laptop |
+| R3-06 | A review-proof demo laptop | V | Code, plus one real Wi-Fi-off run by a person | partial | `scripts/offline_check.py` passes on `cp1-final`; `start_demo.bat` runs `scripts/preflight.py` (packages, model hashes, console, API, the eight demo cases, offline) and opens the console | Viraj does one real Wi-Fi-off run on the demo laptop with `start_demo.bat` |
 | R3-07 | Re-run every test case on the final build | M | Code | done | Every ported case re-run on `cp1-final`: `reports/final_cases_results.json` is stamped `cp1-final 18ba1d9`; no unexpected failure, every failure is linked to an open defect. Also pytest, the smoke test, the offline check, the UI checks and the end-to-end check (Phase 4.2) | None |
-| R3-08 | Final metrics for each channel | K, V | Code | partial | The live models are v2's, so the per-channel figures in `reports/results.md` are v2's, reproduced in Phase 0.7. The final run's retrained figures are kept for the record in `reports/final_run/` and compared value by value in `reports/final_run_check.md` | Phase 5: `reports/FINAL_NUMBERS.md` from `cp1-final` |
+| R3-08 | Final metrics for each channel | K, V | Code | done | `reports/FINAL_NUMBERS.md` section 1: per channel the honest and the flattering measure with precision, recall, F1, false-positive rate, ROC-AUC and the confusion matrix (generated from `cp1-final` by `scripts/make_documents.py`; `tests/test_documents.py` checks it is current and carries no typed or retired number) | None |
 | R3-09 | Correlation against the baselines | B, M | Code for the simulated half; the real half is blocked on R2-10 | partial | Simulated half done on the live models: `reports/comparison_metrics.json` and the R3-09 table in `reports/results.md` (single-channel, parallel multi-channel, whole bundle, the deployed 60-minute engine; titled simulated, with 95% intervals). The noisy-OR patent row is not evaluated (owner, 7 Nov 2026). The real half is blocked on R2-10 | Run `src/refit_fusion.py` on real bundles once R2-10 has them |
 | R3-10 | Timing on the demo laptop | M | Code | partial | `scripts/benchmark.py` over real HTTP on this laptop: both targets met (`reports/benchmark.md`, with CPU, RAM and OS). This laptop is not confirmed as the demo laptop | Viraj confirms this is the demo laptop, or runs `python scripts/benchmark.py` on the demo laptop |
-| R3-11 | The final test report | M | Code | open | Not written | Phase 5: `reports/FINAL_TEST_REPORT.md` |
-| R3-12 | One set of numbers everywhere | T | Code for FINAL_NUMBERS; restating it is People | open | Not written | Phase 5: `reports/FINAL_NUMBERS.md`. The team copies it into the deck, report, patent and paper |
+| R3-11 | The final test report | M | Code | done | `reports/FINAL_TEST_REPORT.md` (written by `scripts/make_final_test_report.py` from the run on `cp1-final`): why the suite was ported, every case with its porting and result, results by module, sample groups, exit criteria, defect log, what was not tested | None |
+| R3-12 | One set of numbers everywhere | T | Code for FINAL_NUMBERS; restating it is People | partial | `reports/FINAL_NUMBERS.md` and `reports/final_numbers.json` (generated from `cp1-final` by `scripts/make_documents.py`; `tests/test_documents.py` checks it is current and carries no typed or retired number), with the retired numbers and a repository search for them | The team restates these numbers in the deck, the report, the patent and the paper, and nowhere else |
 | R3-13 | Indian attack stories | B | Inputs: console presets | done | Four Indian stories in `src/demo_cases.py` (KYC freeze, courier customs fee, work-from-home task scam, legitimate order), served by `/presets` as one-click console presets, hand-written and run once. The legitimate order stays below the line (`reports/screenshots/demo_IN-04.png`) | Nothing for code |
 | R3-14 | Results on real or lab-made bundles | M | Blocked on R2-10 | blocked | 0 real bundles. When they exist, `refit_fusion.py` writes `reports/real_bundles_report.md` and `reports/real_bundles_metrics.json` by default (checked by `tests/test_refit_path.py`) | Blocked on R2-10 |
 | R3-15 | Who would use it | B | People | people | Not a code item | Bala writes it |
-| R3-16 | Privacy and ethics | M | Inputs: PRIVACY.md | open | Not written | Phase 5: `docs/PRIVACY.md` |
-| R3-17 | The limitations slide | M | Inputs: the measured list in FINAL_NUMBERS | open | v2's list is section 5 of `reports/results.md` | Phase 5 |
+| R3-16 | Privacy and ethics | M | Inputs: PRIVACY.md | done | `docs/PRIVACY.md` (what is stored, hashed, logged and deleted, with tests), `PRIVACY_AND_ETHICS.md` (the private-mail pipeline), `DATA_SOURCES.md` (every dataset with its source, licence as checked and hash) | None |
+| R3-17 | The limitations slide | M | Inputs: the measured list in FINAL_NUMBERS | partial | The measured list: `reports/FINAL_NUMBERS.md` section 8 and `docs/report/05_limitations.md` | Manoj puts it on the limitations slide |
 | R3-18 | Each member's lessons learned | T | People | people | Not a code item | Each member writes theirs |
-| R3-19 | The Capstone-2 plan | B | Inputs: CP2_BACKLOG | open | Not written | Phase 5: `docs/CP2_BACKLOG.md` |
-| R3-20 | The near-final project report | T | Inputs: `docs/report/` | open | Not written | Phase 5 |
-| R3-21 | README and user manual | V | Code | partial | `README.md` and `docs/USER_MANUAL.md` written. NFR-05 passes: a fresh clone with a new venv, following only the README, installs, passes the tests and runs the demo (`reports/nfr05_fresh_clone.json`) | Phase 5: finish the manual's walkthrough from `cp1-final` screenshots |
+| R3-19 | The Capstone-2 plan | B | Inputs: CP2_BACKLOG | partial | `docs/CP2_BACKLOG.md` (what is not built, where it plugs in, the data it needs, how we would know it works) and `docs/report/06_future_work.md` | Bala presents the CP2 plan from it |
+| R3-20 | The near-final project report | T | Inputs: `docs/report/` | partial | `docs/report/` chapters 1 to 6 as built (generated from `cp1-final` by `scripts/make_documents.py`; `tests/test_documents.py` checks it is current and carries no typed or retired number) | The team adds the department's formatting, front matter, literature survey and references |
+| R3-21 | README and user manual | V | Code | done | `README.md` (install, run, routes, tests, retrain, documents, troubleshooting) and `docs/USER_MANUAL.md` (the console view by view, with screenshots from `scripts/ui_checks.py`). NFR-05 passes from the README alone (`reports/nfr05_fresh_clone.json`) | None |
 | R3-22 | Plagiarism check on the report | M | People | people | Not a code item | Manoj runs it |
-| R3-23 | The deck in the KLEF template | B | People; the figures come from you | people | No figures yet | Phase 5 makes `reports/figures/`; Bala builds the deck |
-| R3-24 | Practise the Q&A | T | Inputs: VIVA_BY_MODULE. The mock viva is People | open | Not written | Phase 5: `docs/VIVA_BY_MODULE.md` |
+| R3-23 | The deck in the KLEF template | B | People; the figures come from you | people | `reports/figures/`: five figures as PNG at 300 dpi and SVG, readable in grayscale, with their data named in `reports/figures/README.md` | Bala builds the deck in the KLEF template with these figures |
+| R3-24 | Practise the Q&A | T | Inputs: VIVA_BY_MODULE. The mock viva is People | partial | `docs/VIVA_BY_MODULE.md` (generated from `cp1-final` by `scripts/make_documents.py`; `tests/test_documents.py` checks it is current and carries no typed or retired number): per module and owner, how it works and five hard questions with answers citing files and numbers | The team holds a mock viva |
 | R3-25 | Submit the abstract, slides, report and code 2 days early | B | People | people | Not a code item | Bala submits |
 | R3-26 | Confirm the guide will attend | B | People | people | Not a code item | Bala confirms |
 | R3-27 | All four present, in formal attire, with the signed diary | T | People | people | Not a code item | The team |
 | PT-01 | Choose the filing route with KL IPFC | B | People | people | Not a code item | Bala |
 | PT-02 | Confirm the applicant and the inventors | B | People | people | Not a code item | Bala |
-| PT-03 | Match every measured number to the final run | B, M | Inputs: PATENT_NUMBERS | open | The owner decided on 7 Nov 2026 that the patent will be written from this build; the old spec's data is generated. Phase 5 writes `docs/PATENT_BASIS.md`: every measured number from `cp1-final` with its source file | Phase 5: `docs/PATENT_BASIS.md`. Bala and KL IPFC write the new patent from it |
-| PT-04 | Know what is built and what is only described | T | Inputs: BUILT_VS_DESCRIBED | open | The new patent describes this build only. `docs/PATENT_BASIS.md` (Phase 5) lists what is built, with file, function and test, and what is not built | Phase 5: `docs/PATENT_BASIS.md` |
+| PT-03 | Match every measured number to the final run | B, M | Inputs: PATENT_NUMBERS | partial | `docs/PATENT_BASIS.md` section 3: every measured number with its source file (generated from `cp1-final` by `scripts/make_documents.py`; `tests/test_documents.py` checks it is current and carries no typed or retired number). The old spec is not used (owner, 7 Nov 2026) | Bala and KL IPFC write the patent from it |
+| PT-04 | Know what is built and what is only described | T | Inputs: BUILT_VS_DESCRIBED | partial | `docs/PATENT_BASIS.md` sections 2 and 5: every built feature with its file, function and test, and what is not built (generated from `cp1-final` by `scripts/make_documents.py`; `tests/test_documents.py` checks it is current and carries no typed or retired number) | Bala and KL IPFC decide what to claim (section 6 lists the questions) |
 | PT-05 | Go over prior art with KL IPFC | B | People | people | Not a code item | Bala |
 | PT-06 | Check the fees | B | People | people | Not a code item | Bala |
 | PT-07 | Finish the formatting | M | People | people | Not a code item | Manoj |
@@ -106,21 +106,21 @@ All 69 items from section 9 of `CP1_FINISH_TASK.md`. Updated at the end of every
 | PT-10 | Keep everything private until it is filed | T | Rule 8, in force now | done | `git remote -v` is empty; `.gitignore` keeps `docs/inputs/`, data and keys out of git; nothing has been uploaded | Keep it this way until the filing receipt exists |
 | MS-01 | Choose the journal with the guide | B | People | people | Not a code item | Bala and the guide |
 | MS-02 | Move the draft into the journal's template | B | People | people | Not a code item | Bala |
-| MS-03 | Rewrite the method and results from the final build | B, M | Inputs | open | Not written | Phase 5: `docs/MANUSCRIPT_METHOD_RESULTS.md` |
+| MS-03 | Rewrite the method and results from the final build | B, M | Inputs | partial | `docs/MANUSCRIPT_METHOD_RESULTS.md` (generated from `cp1-final` by `scripts/make_documents.py`; `tests/test_documents.py` checks it is current and carries no typed or retired number) | Bala edits the wording into the journal's template; the numbers stay as generated |
 | MS-04 | Write related work and check every reference | K | People | people | Not a code item | Krishna |
-| MS-05 | Redraw the figures for print | V | Inputs: `reports/figures/` | open | No figures yet | Phase 5 |
+| MS-05 | Redraw the figures for print | V | Inputs: `reports/figures/` | done | `reports/figures/` (PNG at 300 dpi and SVG, readable in grayscale), drawn by `scripts/make_figures.py` from the reports of `cp1-final` | None |
 | MS-06 | Agree the author list | B | People | people | Not a code item | Bala and the team |
 | MS-07 | Add the declarations the journal asks for | M | People | people | Not a code item | Manoj |
 | MS-08 | Run a similarity check | M | People | people | Not a code item | Manoj |
 | MS-09 | Write the cover letter | B | People | people | Not a code item | Bala |
 | MS-10 | Submit after the patent is filed | B | People | people | Not a code item | Bala, after PT-09 |
-| RD-01 | Check each drafted entry against what really happened | T | Inputs (dated facts) and People | open | Git history starts 2 Nov 2026 | Phase 5: `docs/DIARY_ENTRIES.md` gives dated facts from git; the team checks each entry |
+| RD-01 | Check each drafted entry against what really happened | T | Inputs (dated facts) and People | partial | `docs/DIARY_ENTRIES.md` gives the dated facts from git and replaces the draft's sample text where it differs (see Found in Phase 5) | The team checks each drafted entry against it |
 | RD-02 | Hand-copy the drafted pages | T | People | people | Not a code item | The team |
 | RD-03 | Record the guide's feedback each week | B | People | people | Not a code item | Bala |
 | RD-04 | Collect the signatures | B | People | people | Not a code item | Bala |
-| RD-05 | Update the traceability matrix (p.14) | M | Inputs | open | Not written | Phase 5: `docs/DIARY_ENTRIES.md` |
-| RD-06 | Update the evidence pages (p.49, p.50, p.53, p.54) | M | Inputs | open | Not written | Phase 5: `docs/DIARY_ENTRIES.md` |
-| RD-07 | Write the weeks after Review-2 | T | Inputs (dated log) and People | open | Not written | Phase 5: a dated log from git in `docs/DIARY_ENTRIES.md` |
+| RD-05 | Update the traceability matrix (p.14) | M | Inputs | partial | `docs/DIARY_ENTRIES.md`, page 14: rows O1 to O5 in the diary's columns, with build and test references and status | The team copies it by hand; the guide signs |
+| RD-06 | Update the evidence pages (p.49, p.50, p.53, p.54) | M | Inputs | partial | `docs/DIARY_ENTRIES.md`, pages 49, 50, 53 and 54, and task 11 on page 45, in the diary's columns | The team copies it by hand; the guide signs the issue tracker |
+| RD-07 | Write the weeks after Review-2 | T | Inputs (dated log) and People | partial | `docs/DIARY_ENTRIES.md`: a dated log of every commit, with dates from git only | The team writes the weekly entries from it |
 
 ## Found in Phase 4
 
@@ -130,21 +130,27 @@ All 69 items from section 9 of `CP1_FINISH_TASK.md`. Updated at the end of every
 4. **Two encoding faults fixed in reporting code.** `make_report.py` wrote `results.md` in the Windows code page, and several scripts read JSON the same way. Both now use UTF-8. Training code was not touched.
 5. **The private mail export is kept out of reports.** `scripts/compare_reports.py` used to list every file under `data/raw/`, which would have named the owner's export with its size and hash. It now skips `email_own/` and says so.
 
+## Found in Phase 5
+
+1. **The diary's filled draft describes a different build in its blue sample text.** It names six email corpora, about 77k emails, the UCI SMS set, XGBoost on 37k URL feature rows, a window sweep on scenarios, a deepfake stub, and sample unit-test results UT-01 to UT-20. None of that matches `cp1-final`. `docs/DIARY_ENTRIES.md` gives the real text for each column; the draft itself was not edited.
+2. **The retired numbers do not appear as claims anywhere we wrote.** The repository search (`reports/FINAL_NUMBERS.md`, section 9) finds hits only where they are quoted as wrong, in files received with v2 or given as team input, or as other measured values with the same digits in code-written reports. To avoid confusion, `FINAL_NUMBERS.md` prints ROC-AUC to four decimals.
+3. **Running pytest rewrites `reports/final_cases_results.json`.** `tests/test_final_cases.py` writes its results at the end of the module. `scripts/make_final_numbers.py` now restores every report file after its own pytest run, so the committed record of the run on `cp1-final` stays.
+4. **The real-mail false-alarm rate is now in the final numbers.** The live email model flags a large share of the account owner's legitimate mail (the rate is in `reports/FINAL_NUMBERS.md`, limitation 2). It is the clearest sign that email needs better legitimate data before real use.
+
 ## Count by status
 
 | Status | Items |
 |---|---|
-| done | 11 |
-| partial | 8 |
-| open | 17 |
+| done | 16 |
+| partial | 20 |
+| open | 0 |
 | blocked | 3 |
 | people | 30 |
 | **total** | **69** |
 
-## Resume here (end of Phase 4, 7 Nov 2026)
+## Resume here (end of Phase 5, 7 Nov 2026)
 
-- **Build:** `cp1-final` (commit `18ba1d9`). It ships v2's models; `reports/` describes them. Every later number, screenshot and demo comes from this tag.
-- **Final run:** recorded in `reports/final_run/`, not adopted (TC-06 lost its alert). Its models are local only, in `models/candidates/final_run/`; `scripts/final_run_record.py` rebuilds the record from them.
-- **Checks on `cp1-final`:** see the Phase 4 row above. Exit criteria: 4 of 8 rows met (`reports/exit_criteria.md`).
-- **Plan for the road to a real-time app:** `PROJECT_STATUS_AND_ROADMAP.md`.
-- **Next:** Phase 5 documents from `cp1-final` (`scripts/make_final_numbers.py` -> `reports/FINAL_NUMBERS.md` first), then the Phase 6 message.
+- **Build:** `cp1-final` (commit `18ba1d9`), v2's models. Every number, screenshot and demo comes from it.
+- **Documents:** rebuild them all with `.venv/Scripts/python.exe scripts/make_documents.py` (about 5 minutes). Edit prose in `docs/templates/`, never a generated file.
+- **What is left for code:** nothing in Phases 0 to 5. Open items need people, data (R2-10) or a decision (defect acceptances, voice scope).
+- **Next:** Phase 6, the summary message to the owner: what is done, every changed number, people tasks by owner, and the decisions needed.

@@ -1,0 +1,3 @@
+# Packages for the documents only (figures). Not needed to run the API, the demo or the tests.
+# python -m pip install -r requirements-docs.txt
+matplotlib==3.11.2
