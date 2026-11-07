@@ -1,6 +1,6 @@
 # Exit criteria (R2-11)
 
-Written by `scripts/exit_criteria.py` on 2026-11-07T16:49:26+05:30 from the run on `cp1-rc1-2-g50c3228-dirty`. Targets: read from the team workbook's Summary sheet and equal to the constants (6 values checked). No target was moved after a result.
+Written by `scripts/exit_criteria.py` on 2026-11-07T17:11:33+05:30 from the run on `cp1-final`. Targets: read from the team workbook's Summary sheet and equal to the constants (6 values checked). No target was moved after a result.
 
 | # | Criterion | Target | Current | Status | Detail |
 |---|---|---|---|---|---|

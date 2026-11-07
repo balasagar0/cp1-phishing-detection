@@ -1,6 +1,6 @@
 # AI-Based Multi-Channel Phishing Detection System (CP1 prototype)
 
-Team Y23-HTE-PROJECT-88, B.Tech CSE, KL University. Build: see `reports/FINAL_NUMBERS.md` (tag and commit at the top).
+Team Y23-HTE-PROJECT-88, B.Tech CSE, KL University. Build: tag `cp1-final`, commit `18ba1d9`. Its figures are in `reports/results.md`; the checks run on it are listed in `CHECKLIST_STATUS.md`.
 
 Three trained detectors (email, SMS, URL), a correlation model that combines events inside a 60-minute window, an event store that groups a
 recipient's events into campaigns and raises alerts, and a console. Every score comes from a trained model; there are no hand-written scoring rules.

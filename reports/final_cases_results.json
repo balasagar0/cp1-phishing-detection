@@ -1,8 +1,8 @@
 {
  "run": {
-  "date": "2026-11-07T16:49:17+05:30",
-  "describe": "cp1-rc1-2-g50c3228-dirty",
-  "commit": "50c3228c4014f58f2bcabb1956c6d16c3187f567",
+  "date": "2026-11-07T17:11:23+05:30",
+  "describe": "cp1-final",
+  "commit": "18ba1d94b103ebeac3aefd775f4d9673c039b451",
   "git_user": "balasagar0",
   "via": "in-process (FastAPI TestClient)",
   "python": "3.13.0",
@@ -272,7 +272,7 @@
    "tag": "Ported",
    "why": "",
    "status": "Pass",
-   "actual": "5,000 characters -> malicious 0.8688 in 0.025 s",
+   "actual": "5,000 characters -> malicious 0.8688 in 0.027 s",
    "defect": null
   },
   "URL-10": {
@@ -601,7 +601,7 @@
    "tag": "Ported",
    "why": "",
    "status": "Pass",
-   "actual": "2.0 MB body -> HTTP 200 in 0.50 s",
+   "actual": "2.0 MB body -> HTTP 200 in 0.62 s",
    "defect": null
   },
   "UI-01": {
@@ -769,7 +769,7 @@
    "tag": "Ported",
    "why": "Uses scripts/secret_scan.py over the files git tracks or would add.",
    "status": "Pass",
-   "actual": "scanned 197 files: 0 possible secret(s)",
+   "actual": "scanned 199 files: 0 possible secret(s)",
    "defect": null
   },
   "NFR-05": {
