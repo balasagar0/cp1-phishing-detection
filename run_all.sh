@@ -15,4 +15,5 @@ echo "using $("$PY" -c 'import sys; print(sys.executable, sys.version.split()[0]
 "$PY" src/train_fusion.py      2>&1 | tee reports/log_fusion.txt
 "$PY" src/probes.py
 "$PY" src/eval_window.py     2>&1 | tee reports/log_window.txt
+"$PY" src/eval_comparison.py 2>&1 | tee reports/log_comparison.txt
 "$PY" src/make_report.py
