@@ -55,11 +55,13 @@ The work follows `CP1_FINISH_TASK.md`. Item-by-item status for all 69 checklist 
 
 ### Phase 3: models (partly done)
 
-- **Email (3.1): two attempts, both failed the adoption rule.** The Nazario, SpamAssassin and Ling corpora were downloaded from their original sources (`download_email_extra.sh`, licences in `DATA_SOURCES.md`). Attempt 1 added them. Attempt 2 kept that and also raised the alert line, with the rule fixed before it ran. Both lift the honest email measure well beyond v2's interval and catch more standard phishing. Both still fail the rule:
-  - (b) a legitimate payment receipt (E-L08) becomes a false alarm;
-  - (c) TC-07 starts alerting, because its parcel email alone now crosses the line.
+- **Email (3.1): three attempts, none adopted.**
+  - Attempt 1 added the Nazario, SpamAssassin and Ling corpora from their original sources.
+  - Attempt 2 also raised the alert line, with its rule fixed before it ran.
+  - v3, approved on 7 Nov, also added legitimate transactional mail: a generated set, company templates, and the owner's own Gmail export, streamed under the owner's privacy spec.
 
-  So v2's email model stays live, and the brief leaves the next step to the team. Results: `reports/candidates/email_candidates.md` and `email_candidates_attempt2.md`.
+  All three lift the honest email measure well beyond v2's interval and catch more standard phishing. All three fail the adoption rule on (b) and (c). v3 fixed the receipt false alarm (E-L08), but missed one more hard phishing email, and TC-07 still alerts. v3's model also failed the privacy audit's memorisation check, so it must not be used. v2's email model stays live. Results: `reports/candidates/email_candidates*.md`; privacy: `PRIVACY_AND_ETHICS.md`.
+  - **Real-world finding:** on the owner's 4,069 legitimate emails, v2's live model raises a false alarm on 23.5%, and a model trained on everything except that inbox on 61.1%. This is the first measurement on real modern mail, and it matters more than any public-corpus figure.
 - **URL (3.2) done.** The scheme and the trailing slash no longer change any label, so no retrain is needed (`reports/candidates/url_d01.md`).
 - **SMS (3.3) done.** No new SMS data with a checkable licence exists, so D-09 and D-16 stay open (`reports/candidates/sms_d09.md`). v2's SMS training data was traced to its source and licence (CC BY 4.0).
 
@@ -74,7 +76,7 @@ The work follows `CP1_FINISH_TASK.md`. Item-by-item status for all 69 checklist 
 ### Before the session (team)
 
 1. Put the patent specification (`Patent_Complete_Specification_Form2`, .docx or .md) in `docs/inputs/cp1_inputs/`. It unblocks PT-03, PT-04 and the patent row of the R3-09 comparison.
-2. Email model: a third attempt (v3) was approved on 7 Nov 2026. Export the inbox as described below so it can run; its result decides the email model.
+2. Email model: after three failed attempts, keep v2's email model for CP1 (recommended), and decide whether to delete `models/candidates/email_model_v3.joblib` and the export in `data/raw/email_own/`.
 3. Optional: put `Test_Plan_Phishing_Detection.docx` and `SRS_Phishing_Detection_v1.0.md` in the same folder, so `docs/BUILT_VS_DESCRIBED.md` can cover the SRS too.
 
 ### Email model v3: what the owner does (one time)
@@ -152,8 +154,8 @@ Size: S is a few days, M is one to three weeks, L is more than three weeks, for 
 
 | Area | What exists now | What a live service needs | Size | Proof it works |
 |---|---|---|---|---|
-| **Real evaluation data** | 0 real bundles; public corpora only | Real bundles (R2-10), then a pilot dataset from each client, collected with consent | L (people) | H1 to H3 from `src/refit_fusion.py` on real bundles, reported as they come out |
-| **Model quality** | Open defects D-01, D-09, D-10, D-16, D-17 | Retrain with real phishing email and real legitimate transactional SMS. Choose the alert line per client on that client's validation data | L | The workbook groups pass their targets; per-client precision and false-alarm rate on held-out client data |
+| **Real evaluation data** | 0 real bundles; public corpora, plus one owner's legitimate mail used for v3 under a privacy spec | Real bundles (R2-10), then a pilot dataset from each client, collected with consent | L (people) | H1 to H3 from `src/refit_fusion.py` on real bundles, reported as they come out |
+| **Model quality** | Open defects D-01, D-09, D-10, D-16, D-17. On the owner's real legitimate mail, v2 raises a false alarm on 23.5% (`reports/candidates/email_candidates_v3.md`) | Retrain with real phishing email and real legitimate transactional SMS. Choose the alert line per client on that client's validation data | L | The workbook groups pass their targets; per-client precision and false-alarm rate on held-out client data |
 | **Calibrated risk** | Uncalibrated score, 0.5 line tied to the simulation's mix | A calibration step fitted on real bundles, with the risk shown as a band | M | A reliability curve on held-out real bundles |
 | **Live message sources** | Messages are pasted, or replayed into `/events` | Connectors that call `/events` as messages arrive: email (Microsoft Graph or Gmail API push, or IMAP), SMS (an Android reader app or an SMS gateway export, keeping India's DLT sender headers), URLs (a browser extension or the mail connector's links) | L | Events arrive and campaigns form with no one pressing Replay; time from arrival to alert is measured |
 | **Background processing** | Every request is scored while it waits | A queue (Redis or RabbitMQ) and worker processes, so a burst of mail does not slow the API | M | Load test: a burst of messages is processed without timeouts or lost events |
@@ -161,7 +163,7 @@ Size: S is a few days, M is one to three weeks, L is more than three weeks, for 
 | **Client separation** | One store; recipients hashed with one key | Separate data and a separate HMAC key per client, held in a secrets manager or KMS, never in a file | M | A test that no query crosses clients; key rotation drill |
 | **Sign-in and roles** | None | Login (OAuth2 or SSO), roles (analyst, admin, read-only), API keys for connectors, rate limits | M | Security tests: no route answers without a valid token and role |
 | **Alert workflow** | Alerts listed and acknowledged | Triage states (new, investigating, confirmed, false alarm), notes, assignment, notifications (email, Teams or Slack, webhook), and a log of analyst actions | M | An analyst can take an alert from new to closed; every action is logged |
-| **Learning from feedback** | None | Analyst verdicts saved as labels, with consent, for scheduled retraining under the same adoption rule | M | Each retrain is compared with the live model before it replaces it |
+| **Learning from feedback** | None. v3 showed that training on real mail leaves a measurable memorisation signal (`PRIVACY_AND_ETHICS.md`) | Analyst verdicts saved as labels, with consent, for scheduled retraining under the same adoption rule, with formal privacy noise (differential privacy) or evaluation-only use of private mail | M | Each retrain is compared with the live model before it replaces it |
 | **Monitoring** | `/health` only | Metrics without message content (requests, latency, alerts per day, score drift per channel), dashboards, alerts to the operator | M | Drift and outages are noticed by monitoring before a client reports them |
 | **Packaging and deployment** | `start_demo.bat`, local venv | Docker images, a compose file for single-server installs, HTTPS through a reverse proxy, environment-based configuration | M | A fresh server reaches a working install from the deployment guide alone |
 | **Quality gate** | Tests run by hand | CI on every commit: all tests, secret scan, dependency scan, offline check, build | S | No change reaches a client without a green pipeline |

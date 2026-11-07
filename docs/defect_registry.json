@@ -99,7 +99,7 @@
   ],
   "fixed_by": "v2 build (different email model)",
   "fix_commits": [],
-  "fix_summary": "EML-02 passes on v2. EML-03 still fails: one hard legitimate email (E-H04) is flagged, and one hard phishing email is missed (D-17). Two retrain attempts with the Nazario, SpamAssassin and Ling corpora (reports/candidates/email_candidates.md and email_candidates_attempt2.md) raised the honest email measure beyond v2's interval and caught more standard phishing, but both failed the adoption rule: E-L08 became a false alarm and TC-07 started alerting. v2's email model stays live; after two failed attempts the brief leaves the next step to the team."
+  "fix_summary": "EML-02 passes on v2. EML-03 still fails: one hard legitimate email (E-H04) is flagged, and one hard phishing email is missed (D-17). Two retrain attempts with the Nazario, SpamAssassin and Ling corpora (reports/candidates/email_candidates.md and email_candidates_attempt2.md) raised the honest email measure beyond v2's interval and caught more standard phishing, but both failed the adoption rule: E-L08 became a false alarm and TC-07 started alerting. v2's email model stays live; after two failed attempts the brief leaves the next step to the team. A third attempt (v3, approved by the owner on 7 Nov) added legitimate transactional mail, including the owner's own export, streamed under their privacy rules. It fixed E-L08 but still failed the adoption rule (a hard phishing email missed; TC-07 alerts), and its model failed the privacy audit's memorisation check, so it is not used (reports/candidates/email_candidates_v3.md, reports/privacy/email_v3_privacy_audit.md)."
  },
  "D-11": {
   "cases": [
@@ -198,7 +198,7 @@
   "steps": "POST E-P03, E-P06, E-P07, E-P09 and E-H01 to /score with channel=email.",
   "fixed_by": "not fixed",
   "fix_commits": [],
-  "fix_summary": "Not fixed. Two retrain attempts with the Nazario, SpamAssassin and Ling corpora (reports/candidates/email_candidates.md and email_candidates_attempt2.md) raised the honest email measure beyond v2's interval and caught more standard phishing, but both failed the adoption rule: E-L08 became a false alarm and TC-07 started alerting. v2's email model stays live; after two failed attempts the brief leaves the next step to the team."
+  "fix_summary": "Not fixed. Two retrain attempts with the Nazario, SpamAssassin and Ling corpora (reports/candidates/email_candidates.md and email_candidates_attempt2.md) raised the honest email measure beyond v2's interval and caught more standard phishing, but both failed the adoption rule: E-L08 became a false alarm and TC-07 started alerting. v2's email model stays live; after two failed attempts the brief leaves the next step to the team. A third attempt (v3, approved by the owner on 7 Nov) added legitimate transactional mail, including the owner's own export, streamed under their privacy rules. It fixed E-L08 but still failed the adoption rule (a hard phishing email missed; TC-07 alerts), and its model failed the privacy audit's memorisation check, so it is not used (reports/candidates/email_candidates_v3.md, reports/privacy/email_v3_privacy_audit.md)."
  },
  "D-18": {
   "new": true,

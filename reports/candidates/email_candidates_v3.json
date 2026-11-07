@@ -1,0 +1,690 @@
+{
+  "attempt": "v3 (third, authorised by the project owner on 7 Nov 2026)",
+  "rule_fixed_before_running": "attempt 2's recipe (today's cleaner; CEAS_08, Enron, FraudEmail + Nazario, SpamAssassin, Ling-Spam; C from attempt 1; the alert line set by\nattempt 2's rule: no more false alarms than the v2 recipe on held-out legitimate SpamAssassin and Ling-Spam emails, applied as an intercept shift)\nPLUS three legitimate sources, all label 0:\n  GeneratedLegit  imnim/multiclass-email-classification, MIT: 2,105 emails GENERATED with GPT-3.5 (synthetic, not real messages)\n  Templates       Postmark and Mailgun transactional templates, MIT: real company wording, placeholders removed\n  OwnInbox        the account owner's own legitimate mail (receipts, bank, order, shipping, OTP and account notices), exported by them, with consent\nThe adoption rule is unchanged: (a) honest metric (mean F1, held-out CEAS_08, Enron, FraudEmail) not worse than v2's 95% interval; (b) the D-10 and\nD-17 workbook cases improve and no EML group falls; (c) TC-01 to TC-08 keep their alert outcome; (d) every test passes after adoption.\nReported beside the rule, not part of it: the false-alarm rate on each legitimate source held out (OwnInbox held out = real receipts the model never\nsaw), for v3 and for v2's live model. Needs at least 100 own-inbox emails after cleaning; with fewer it stops without training.\nThe workbook emails, the scenarios and TC-01 to TC-08 are never trained on and never used to set anything; they are only checked afterwards.",
+  "chosen_C": 16,
+  "alert_line_t": 0.685,
+  "data": {
+    "public_dedupe": {
+      "rows_before": 100255,
+      "rows_after": 88136,
+      "conflicting_texts_dropped": 0
+    },
+    "own_inbox_stream": {
+      "read": 4431,
+      "skipped_spam_trash": 3,
+      "failed": 0,
+      "empty": 28,
+      "kept": 4069,
+      "duplicates_dropped": 331,
+      "too_short": 0
+    },
+    "counts": {
+      "CEAS_08": {
+        "0": 17046,
+        "1": 17248
+      },
+      "Enron": {
+        "0": 14485,
+        "1": 14432
+      },
+      "FraudEmail": {
+        "0": 5091,
+        "1": 4129
+      },
+      "GeneratedLegit": {
+        "0": 2104,
+        "1": 0
+      },
+      "LingSpam": {
+        "0": 2402,
+        "1": 464
+      },
+      "Nazario": {
+        "0": 0,
+        "1": 4914
+      },
+      "OwnInbox": {
+        "0": 4069,
+        "1": 0
+      },
+      "SpamAssassin": {
+        "0": 4097,
+        "1": 1710
+      },
+      "Templates": {
+        "0": 14,
+        "1": 0
+      }
+    }
+  },
+  "privacy": {
+    "outbound_connection_attempts": 0,
+    "archive_unchanged": true,
+    "archives": 1,
+    "model_file": {
+      "permissions": "current user only (icacls)",
+      "encrypted": false
+    },
+    "note": "The first run (7 Nov 2026) stopped at the demo-case step: its network guard also blocked loopback, which Windows' asyncio needs. This run is the same procedure; the guard now allows loopback and still blocks and counts everything that would leave the machine."
+  },
+  "calibration": {
+    "corpora": [
+      "SpamAssassin",
+      "LingSpam"
+    ],
+    "v2_recipe_false_positive_rate": 0.0575,
+    "v3_false_positive_rate_at_0.5": 0.084,
+    "v3_false_positive_rate_at_t": 0.0572
+  },
+  "held_out_at_t": {
+    "CEAS_08": {
+      "n": 34294,
+      "positives": 17248,
+      "precision": 0.9429,
+      "recall": 0.9195,
+      "f1": 0.9311,
+      "false_positive_rate": 0.0564,
+      "roc_auc": 0.9826
+    },
+    "Enron": {
+      "n": 28917,
+      "positives": 14432,
+      "precision": 0.9577,
+      "recall": 0.6996,
+      "f1": 0.8086,
+      "false_positive_rate": 0.0308,
+      "roc_auc": 0.9561
+    },
+    "FraudEmail": {
+      "n": 9220,
+      "positives": 4129,
+      "precision": 0.8625,
+      "recall": 0.9341,
+      "f1": 0.8969,
+      "false_positive_rate": 0.1208,
+      "roc_auc": 0.9744
+    },
+    "Nazario": {
+      "n": 4914,
+      "positives": 4914,
+      "recall": 0.4214,
+      "note": "one class (all phishing): recall only"
+    },
+    "SpamAssassin": {
+      "n": 5807,
+      "positives": 1710,
+      "precision": 0.8345,
+      "recall": 0.9439,
+      "f1": 0.8858,
+      "false_positive_rate": 0.0781,
+      "roc_auc": 0.9857
+    },
+    "LingSpam": {
+      "n": 2866,
+      "positives": 464,
+      "precision": 0.8815,
+      "recall": 0.8341,
+      "f1": 0.8571,
+      "false_positive_rate": 0.0216,
+      "roc_auc": 0.9732
+    },
+    "GeneratedLegit": {
+      "n": 2104,
+      "positives": 0,
+      "false_positive_rate": 0.2643,
+      "note": "one class (all legitimate): false-positive rate only"
+    },
+    "Templates": {
+      "n": 14,
+      "positives": 0,
+      "false_positive_rate": 0.0,
+      "note": "one class (all legitimate): false-positive rate only"
+    },
+    "OwnInbox": {
+      "n": 4069,
+      "positives": 0,
+      "false_positive_rate": 0.6105,
+      "note": "one class (all legitimate): false-positive rate only"
+    }
+  },
+  "mean_f1_at_t": 0.8789,
+  "mean_f1_at_t_ci95": [
+    0.8756,
+    0.8817
+  ],
+  "v2_mean_f1_ci95": [
+    0.8187,
+    0.8257
+  ],
+  "legit_sources_false_alarms": {
+    "GeneratedLegit": {
+      "v3_held_out": 0.2643,
+      "live_v2": 0.2158,
+      "n": 2104
+    },
+    "Templates": {
+      "v3_held_out": 0.0,
+      "live_v2": 0.0,
+      "n": 14
+    },
+    "OwnInbox": {
+      "v3_held_out": 0.6105,
+      "live_v2": 0.2347,
+      "n": 4069
+    }
+  },
+  "samples_live": {
+    "model": "live v2 model",
+    "samples": {
+      "E-P01": {
+        "score": 0.9998,
+        "predicted": "Phishing",
+        "expected": "Phishing",
+        "group": "Standard"
+      },
+      "E-P02": {
+        "score": 0.8172,
+        "predicted": "Phishing",
+        "expected": "Phishing",
+        "group": "Standard"
+      },
+      "E-P03": {
+        "score": 0.102,
+        "predicted": "Legitimate",
+        "expected": "Phishing",
+        "group": "Standard"
+      },
+      "E-P04": {
+        "score": 0.9953,
+        "predicted": "Phishing",
+        "expected": "Phishing",
+        "group": "Standard"
+      },
+      "E-P05": {
+        "score": 0.9309,
+        "predicted": "Phishing",
+        "expected": "Phishing",
+        "group": "Standard"
+      },
+      "E-P06": {
+        "score": 0.0517,
+        "predicted": "Legitimate",
+        "expected": "Phishing",
+        "group": "Standard"
+      },
+      "E-P07": {
+        "score": 0.2372,
+        "predicted": "Legitimate",
+        "expected": "Phishing",
+        "group": "Standard"
+      },
+      "E-P08": {
+        "score": 0.9547,
+        "predicted": "Phishing",
+        "expected": "Phishing",
+        "group": "Standard"
+      },
+      "E-P09": {
+        "score": 0.2057,
+        "predicted": "Legitimate",
+        "expected": "Phishing",
+        "group": "Standard"
+      },
+      "E-P10": {
+        "score": 0.9004,
+        "predicted": "Phishing",
+        "expected": "Phishing",
+        "group": "Standard"
+      },
+      "E-P11": {
+        "score": 0.9696,
+        "predicted": "Phishing",
+        "expected": "Phishing",
+        "group": "Standard"
+      },
+      "E-H01": {
+        "score": 0.0006,
+        "predicted": "Legitimate",
+        "expected": "Phishing",
+        "group": "Hard case"
+      },
+      "E-H02": {
+        "score": 0.8102,
+        "predicted": "Phishing",
+        "expected": "Phishing",
+        "group": "Hard case"
+      },
+      "E-H03": {
+        "score": 0.9669,
+        "predicted": "Phishing",
+        "expected": "Phishing",
+        "group": "Hard case"
+      },
+      "E-L01": {
+        "score": 0.0022,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Standard"
+      },
+      "E-L02": {
+        "score": 0.096,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Standard"
+      },
+      "E-L03": {
+        "score": 0.0438,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Standard"
+      },
+      "E-L04": {
+        "score": 0.0161,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Standard"
+      },
+      "E-L05": {
+        "score": 0.0004,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Standard"
+      },
+      "E-L06": {
+        "score": 0.0798,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Standard"
+      },
+      "E-L07": {
+        "score": 0.0082,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Standard"
+      },
+      "E-L08": {
+        "score": 0.2801,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Standard"
+      },
+      "E-L09": {
+        "score": 0.041,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Standard"
+      },
+      "E-L10": {
+        "score": 0.0025,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Standard"
+      },
+      "E-L11": {
+        "score": 0.0127,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Standard"
+      },
+      "E-H04": {
+        "score": 0.577,
+        "predicted": "Phishing",
+        "expected": "Legitimate",
+        "group": "Hard case"
+      },
+      "E-H05": {
+        "score": 0.0015,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Hard case"
+      },
+      "E-H06": {
+        "score": 0.0177,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Hard case"
+      }
+    },
+    "EML-01 standard phishing": 0.6364,
+    "EML-02 standard legitimate": 1.0,
+    "EML-03 hard phishing": 0.6667,
+    "EML-03 hard legitimate": 0.6667,
+    "D-10 cases correct": [
+      "E-L08",
+      "E-H06",
+      "E-L06"
+    ],
+    "D-17 cases correct": []
+  },
+  "samples_candidate": {
+    "model": "v3",
+    "samples": {
+      "E-P01": {
+        "score": 1.0,
+        "predicted": "Phishing",
+        "expected": "Phishing",
+        "group": "Standard"
+      },
+      "E-P02": {
+        "score": 0.9808,
+        "predicted": "Phishing",
+        "expected": "Phishing",
+        "group": "Standard"
+      },
+      "E-P03": {
+        "score": 0.9618,
+        "predicted": "Phishing",
+        "expected": "Phishing",
+        "group": "Standard"
+      },
+      "E-P04": {
+        "score": 0.9932,
+        "predicted": "Phishing",
+        "expected": "Phishing",
+        "group": "Standard"
+      },
+      "E-P05": {
+        "score": 0.7633,
+        "predicted": "Phishing",
+        "expected": "Phishing",
+        "group": "Standard"
+      },
+      "E-P06": {
+        "score": 0.6224,
+        "predicted": "Phishing",
+        "expected": "Phishing",
+        "group": "Standard"
+      },
+      "E-P07": {
+        "score": 0.1878,
+        "predicted": "Legitimate",
+        "expected": "Phishing",
+        "group": "Standard"
+      },
+      "E-P08": {
+        "score": 0.9599,
+        "predicted": "Phishing",
+        "expected": "Phishing",
+        "group": "Standard"
+      },
+      "E-P09": {
+        "score": 0.0339,
+        "predicted": "Legitimate",
+        "expected": "Phishing",
+        "group": "Standard"
+      },
+      "E-P10": {
+        "score": 0.7606,
+        "predicted": "Phishing",
+        "expected": "Phishing",
+        "group": "Standard"
+      },
+      "E-P11": {
+        "score": 0.9955,
+        "predicted": "Phishing",
+        "expected": "Phishing",
+        "group": "Standard"
+      },
+      "E-H01": {
+        "score": 0.0386,
+        "predicted": "Legitimate",
+        "expected": "Phishing",
+        "group": "Hard case"
+      },
+      "E-H02": {
+        "score": 0.4302,
+        "predicted": "Legitimate",
+        "expected": "Phishing",
+        "group": "Hard case"
+      },
+      "E-H03": {
+        "score": 0.9936,
+        "predicted": "Phishing",
+        "expected": "Phishing",
+        "group": "Hard case"
+      },
+      "E-L01": {
+        "score": 0.0017,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Standard"
+      },
+      "E-L02": {
+        "score": 0.0308,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Standard"
+      },
+      "E-L03": {
+        "score": 0.0088,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Standard"
+      },
+      "E-L04": {
+        "score": 0.008,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Standard"
+      },
+      "E-L05": {
+        "score": 0.0001,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Standard"
+      },
+      "E-L06": {
+        "score": 0.0932,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Standard"
+      },
+      "E-L07": {
+        "score": 0.0035,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Standard"
+      },
+      "E-L08": {
+        "score": 0.1968,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Standard"
+      },
+      "E-L09": {
+        "score": 0.0192,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Standard"
+      },
+      "E-L10": {
+        "score": 0.002,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Standard"
+      },
+      "E-L11": {
+        "score": 0.0048,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Standard"
+      },
+      "E-H04": {
+        "score": 0.9349,
+        "predicted": "Phishing",
+        "expected": "Legitimate",
+        "group": "Hard case"
+      },
+      "E-H05": {
+        "score": 0.0004,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Hard case"
+      },
+      "E-H06": {
+        "score": 0.1802,
+        "predicted": "Legitimate",
+        "expected": "Legitimate",
+        "group": "Hard case"
+      }
+    },
+    "EML-01 standard phishing": 0.8182,
+    "EML-02 standard legitimate": 1.0,
+    "EML-03 hard phishing": 0.3333,
+    "EML-03 hard legitimate": 0.6667,
+    "D-10 cases correct": [
+      "E-L08",
+      "E-H06",
+      "E-L06"
+    ],
+    "D-17 cases correct": [
+      "E-P03",
+      "E-P06"
+    ]
+  },
+  "demo_cases": {
+    "TC-01": {
+      "live": {
+        "risk": 0.9975,
+        "alert": true,
+        "scores": [
+          0.9975
+        ]
+      },
+      "candidate": {
+        "risk": 0.9996,
+        "alert": true,
+        "scores": [
+          0.9996
+        ]
+      }
+    },
+    "TC-02": {
+      "live": {
+        "risk": 0.9999,
+        "alert": true,
+        "scores": [
+          1.0
+        ]
+      },
+      "candidate": {
+        "risk": 0.9999,
+        "alert": true,
+        "scores": [
+          1.0
+        ]
+      }
+    },
+    "TC-03": {
+      "live": null,
+      "candidate": null
+    },
+    "TC-04": {
+      "live": {
+        "risk": 0.9999,
+        "alert": true,
+        "scores": [
+          1.0,
+          0.9952,
+          0.9975
+        ]
+      },
+      "candidate": {
+        "risk": 0.9999,
+        "alert": true,
+        "scores": [
+          1.0,
+          0.9952,
+          0.9996
+        ]
+      }
+    },
+    "TC-05": {
+      "live": {
+        "risk": 0.0001,
+        "alert": false,
+        "scores": [
+          0.0017,
+          0.0,
+          0.0001
+        ]
+      },
+      "candidate": {
+        "risk": 0.0001,
+        "alert": false,
+        "scores": [
+          0.0017,
+          0.0,
+          0.0001
+        ]
+      }
+    },
+    "TC-06": {
+      "live": {
+        "risk": 0.5954,
+        "alert": true,
+        "scores": [
+          0.4211,
+          0.451,
+          0.204
+        ]
+      },
+      "candidate": {
+        "risk": 0.5902,
+        "alert": true,
+        "scores": [
+          0.4211,
+          0.451,
+          0.6725
+        ]
+      }
+    },
+    "TC-07": {
+      "live": {
+        "risk": 0.451,
+        "alert": false,
+        "scores": [
+          0.4211,
+          0.451,
+          0.204
+        ]
+      },
+      "candidate": {
+        "risk": 0.6725,
+        "alert": true,
+        "scores": [
+          0.4211,
+          0.451,
+          0.6725
+        ]
+      }
+    },
+    "TC-08": {
+      "live": {
+        "risk": 0.9995,
+        "alert": true,
+        "scores": [
+          0.9702,
+          0.031
+        ]
+      },
+      "candidate": {
+        "risk": 0.9995,
+        "alert": true,
+        "scores": [
+          0.9702,
+          0.1332
+        ]
+      }
+    }
+  },
+  "adoption": {
+    "a_honest_metric_not_worse_than_v2_beyond_ci": true,
+    "a_detail": "v3 mean held-out F1 0.8789 vs v2 95% interval [0.8187, 0.8257]",
+    "b_target_defect_cases_improve": false,
+    "c_demo_cases_keep_alert_outcome": false,
+    "d_every_test_passes": "checked after adoption by running the tests",
+    "privacy_audit": "scripts/privacy_audit_email.py must pass before the model is used (PRIVACY_AND_ETHICS.md)",
+    "decision": "keep v2's model; v3 is a negative result"
+  }
+}

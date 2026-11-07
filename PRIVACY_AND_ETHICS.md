@@ -71,6 +71,32 @@ The model is a bag-of-words classifier. Single words and word pairs are weighted
 - **Deleting the .mbox does not remove what the model already learnt.** To withdraw the inbox, delete the export and
   `models/candidates/email_model_v3.joblib` (and any copy), then retrain without it.
 
+## Result of the first real run (7 Nov 2026)
+
+`src/eval_email_v3.py` trained on the export, then `scripts/privacy_audit_email.py` audited the model. The generated report is
+`reports/privacy/email_v3_privacy_audit.md`, left exactly as produced. Here is what it found, read honestly:
+
+| Requirement | Audit status | What it means |
+|---|---|---|
+| Original archive unchanged | VERIFIED | SHA-256 equal before and after the training run and the audit |
+| No external transmission | VERIFIED | 0 outbound connection attempts in the training run and in the audit |
+| No inbox-only term in the model | VERIFIED | every one of the model's terms also occurs in at least 5 emails of a public source |
+| Memorisation of unique phrases | **FAILED** | The made-up names and secrets never entered the model. But the canary phrases were ordinary English words that are already model terms from public data ('copper', 'umbrella', 'quietly'...). Repeating those emails 6 times in the stream shifted the model's scores for them by up to 2.7 points against unseen canaries. So the model carries a small, measurable signal about repeated inbox messages. **This model must not be used.** |
+| Credentials and financial details | FAILED as reported | An audit-logic fault: the check found 0 e-mail addresses and 0 numbers of 6+ digits in the model, but its verdict was tied to the memorisation check. On its own evidence it would pass. The fault is recorded, not hidden; fix it before the next audit |
+| Extraction of unique messages | FAILED as reported | The model holds at most two-word terms. The one 8-word match is in `reports/candidates/url_d01.json`, written on 2 Nov, before the export existed. It is a hand-written workbook URL (a Google sign-in link) that also occurs in the owner's mail, not inbox text leaking into a report. The check works as written; this hit is a false alarm |
+| Personal names | PARTIAL | 247 of the 1,262 words in the inbox's header names and addresses are model terms, all of them also common in public data (brands, common first names). Their weights are shaped partly by the inbox |
+| Streaming | PARTIAL | as described above |
+| Model file protection | PARTIAL | current-user access only; not encrypted |
+| Memory release | UNVERIFIED | as described above |
+
+**Decision:** the v3 model is not used. It failed the project's adoption rule, (b) and (c), and the privacy audit's memorisation check. It
+stays at `models/candidates/email_model_v3.joblib`, current-user access only and gitignored, until the owner decides whether to delete it.
+
+**Lesson for the next attempt:** a stronger guarantee needs one of these:
+- formal privacy noise during training (differential privacy);
+- not training on private mail at all and using the export only to **measure** false alarms, which stores nothing in a model;
+- counting the inbox only for weights of terms chosen without it, and accepting and reporting the remaining signal.
+
 ## Model files and checkpoints
 
 - No checkpoints are written; training holds everything in memory and saves one final model.

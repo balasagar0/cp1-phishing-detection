@@ -1,0 +1,48 @@
+{
+ "date": "2026-11-07T11:43:11+05:30",
+ "model": "models\\candidates\\email_model_v3.joblib",
+ "results": {
+  "memorisation_of_unique_phrases": {
+   "status": "FAILED",
+   "evidence": "canary words in the model: 5; largest score gap between trained-on and never-seen canaries: 2.66e-02; audit model trained on the real stream (4,071 inbox emails) plus 12 canary emails"
+  },
+  "no_inbox_only_terms": {
+   "status": "VERIFIED",
+   "evidence": "model terms: 75,103; terms without public support (5+ emails in a public source): 0"
+  },
+  "email_addresses_phone_numbers_financial_details_credentials": {
+   "status": "FAILED",
+   "evidence": "e-mail addresses in the model object: 0; numbers of 6+ digits: 0; metadata holds only counts and source names: True; numbers are masked before counting; canary passwords and card numbers absent (check 1)"
+  },
+  "personal_names": {
+   "status": "PARTIAL",
+   "evidence": "distinct words in the inbox's names and address local parts: 1,262; of them, single-word model terms: 247. Every model term also occurs in public data (check 2), so these are common words (for example a brand or a common first name), not names learnt from the inbox alone. Their weights are still influenced by the inbox."
+  },
+  "extraction_of_unique_messages": {
+   "status": "FAILED",
+   "evidence": "longest model term: 2 words (the model cannot hold a sentence); 8-word runs of inbox text found in 33 report and log files: 1"
+  },
+  "original_mbox_unchanged": {
+   "status": "VERIFIED",
+   "evidence": "SHA-256 equal before and after the v3 run and this audit: True; test_original_mbox_unchanged"
+  },
+  "no_external_transmission": {
+   "status": "VERIFIED",
+   "evidence": "outbound attempts during the v3 run: 0, during this audit: 0; test_no_external_network_transmission, test_training_works_offline"
+  },
+  "model_file_protection": {
+   "status": "PARTIAL",
+   "evidence": "current user only (icacls); not encrypted: Windows 11 Home has no file encryption (EFS). Turning on device encryption or BitLocker is the owner's choice."
+  },
+  "memory_release": {
+   "status": "UNVERIFIED",
+   "evidence": "each email's text is dropped after counting, but Python cannot prove the memory is wiped (garbage collection, OS paging)"
+  },
+  "streaming": {
+   "status": "PARTIAL",
+   "evidence": "each message is read and counted one at a time and its text dropped (test_streaming_email_processing); integer n-gram counts for the inbox stay in memory for the run because the model needs several training passes"
+  }
+ },
+ "model_may_be_used": false,
+ "rule": "the model may be used only if no exposure check FAILED (privacy spec, section 9)"
+}
