@@ -19,13 +19,14 @@ def log(*a): print(f"[{time.time()-T0:6.0f}s]", *a, flush=True)
 TOKEN = r"(?u)\b\w\w+\b|[$€£!]"
 MIN_DOCS_PER_SOURCE, MAX_FEATURES = 5, 200_000
 USE_EXTRA_CORPORA = False
+USE_LEGIT_CORPORA = False       # v3: generated, template and own-inbox LEGITIMATE email (src/email_corpora.py); off unless v3 is adopted
 POOL_PER_CLASS = 1500            # held-out scores kept per class per corpus for the correlation simulation (fewer if a corpus has fewer)
 
 
-def load_email(extra=None, cleaner=None):
+def load_email(extra=None, cleaner=None, legit=None):
     """The email corpora, cleaned (numbers masked), short texts dropped, de-duplicated. extra: add the three extra corpora
     (default USE_EXTRA_CORPORA). cleaner: the text cleaner (default common.clean_text; the candidate evaluation passes v2's for comparison)."""
-    extra = USE_EXTRA_CORPORA if extra is None else extra; cleaner = cleaner or clean_text
+    extra = USE_EXTRA_CORPORA if extra is None else extra; cleaner = cleaner or clean_text; legit = USE_LEGIT_CORPORA if legit is None else legit
     c = pd.read_csv(RAW / "CEAS_08.csv", usecols=["subject", "body", "label"])
     e = pd.read_csv(RAW / "enron_spam_data.csv")
     f = pd.read_csv(RAW / "fraud_email.csv").dropna(subset=["Text"])
@@ -37,6 +38,9 @@ def load_email(extra=None, cleaner=None):
     if extra:
         from email_corpora import load_extra
         parts.append(load_extra()[["source", "raw", "label"]])
+    if legit:
+        from email_corpora import load_legit_extra
+        parts.append(load_legit_extra()[["source", "raw", "label"]])
     df = pd.concat(parts, ignore_index=True)
     df["text"] = df.raw.map(lambda t: cleaner(t, mask_numbers=True)); df = df.drop(columns="raw")
     df = df[df.text.str.len() >= 25]

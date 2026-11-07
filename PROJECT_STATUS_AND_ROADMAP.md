@@ -74,8 +74,20 @@ The work follows `CP1_FINISH_TASK.md`. Item-by-item status for all 69 checklist 
 ### Before the session (team)
 
 1. Put the patent specification (`Patent_Complete_Specification_Form2`, .docx or .md) in `docs/inputs/cp1_inputs/`. It unblocks PT-03, PT-04 and the patent row of the R3-09 comparison.
-2. Decide on the email model after two failed attempts: keep v2's email model (both attempts recorded as negative results), or adopt attempt 2 with written reasons. Adopting it means overriding the adoption rule on (b) and (c), and TC-07 would no longer show 'no alert'.
+2. Email model: a third attempt (v3) was approved on 7 Nov 2026. Export the inbox as described below so it can run; its result decides the email model.
 3. Optional: put `Test_Plan_Phishing_Detection.docx` and `SRS_Phishing_Detection_v1.0.md` in the same folder, so `docs/BUILT_VS_DESCRIBED.md` can cover the SRS too.
+
+### Email model v3: what the owner does (one time)
+
+v3 (the third email attempt, approved on 7 Nov 2026) adds legitimate modern transactional email to training. Two parts are downloaded (`download_email_legit.sh`: a public GPT-generated set and company templates, both MIT). The third part is real mail only the owner can provide:
+
+1. In Gmail, create a label named `cp1-legit`.
+2. Put that label on legitimate emails you are sure about: payment receipts, bank and UPI alerts, order confirmations, shipping and delivery updates, OTP and sign-in alerts, bills. At least 100, ideally a few hundred, from many different senders. Leave out anything you are unsure of and anything from Spam.
+3. Open https://takeout.google.com, choose **Deselect all**, tick **Mail**, click **All Mail data included**, keep only the label `cp1-legit`, and export once as a .zip.
+4. Unzip it. Copy `Takeout/Mail/cp1-legit.mbox` to `data/raw/email_own/cp1-legit.mbox` in the project folder.
+5. Then run `python src/eval_email_v3.py` (or ask Claude Code to). It refuses to train with fewer than 100 emails.
+
+Putting the file in that folder is the owner's consent for this use. The mail stays on the laptop and is never committed (`docs/PRIVACY.md`). Other team members may add their own `.mbox` files the same way, each with their own consent.
 
 ### Start the session
 

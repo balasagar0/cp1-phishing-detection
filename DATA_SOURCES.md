@@ -1,6 +1,6 @@
 # Data sources
 
-Written by `scripts/make_data_sources.py` on 2026-11-02. Every dataset the code downloads, with its licence or terms as checked on 2 Nov 2026, the date it was downloaded on this machine (file time), its SHA-256 and what uses it.
+Written by `scripts/make_data_sources.py` on 2026-11-07. Every dataset the code downloads, with its licence or terms as checked on 2 Nov 2026, the date it was downloaded on this machine (file time), its SHA-256 and what uses it.
 
 **No dataset is in git or redistributed** (`data/` is gitignored). The trained models in `models/` are derived from these datasets: check the terms below before publishing the models or the data. Datasets marked 'terms unknown' come from repositories with no licence file; the team should check their origin before any publication.
 
@@ -42,6 +42,12 @@ Hand-written material (the workbook samples, scenarios, TC-01 to TC-08 and the I
 | `email_extra/spamassassin/20030228_spam.tar.bz2` | (same source) | (same) | 2026-11-02 | 1,183,768 | `c08debc32413804949a866be45ef78195cec2cbafd1da744ed76cdb860589743` | (same) |
 | `email_extra/spamassassin/20050311_spam_2.tar.bz2` | (same source) | (same) | 2026-11-02 | 2,059,029 | `44280a0e28bf7645b2279e8e42659271ad82c6f40bf8d364dbda7f1df344a765` | (same) |
 | `email_extra/spamassassin/readme.html` | (same source) | (same) | 2026-11-02 | 4,566 | `9f8cc0c8be6f32b25226d3ece26da775a6e008581b8fb061a679e3acee6b64be` | (same) |
+| `email_legit/generated/dataset_creation.py.txt` | https://huggingface.co/datasets/imnim/multiclass-email-classification (email_dataset.json, dataset_creation.py, README.md) | MIT (dataset card). GENERATED with OpenAI GPT-3.5 by the dataset's own script: synthetic text, not real messages; labelled synthetic wherever used. | 2026-11-07 | 7,878 | `3850b452fcd3047830c1de6c2065fc57b9bc17d52868d7da472c1cf6bf21180c` | email v3 attempt only (legitimate class) |
+| `email_legit/generated/email_dataset.json` | (same source) | (same) | 2026-11-07 | 1,140,713 | `1093f1a3191e52b715ae728609b2e15bac71ba2573814a968856c43b009a0b30` | (same) |
+| `email_legit/generated/README.md` | (same source) | (same) | 2026-11-07 | 738 | `de69b0adb28d0117105547af1f761bd2220aecab635f4dad429e53e69865c329` | (same) |
+| `email_legit/templates/mailgun-templates.zip` | https://github.com/ActiveCampaign/postmark-templates and https://github.com/mailgun/transactional-email-templates | MIT (both repositories). Company transactional templates (receipt, invoice, dunning, password reset, welcome, billing...); placeholders removed, nothing filled in. Templates, not messages. | 2026-11-07 | 182,447 | `c70b1c08163f6c06bf31556fba9f211ef1090a939b77ebfb1a756ab9860aae6e` | email v3 attempt only (legitimate class) |
+| `email_legit/templates/postmark-templates.zip` | (same source) | (same) | 2026-11-07 | 418,647 | `3440ef5880d77a02164a2dbab4a27bddf99a0dc81c926d72c76d703d24ee53e1` | (same) |
+| `email_own` | the account owner's own mailbox, exported by them as .mbox (Gmail: Google Takeout, Mail, one label of known-legitimate mail) | Not public. Used with the account owner's consent (given in the Claude Code chat on 7 Nov 2026). Never committed, never shared, never used as a test case; the model keeps only words seen in two or more sources, so personal names and numbers do not enter its vocabulary. | not downloaded on this machine | – | – | email v3 attempt only (legitimate class) |
 | `email_extra/lingspam/lingspam_public.tar.gz` | http://www.aueb.gr/users/ion/data/lingspam_public.tar.gz | readme.txt in the archive: acknowledge the use and origin of the corpus in any published work, and notify Ion Androutsopoulos about it. | 2026-11-02 | 11,564,714 | `e3a0bb61dff2f1e47c368d1c376c27f79319cd600a8784ea3872e4b77d22c148` | Phase 3.1 email evaluation; email training only if the candidate is adopted |
 
 Note on dates: unpacked files keep the date stored in their archive, so `enron_spam_data.csv` and `fraud_email.csv` show the archive's date, not the download date.

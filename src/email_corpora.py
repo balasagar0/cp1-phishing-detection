@@ -78,6 +78,51 @@ def load_extra():
     return pd.concat([load_nazario(), load_spamassassin(), load_lingspam()], ignore_index=True)
 
 
+# ---- legitimate transactional email for the v3 attempt (download_email_legit.sh; the own-inbox export is added by a person). All label 0.
+LEGIT = Path(__file__).resolve().parents[1] / "data" / "raw" / "email_legit"
+OWN = Path(__file__).resolve().parents[1] / "data" / "raw" / "email_own"
+_PLACEHOLDER = re.compile(r"\{\{[^}]*\}\}|\{\{|\}\}")
+
+
+def load_generated(path=LEGIT / "generated" / "email_dataset.json"):
+    """imnim/multiclass-email-classification (MIT): 2,105 emails GENERATED with GPT-3.5 (its dataset_creation.py). Synthetic, not real messages."""
+    import json
+    rows = json.loads(Path(path).read_text(encoding="utf-8"))
+    return pd.DataFrame([{"source": "GeneratedLegit", "raw": f"{r.get('subject', '')} . {r.get('body', '')}", "label": 0, "file": ",".join(r.get("labels", []))} for r in rows])
+
+
+def load_templates(d=LEGIT / "templates"):
+    """Postmark (11 template types) and Mailgun (3) transactional email templates, MIT: real company wording; placeholders removed, nothing filled in."""
+    import zipfile
+    rows = []
+    for z in sorted(Path(d).glob("*.zip")):
+        with zipfile.ZipFile(z) as f:
+            for n in f.namelist():
+                if ("postmark" in z.name and n.endswith("/content.txt")) or ("mailgun" in z.name and n.endswith(".html") and "/inlined/" not in n):
+                    txt = _PLACEHOLDER.sub(" ", f.read(n).decode("utf-8", errors="ignore"))
+                    rows.append({"source": "Templates", "raw": f" . {txt}", "label": 0, "file": n.split("/")[-2] + "/" + n.split("/")[-1]})
+    return pd.DataFrame(rows)
+
+
+def load_own_inbox(d=OWN):
+    """The team's own LEGITIMATE emails (receipts, bank, order, shipping, OTP and account notices), exported by the account owner as .mbox
+    (for Gmail: Google Takeout, Mail, one label holding only known-legitimate mail) into data/raw/email_own/. Basis: the account owner's own
+    consent, recorded in DATA_SOURCES.md. Messages Gmail filed as Spam or Trash are skipped. Never committed; never used as a test case."""
+    rows = []
+    for f in sorted(Path(d).glob("*.mbox")) if Path(d).exists() else []:
+        try: msgs = list(_mbox(f))
+        except OSError as e: SKIPPED.append(f"{f.name}: {e.__class__.__name__} {e}"); continue
+        for m in msgs:
+            if re.search(r"\b(Spam|Trash)\b", str(m.get("X-Gmail-Labels", ""))): continue
+            try: rows.append({"source": "OwnInbox", "raw": _text(m), "label": 0, "file": f.name})
+            except Exception: continue
+    return pd.DataFrame(rows, columns=["source", "raw", "label", "file"])
+
+
+def load_legit_extra():
+    return pd.concat([load_generated(), load_templates(), load_own_inbox()], ignore_index=True)
+
+
 if __name__ == "__main__":
     df = load_extra()
     print(df.groupby(["source", "label"]).size().to_string()); print("empty texts:", int((df.raw.str.len() < 10).sum())); print("skipped files:", SKIPPED or "none")

@@ -30,6 +30,13 @@ Checks: `tests/test_event_store.py::test_recipient_tokens_and_text_are_not_store
 
 See `DATA_SOURCES.md`: every public dataset, its source, its licence or terms as checked, and its SHA-256. No dataset is committed to git. Some sources have no stated licence; they must be checked before the models or data are published.
 
+## The team's own emails (email model v3)
+
+- The v3 email attempt can train on the account owner's own legitimate emails (receipts, bank, order, shipping, OTP and account notices), exported by them as .mbox into `data/raw/email_own/`. This is used only with the owner's consent, which was given on 7 Nov 2026.
+- The export stays on this laptop: `data/` is gitignored, and nothing from it is committed, uploaded or used as a test case. Delete the folder to withdraw it; retrain afterwards.
+- The model keeps only words that appear in at least five emails of at least two different sources, and numbers are masked, so names, order numbers and amounts from one inbox do not enter the model. The trained model file still derives from the mail: do not publish it while the export is in its training data.
+- Only mail the owner has checked is legitimate goes in. Messages Gmail filed as Spam or Trash are skipped.
+
 ## Ethics notes
 
 - **Consent for real bundles (R2-10).** Messages collected for the real-bundle evaluation must come from the team's own accounts or from people who agreed in writing. `TESTCASE_FORMAT.md` requires a `basis` for every `collected_real` row. Never create or fake bundles.
