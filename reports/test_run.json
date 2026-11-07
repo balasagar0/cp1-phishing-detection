@@ -1,0 +1,22 @@
+{
+ "date": "2026-11-07T17:49:06+05:30",
+ "build": {
+  "tag": "cp1-final",
+  "commit": "18ba1d94b103ebeac3aefd775f4d9673c039b451"
+ },
+ "pytest": {
+  "passed": 180,
+  "failed": 0,
+  "error": 0,
+  "skipped": 1,
+  "xfailed": 7,
+  "xpassed": 0
+ },
+ "pytest_note": "pytest tests, except tests/test_documents.py (it checks the documents this script feeds)",
+ "smoke": {
+  "pass": 24,
+  "skip": 1,
+  "fail": 0,
+  "all_passed": true
+ }
+}

@@ -1,6 +1,6 @@
 # AI-Based Multi-Channel Phishing Detection System (CP1 prototype)
 
-Team Y23-HTE-PROJECT-88, B.Tech CSE, KL University. Build: tag `cp1-final`, commit `18ba1d9`. Its figures are in `reports/results.md`; the checks run on it are listed in `CHECKLIST_STATUS.md`.
+Team Y23-HTE-PROJECT-88, B.Tech CSE, KL University. Build: tag `cp1-final`, commit `18ba1d9`. Every number for this build is in `reports/FINAL_NUMBERS.md`; the checks run on it are listed in `CHECKLIST_STATUS.md`.
 
 Three trained detectors (email, SMS, URL), a correlation model that combines events inside a 60-minute window, an event store that groups a
 recipient's events into campaigns and raises alerts, and a console. Every score comes from a trained model; there are no hand-written scoring rules.
@@ -103,6 +103,28 @@ bash run_all.sh           # retrains every model and rewrites reports/ (uses .ve
 
 On Windows run these in Git Bash. `run_all.sh` stops at the first failed step. After a retrain, run the tests, `scripts/make_model_manifest.py`
 and `scripts/preflight.py`.
+
+On `cp1-final` a retrain gives models close to, but not the same as, the shipped ones: the email text cleaner was fixed after v2, and the
+retrained correlation model changes one demo outcome. The shipped models are v2's, and `reports/` describes them. Do not commit `run_all.sh`
+output over them; `reports/final_run/README.md` records what a retrain gives and why it was not adopted.
+
+## Documents
+
+Every document with a number is generated from the reports of `cp1-final`, never typed:
+
+| File | What |
+|---|---|
+| `reports/FINAL_NUMBERS.md` | the one set of numbers: per detector (honest and flattering), correlation (simulated), demo cases, tests, latency, defects, limits, retired numbers |
+| `reports/FINAL_TEST_REPORT.md` | why the test plan was ported, every case with its result, sample groups, exit criteria, defect log, what was not tested |
+| `reports/figures/` | figures for the paper, poster and deck (PNG at 300 dpi and SVG); its README names each figure's data |
+| `docs/DEMO_SCRIPT.md` | the demo order, what to say, expected values and fallbacks |
+| `docs/PATENT_BASIS.md` | what is built (code and tests), every measured number with its source, and what is not built |
+| `docs/MANUSCRIPT_METHOD_RESULTS.md`, `docs/report/` | text for the paper and the project report |
+| `docs/VIVA_BY_MODULE.md`, `docs/DIARY_ENTRIES.md` | viva preparation per member; text to copy into the research diary |
+
+Rebuild them all with `.venv/Scripts/python.exe scripts/make_documents.py` (needs `pip install -r requirements-docs.txt` for the figures). The
+prose lives in `docs/templates/`; edit a template, never a generated file. `tests/test_documents.py` fails if a document is stale or carries a
+typed or retired number.
 
 ## Troubleshooting
 

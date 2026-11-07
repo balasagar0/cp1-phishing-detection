@@ -101,6 +101,13 @@ On Windows run the `.sh` scripts from Git Bash. The folder path has a space (`Ca
 - `tests/smoke_test.py` — 24 workbook, validator and refit checks; a script, not pytest. It needs
   `data/processed/pool_*.csv` (made by `run_all.sh`; present in this folder, gitignored). With them, 24 pass
   and 1 is skipped (it needs a spreadsheet program). Without them it stops after 11: missing data, not a defect.
+- `tests/test_documents.py` — the Phase 5 documents: rendered from `cp1-final`, current, no typed metric in `docs/templates/`, no retired
+  number, correlation numbers called simulated. Note: running pytest rewrites `reports/final_cases_results.json` (the committed copy is the
+  run on `cp1-final`; `git checkout` it afterwards, or let `scripts/make_final_numbers.py` restore it).
+
+**Documents** (Phase 5): `.venv/Scripts/python.exe scripts/make_documents.py` rebuilds `reports/FINAL_NUMBERS.md`, `reports/FINAL_TEST_REPORT.md`,
+`reports/figures/`, the documents in `docs/` from `docs/templates/`, and `docs/DIARY_ENTRIES.md`. Edit a template, never a generated file.
+Figures need `pip install -r requirements-docs.txt`.
 
 `pytest tests/` runs everything except the smoke test (`tests/conftest.py` skips the script-style files).
 `RUN_TESTS.bat` runs all of it with the venv.
