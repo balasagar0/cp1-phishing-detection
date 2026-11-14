@@ -1,11 +1,11 @@
 {
- "date": "2026-11-07T17:49:18+05:30",
+ "date": "2026-11-14T10:59:00+05:30",
  "build": {
   "tag": "cp1-final",
   "commit": "18ba1d94b103ebeac3aefd775f4d9673c039b451",
   "commit7": "18ba1d9",
   "tag_date": "07 Nov 2026",
-  "head": "ae6fac1",
+  "head": "bbb67c2",
   "runtime_paths": [
    "api.py",
    "src",
@@ -21,7 +21,7 @@
   "build.commit": "18ba1d94b103ebeac3aefd775f4d9673c039b451",
   "build.commit7": "18ba1d9",
   "build.tag_date": "07 Nov 2026",
-  "build.head": "ae6fac1",
+  "build.head": "bbb67c2",
   "window.minutes": "60",
   "window.file_line": "src/fusion.py:13",
   "alert_line": "0.5",
@@ -379,7 +379,9 @@
   "latency.n": "100",
   "latency.startup": "8.2 s",
   "latency.machine": "AMD Ryzen 7 5800HS with Radeon Graphics (16 logical CPUs), 15.4 GB RAM, Windows-11-10.0.26200-SP0, Python 3.13.0",
-  "latency.demo_laptop": "not confirmed: Viraj confirms whether this is the demo laptop, or re-runs this script on it (R3-10)"
+  "latency.demo_laptop": "not confirmed: Viraj confirms whether this is the demo laptop, or re-runs this script on it (R3-10)",
+  "review3.n": "31",
+  "review3.same": "31"
  },
  "demo": [
   {
@@ -618,7 +620,7 @@
   }
  },
  "retired_search": {
-  "searched_files": 163,
+  "searched_files": 199,
   "hits": [
    {
     "number": "email F1 0.947 (Review-2 deck)",
@@ -644,7 +646,7 @@
    {
     "number": "'142 cases'",
     "file": "CLAUDE.md",
-    "line": 220,
+    "line": 227,
     "origin": "written in the CP1 finish work",
     "verdict": "quotes it as wrong"
    },
@@ -658,14 +660,14 @@
    {
     "number": "'30-minute window'",
     "file": "CLAUDE.md",
-    "line": 220,
+    "line": 227,
     "origin": "written in the CP1 finish work",
     "verdict": "quotes it as wrong"
    },
    {
     "number": "'30-minute window'",
     "file": "CLAUDE.md",
-    "line": 235,
+    "line": 242,
     "origin": "written in the CP1 finish work",
     "verdict": "quotes it as wrong"
    },
@@ -679,7 +681,7 @@
    {
     "number": "'19 routes'",
     "file": "CLAUDE.md",
-    "line": 220,
+    "line": 227,
     "origin": "written in the CP1 finish work",
     "verdict": "quotes it as wrong"
    },
@@ -831,6 +833,503 @@
     "verdict": "received, not edited"
    },
    {
+    "number": "email F1 0.947 (Review-2 deck)",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 165,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "email F1 0.947 (Review-2 deck)",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 186,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "email F1 0.947 (Review-2 deck)",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 195,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "email F1 0.947 (Review-2 deck)",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 218,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "email F1 0.947 (Review-2 deck)",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 220,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "email F1 0.947 (Review-2 deck)",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 226,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "email F1 0.947 (Review-2 deck)",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 232,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "email F1 0.947 (Review-2 deck)",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 235,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "email F1 0.947 (Review-2 deck)",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 237,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "SMS F1 0.926 (Review-2 deck)",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 166,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "SMS F1 0.926 (Review-2 deck)",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 187,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "SMS F1 0.926 (Review-2 deck)",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 196,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "SMS F1 0.926 (Review-2 deck)",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 221,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "SMS F1 0.926 (Review-2 deck)",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 223,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "SMS F1 0.926 (Review-2 deck)",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 225,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "SMS F1 0.926 (Review-2 deck)",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 228,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "SMS F1 0.926 (Review-2 deck)",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 229,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "SMS F1 0.926 (Review-2 deck)",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 231,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "SMS F1 0.926 (Review-2 deck)",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 233,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "SMS F1 0.926 (Review-2 deck)",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 236,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "SMS F1 0.926 (Review-2 deck)",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 239,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "URL F1 0.960 (Review-2 deck)",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 167,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "URL F1 0.960 (Review-2 deck)",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 188,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "URL F1 0.960 (Review-2 deck)",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 197,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "F1 0.991 (TRAINING_REPORT.md)",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 168,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "F1 0.991 (TRAINING_REPORT.md)",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 198,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "F1 0.991 (TRAINING_REPORT.md)",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 216,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "F1 0.991 (TRAINING_REPORT.md)",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 217,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "F1 0.991 (TRAINING_REPORT.md)",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 222,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "F1 0.991 (TRAINING_REPORT.md)",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 224,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "F1 0.991 (TRAINING_REPORT.md)",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 227,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "F1 0.991 (TRAINING_REPORT.md)",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 230,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "F1 0.991 (TRAINING_REPORT.md)",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 234,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "F1 0.991 (TRAINING_REPORT.md)",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 238,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'linear SVM' (TRAINING_REPORT.md)",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 169,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'linear SVM' (TRAINING_REPORT.md)",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 199,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'460 campaigns'",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 170,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'460 campaigns'",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 200,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'80.0% -> 84.5%'",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 171,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'80.0% -> 84.5%'",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 201,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'80.0% -> 84.5%'",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 219,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'22 of 60'",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 172,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'22 of 60'",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 202,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'32 of 60'",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 173,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'32 of 60'",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 203,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'142 cases'",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 174,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'142 cases'",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 189,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'142 cases'",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 204,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'142 cases'",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 205,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'30-minute window'",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 147,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'30-minute window'",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 175,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'30-minute window'",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 190,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'30-minute window'",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 191,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'30-minute window'",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 192,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'30-minute window'",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 206,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'30-minute window'",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 207,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'30-minute window'",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 208,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'30-minute window'",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 215,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'50-minute window'",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 176,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'50-minute window'",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 209,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "quiet-attack demo score 87.8",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 177,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "quiet-attack demo score 87.8",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 210,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "quiet-attack demo score 85.6",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 178,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "quiet-attack demo score 85.6",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 211,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "voice ROC-AUC 0.952",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 179,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "voice ROC-AUC 0.952",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 212,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'19 routes'",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 180,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'19 routes'",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 193,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'19 routes'",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 194,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'19 routes'",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 213,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'19 routes'",
+    "file": "reports/FINAL_NUMBERS.md",
+    "line": 214,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
     "number": "F1 0.991 (TRAINING_REPORT.md)",
     "file": "reports/baseline_check.md",
     "line": 107,
@@ -864,6 +1363,496 @@
     "line": 208,
     "origin": "received with v2, unchanged",
     "verdict": "written by code: a different measured value with the same digits, not the retired claim"
+   },
+   {
+    "number": "email F1 0.947 (Review-2 deck)",
+    "file": "reports/final_numbers.json",
+    "line": 624,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "email F1 0.947 (Review-2 deck)",
+    "file": "reports/final_numbers.json",
+    "line": 687,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "email F1 0.947 (Review-2 deck)",
+    "file": "reports/final_numbers.json",
+    "line": 848,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "email F1 0.947 (Review-2 deck)",
+    "file": "reports/final_numbers.json",
+    "line": 862,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "email F1 0.947 (Review-2 deck)",
+    "file": "reports/final_numbers.json",
+    "line": 904,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "email F1 0.947 (Review-2 deck)",
+    "file": "reports/final_numbers.json",
+    "line": 946,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "email F1 0.947 (Review-2 deck)",
+    "file": "reports/final_numbers.json",
+    "line": 967,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "email F1 0.947 (Review-2 deck)",
+    "file": "reports/final_numbers.json",
+    "line": 981,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "email F1 0.947 (Review-2 deck)",
+    "file": "reports/final_numbers.json",
+    "line": 1004,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "SMS F1 0.926 (Review-2 deck)",
+    "file": "reports/final_numbers.json",
+    "line": 631,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "SMS F1 0.926 (Review-2 deck)",
+    "file": "reports/final_numbers.json",
+    "line": 694,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "SMS F1 0.926 (Review-2 deck)",
+    "file": "reports/final_numbers.json",
+    "line": 869,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "SMS F1 0.926 (Review-2 deck)",
+    "file": "reports/final_numbers.json",
+    "line": 883,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "SMS F1 0.926 (Review-2 deck)",
+    "file": "reports/final_numbers.json",
+    "line": 897,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "SMS F1 0.926 (Review-2 deck)",
+    "file": "reports/final_numbers.json",
+    "line": 918,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "SMS F1 0.926 (Review-2 deck)",
+    "file": "reports/final_numbers.json",
+    "line": 925,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "SMS F1 0.926 (Review-2 deck)",
+    "file": "reports/final_numbers.json",
+    "line": 939,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "SMS F1 0.926 (Review-2 deck)",
+    "file": "reports/final_numbers.json",
+    "line": 953,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "SMS F1 0.926 (Review-2 deck)",
+    "file": "reports/final_numbers.json",
+    "line": 974,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "SMS F1 0.926 (Review-2 deck)",
+    "file": "reports/final_numbers.json",
+    "line": 995,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "SMS F1 0.926 (Review-2 deck)",
+    "file": "reports/final_numbers.json",
+    "line": 1005,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "URL F1 0.960 (Review-2 deck)",
+    "file": "reports/final_numbers.json",
+    "line": 638,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "URL F1 0.960 (Review-2 deck)",
+    "file": "reports/final_numbers.json",
+    "line": 701,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "URL F1 0.960 (Review-2 deck)",
+    "file": "reports/final_numbers.json",
+    "line": 1006,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "F1 0.991 (TRAINING_REPORT.md)",
+    "file": "reports/final_numbers.json",
+    "line": 708,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "F1 0.991 (TRAINING_REPORT.md)",
+    "file": "reports/final_numbers.json",
+    "line": 834,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "F1 0.991 (TRAINING_REPORT.md)",
+    "file": "reports/final_numbers.json",
+    "line": 841,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "F1 0.991 (TRAINING_REPORT.md)",
+    "file": "reports/final_numbers.json",
+    "line": 876,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "F1 0.991 (TRAINING_REPORT.md)",
+    "file": "reports/final_numbers.json",
+    "line": 890,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "F1 0.991 (TRAINING_REPORT.md)",
+    "file": "reports/final_numbers.json",
+    "line": 911,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "F1 0.991 (TRAINING_REPORT.md)",
+    "file": "reports/final_numbers.json",
+    "line": 932,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "F1 0.991 (TRAINING_REPORT.md)",
+    "file": "reports/final_numbers.json",
+    "line": 960,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "F1 0.991 (TRAINING_REPORT.md)",
+    "file": "reports/final_numbers.json",
+    "line": 988,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "F1 0.991 (TRAINING_REPORT.md)",
+    "file": "reports/final_numbers.json",
+    "line": 1007,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'linear SVM' (TRAINING_REPORT.md)",
+    "file": "reports/final_numbers.json",
+    "line": 715,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'linear SVM' (TRAINING_REPORT.md)",
+    "file": "reports/final_numbers.json",
+    "line": 1008,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'460 campaigns'",
+    "file": "reports/final_numbers.json",
+    "line": 722,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'460 campaigns'",
+    "file": "reports/final_numbers.json",
+    "line": 1009,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'80.0% -> 84.5%'",
+    "file": "reports/final_numbers.json",
+    "line": 729,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'80.0% -> 84.5%'",
+    "file": "reports/final_numbers.json",
+    "line": 855,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'80.0% -> 84.5%'",
+    "file": "reports/final_numbers.json",
+    "line": 1010,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'22 of 60'",
+    "file": "reports/final_numbers.json",
+    "line": 736,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'22 of 60'",
+    "file": "reports/final_numbers.json",
+    "line": 1011,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'32 of 60'",
+    "file": "reports/final_numbers.json",
+    "line": 743,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'32 of 60'",
+    "file": "reports/final_numbers.json",
+    "line": 1012,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'142 cases'",
+    "file": "reports/final_numbers.json",
+    "line": 645,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'142 cases'",
+    "file": "reports/final_numbers.json",
+    "line": 750,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'142 cases'",
+    "file": "reports/final_numbers.json",
+    "line": 757,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'142 cases'",
+    "file": "reports/final_numbers.json",
+    "line": 1013,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'30-minute window'",
+    "file": "reports/final_numbers.json",
+    "line": 652,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'30-minute window'",
+    "file": "reports/final_numbers.json",
+    "line": 659,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'30-minute window'",
+    "file": "reports/final_numbers.json",
+    "line": 666,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'30-minute window'",
+    "file": "reports/final_numbers.json",
+    "line": 764,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'30-minute window'",
+    "file": "reports/final_numbers.json",
+    "line": 771,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'30-minute window'",
+    "file": "reports/final_numbers.json",
+    "line": 778,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'30-minute window'",
+    "file": "reports/final_numbers.json",
+    "line": 827,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'30-minute window'",
+    "file": "reports/final_numbers.json",
+    "line": 1014,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'50-minute window'",
+    "file": "reports/final_numbers.json",
+    "line": 785,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'50-minute window'",
+    "file": "reports/final_numbers.json",
+    "line": 1015,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "quiet-attack demo score 87.8",
+    "file": "reports/final_numbers.json",
+    "line": 792,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "quiet-attack demo score 87.8",
+    "file": "reports/final_numbers.json",
+    "line": 1016,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "quiet-attack demo score 85.6",
+    "file": "reports/final_numbers.json",
+    "line": 799,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "quiet-attack demo score 85.6",
+    "file": "reports/final_numbers.json",
+    "line": 1017,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "voice ROC-AUC 0.952",
+    "file": "reports/final_numbers.json",
+    "line": 806,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "voice ROC-AUC 0.952",
+    "file": "reports/final_numbers.json",
+    "line": 1018,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'19 routes'",
+    "file": "reports/final_numbers.json",
+    "line": 673,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'19 routes'",
+    "file": "reports/final_numbers.json",
+    "line": 680,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'19 routes'",
+    "file": "reports/final_numbers.json",
+    "line": 813,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'19 routes'",
+    "file": "reports/final_numbers.json",
+    "line": 820,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'19 routes'",
+    "file": "reports/final_numbers.json",
+    "line": 1019,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
    },
    {
     "number": "SMS F1 0.926 (Review-2 deck)",
@@ -997,6 +1986,132 @@
     "line": 193,
     "origin": "received with v2, unchanged",
     "verdict": "written by code: a different measured value with the same digits, not the retired claim"
+   },
+   {
+    "number": "email F1 0.947 (Review-2 deck)",
+    "file": "scripts/make_final_numbers.py",
+    "line": 19,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "SMS F1 0.926 (Review-2 deck)",
+    "file": "scripts/make_final_numbers.py",
+    "line": 19,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "URL F1 0.960 (Review-2 deck)",
+    "file": "scripts/make_final_numbers.py",
+    "line": 20,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "F1 0.991 (TRAINING_REPORT.md)",
+    "file": "scripts/make_final_numbers.py",
+    "line": 20,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'linear SVM' (TRAINING_REPORT.md)",
+    "file": "scripts/make_final_numbers.py",
+    "line": 21,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'460 campaigns'",
+    "file": "scripts/make_final_numbers.py",
+    "line": 21,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'460 campaigns'",
+    "file": "scripts/make_final_numbers.py",
+    "line": 21,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'80.0% -> 84.5%'",
+    "file": "scripts/make_final_numbers.py",
+    "line": 22,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'22 of 60'",
+    "file": "scripts/make_final_numbers.py",
+    "line": 22,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'32 of 60'",
+    "file": "scripts/make_final_numbers.py",
+    "line": 22,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'142 cases'",
+    "file": "scripts/make_final_numbers.py",
+    "line": 23,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'30-minute window'",
+    "file": "scripts/make_final_numbers.py",
+    "line": 23,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'30-minute window'",
+    "file": "scripts/make_final_numbers.py",
+    "line": 352,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'50-minute window'",
+    "file": "scripts/make_final_numbers.py",
+    "line": 24,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "quiet-attack demo score 87.8",
+    "file": "scripts/make_final_numbers.py",
+    "line": 24,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "quiet-attack demo score 85.6",
+    "file": "scripts/make_final_numbers.py",
+    "line": 25,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "voice ROC-AUC 0.952",
+    "file": "scripts/make_final_numbers.py",
+    "line": 25,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
+   },
+   {
+    "number": "'19 routes'",
+    "file": "scripts/make_final_numbers.py",
+    "line": 25,
+    "origin": "written in the CP1 finish work",
+    "verdict": "quotes it as wrong"
    }
   ]
  },
@@ -1017,5 +2132,253 @@
   "quiet-attack demo score 85.6",
   "voice ROC-AUC 0.952",
   "'19 routes'"
+ ],
+ "review3": [
+  {
+   "figure": "Email F1, mean of 3 leave-one-corpus-out runs (honest)",
+   "review3": "82.2%",
+   "now": "82.2%",
+   "same": true
+  },
+  {
+   "figure": "Email F1, pooled random split (flattering)",
+   "review3": "98.8%",
+   "now": "98.8%",
+   "same": true
+  },
+  {
+   "figure": "SMS smishing-vs-rest F1 (honest)",
+   "review3": "87.1%",
+   "now": "87.1%",
+   "same": true
+  },
+  {
+   "figure": "SMS smishing-vs-rest F1, 95% CI low",
+   "review3": "82.3%",
+   "now": "82.3%",
+   "same": true
+  },
+  {
+   "figure": "SMS smishing-vs-rest F1, 95% CI high",
+   "review3": "91.7%",
+   "now": "91.7%",
+   "same": true
+  },
+  {
+   "figure": "SMS spam-or-smishing F1 (flattering)",
+   "review3": "98.2%",
+   "now": "98.2%",
+   "same": true
+  },
+  {
+   "figure": "URL F1, host-grouped (honest)",
+   "review3": "90.4%",
+   "now": "90.4%",
+   "same": true
+  },
+  {
+   "figure": "URL false alarms on login URLs of 1,000 held-out popular domains",
+   "review3": "0.0%",
+   "now": "0.0%",
+   "same": true
+  },
+  {
+   "figure": "URL recall on bad URLs on top-10k domains, before the fix",
+   "review3": "49.9%",
+   "now": "49.9%",
+   "same": true
+  },
+  {
+   "figure": "URL recall on bad URLs on top-10k domains, final",
+   "review3": "30.7%",
+   "now": "30.7%",
+   "same": true
+  },
+  {
+   "figure": "URL F1, offline feature benchmark (flattering)",
+   "review3": "95.4%",
+   "now": "95.4%",
+   "same": true
+  },
+  {
+   "figure": "Correlation (simulated): Single-channel, precision",
+   "review3": "87.0%",
+   "now": "87.0%",
+   "same": true
+  },
+  {
+   "figure": "Correlation (simulated): Single-channel, recall",
+   "review3": "95.3%",
+   "now": "95.3%",
+   "same": true
+  },
+  {
+   "figure": "Correlation (simulated): Single-channel, f1",
+   "review3": "91.0%",
+   "now": "91.0%",
+   "same": true
+  },
+  {
+   "figure": "Correlation (simulated): Single-channel, false positive rate",
+   "review3": "14.1%",
+   "now": "14.1%",
+   "same": true
+  },
+  {
+   "figure": "Correlation (simulated): Whole-bundle model, precision",
+   "review3": "97.0%",
+   "now": "97.0%",
+   "same": true
+  },
+  {
+   "figure": "Correlation (simulated): Whole-bundle model, recall",
+   "review3": "92.9%",
+   "now": "92.9%",
+   "same": true
+  },
+  {
+   "figure": "Correlation (simulated): Whole-bundle model, f1",
+   "review3": "94.9%",
+   "now": "94.9%",
+   "same": true
+  },
+  {
+   "figure": "Correlation (simulated): Whole-bundle model, false positive rate",
+   "review3": "2.8%",
+   "now": "2.8%",
+   "same": true
+  },
+  {
+   "figure": "Correlation (simulated): Engine, no window, precision",
+   "review3": "96.8%",
+   "now": "96.8%",
+   "same": true
+  },
+  {
+   "figure": "Correlation (simulated): Engine, no window, recall",
+   "review3": "93.0%",
+   "now": "93.0%",
+   "same": true
+  },
+  {
+   "figure": "Correlation (simulated): Engine, no window, f1",
+   "review3": "94.8%",
+   "now": "94.8%",
+   "same": true
+  },
+  {
+   "figure": "Correlation (simulated): Engine, no window, false positive rate",
+   "review3": "3.0%",
+   "now": "3.0%",
+   "same": true
+  },
+  {
+   "figure": "Correlation (simulated): Engine, 60-minute window, precision",
+   "review3": "89.4%",
+   "now": "89.4%",
+   "same": true
+  },
+  {
+   "figure": "Correlation (simulated): Engine, 60-minute window, recall",
+   "review3": "94.9%",
+   "now": "94.9%",
+   "same": true
+  },
+  {
+   "figure": "Correlation (simulated): Engine, 60-minute window, f1",
+   "review3": "92.0%",
+   "now": "92.0%",
+   "same": true
+  },
+  {
+   "figure": "Correlation (simulated): Engine, 60-minute window, false positive rate",
+   "review3": "11.1%",
+   "now": "11.1%",
+   "same": true
+  },
+  {
+   "figure": "Simulated linked attacks with every event below 0.5 (count)",
+   "review3": "27",
+   "now": "27",
+   "same": true
+  },
+  {
+   "figure": "Simulated linked attacks with every event below 0.5 (share)",
+   "review3": "0.8%",
+   "now": "0.8%",
+   "same": true
+  },
+  {
+   "figure": "Of those, flagged by the 60-minute engine",
+   "review3": "18.5%",
+   "now": "18.5%",
+   "same": true
+  },
+  {
+   "figure": "Simulated linked attack bundles that fit in 60 minutes",
+   "review3": "95.6%",
+   "now": "95.6%",
+   "same": true
+  }
+ ],
+ "open_defects": [
+  {
+   "id": "D-01",
+   "severity": "High",
+   "proposal": "",
+   "failing": [
+    "URL-07"
+   ]
+  },
+  {
+   "id": "D-09",
+   "severity": "High",
+   "proposal": "",
+   "failing": [
+    "SMS-03"
+   ]
+  },
+  {
+   "id": "D-10",
+   "severity": "Medium",
+   "proposal": "",
+   "failing": [
+    "EML-03"
+   ]
+  },
+  {
+   "id": "D-12",
+   "severity": "Medium",
+   "proposal": "Proposed: accept because no case in S-01, S-02 or S-11 can show a lift (each already alerts alone), and the lift is shown instead by TC-06 against TC-07. This stays a hand-written and simulated result until real bundles exist (R2-10).",
+   "failing": [
+    "SYS-14"
+   ]
+  },
+  {
+   "id": "D-16",
+   "severity": "Medium",
+   "proposal": "",
+   "failing": [
+    "SMS-03"
+   ]
+  },
+  {
+   "id": "D-17",
+   "severity": "High",
+   "proposal": "",
+   "failing": [
+    "EML-01",
+    "EML-03"
+   ]
+  },
+  {
+   "id": "D-18",
+   "severity": "Low",
+   "proposal": "Proposed: accept because the alert does not change in S-06, and lowering a lone high score next to benign events is where the model's lower false-alarm rate on simulated bundles comes from. Recheck on real bundles (R2-10).",
+   "failing": [
+    "SCO-08",
+    "UI-03"
+   ]
+  }
  ]
 }

@@ -1,6 +1,6 @@
 # Final numbers (CP1)
 
-**Build: tag `cp1-final`, commit `18ba1d94b103ebeac3aefd775f4d9673c039b451` (07 Nov 2026).** Written by `scripts/make_final_numbers.py` on 2026-11-07T17:49:18+05:30. Every number is read from `reports/` or measured by that script on this build; none is typed. The script checks that the API, models and training code (`api.py`, `src`, `models`, `console/dist`, `console.html`, `requirements.txt`, `requirements.lock.txt`) are byte for byte those of `cp1-final` before it writes anything.
+**Build: tag `cp1-final`, commit `18ba1d94b103ebeac3aefd775f4d9673c039b451` (07 Nov 2026).** Written by `scripts/make_final_numbers.py` on 2026-11-14T10:59:00+05:30. Every number is read from `reports/` or measured by that script on this build; none is typed. The script checks that the API, models and training code (`api.py`, `src`, `models`, `console/dist`, `console.html`, `requirements.txt`, `requirements.lock.txt`) are byte for byte those of `cp1-final` before it writes anything.
 
 Quote the honest number. Never quote the flattering one alone. Simulated results are always called simulated. Demo cases are hand-written, not a test set.
 
@@ -179,19 +179,19 @@ These numbers are wrong. They must not be quoted. Patent Tables 2 and 3 are not 
 - voice ROC-AUC 0.952
 - '19 routes'
 
-Repository search: 163 text files (every tracked file except the built console bundle, plus the team's text inputs in `docs/inputs/`). 54 hits: 29 quotes it as wrong; 1 received, not edited; 24 written by code: a different measured value with the same digits, not the retired claim. Files received with v2 or given as team input are listed and not edited.
+Repository search: 199 text files (every tracked file except the built console bundle, plus the team's text inputs in `docs/inputs/`). 213 hits: 188 quotes it as wrong; 1 received, not edited; 24 written by code: a different measured value with the same digits, not the retired claim. Files received with v2 or given as team input are listed and not edited.
 
 | Number | File | Line | Origin | Verdict |
 |---|---|---|---|---|
 | email F1 0.947 (Review-2 deck) | `CLAUDE.md` | 23 | written in the CP1 finish work | quotes it as wrong |
 | SMS F1 0.926 (Review-2 deck) | `CLAUDE.md` | 23 | written in the CP1 finish work | quotes it as wrong |
 | URL F1 0.960 (Review-2 deck) | `CLAUDE.md` | 23 | written in the CP1 finish work | quotes it as wrong |
-| '142 cases' | `CLAUDE.md` | 220 | written in the CP1 finish work | quotes it as wrong |
+| '142 cases' | `CLAUDE.md` | 227 | written in the CP1 finish work | quotes it as wrong |
 | '30-minute window' | `CLAUDE.md` | 20 | written in the CP1 finish work | quotes it as wrong |
-| '30-minute window' | `CLAUDE.md` | 220 | written in the CP1 finish work | quotes it as wrong |
-| '30-minute window' | `CLAUDE.md` | 235 | written in the CP1 finish work | quotes it as wrong |
+| '30-minute window' | `CLAUDE.md` | 227 | written in the CP1 finish work | quotes it as wrong |
+| '30-minute window' | `CLAUDE.md` | 242 | written in the CP1 finish work | quotes it as wrong |
 | '19 routes' | `CLAUDE.md` | 19 | written in the CP1 finish work | quotes it as wrong |
-| '19 routes' | `CLAUDE.md` | 220 | written in the CP1 finish work | quotes it as wrong |
+| '19 routes' | `CLAUDE.md` | 227 | written in the CP1 finish work | quotes it as wrong |
 | email F1 0.947 (Review-2 deck) | `CP1_FINISH_TASK.md` | 252 | written in the CP1 finish work | quotes it as wrong |
 | SMS F1 0.926 (Review-2 deck) | `CP1_FINISH_TASK.md` | 252 | written in the CP1 finish work | quotes it as wrong |
 | URL F1 0.960 (Review-2 deck) | `CP1_FINISH_TASK.md` | 252 | written in the CP1 finish work | quotes it as wrong |
@@ -213,11 +213,152 @@ Repository search: 163 text files (every tracked file except the built console b
 | '19 routes' | `CP1_FINISH_TASK.md` | 72 | written in the CP1 finish work | quotes it as wrong |
 | '19 routes' | `CP1_FINISH_TASK.md` | 252 | written in the CP1 finish work | quotes it as wrong |
 | '30-minute window' | `TESTCASE_FORMAT.md` | 55 | received with v2, unchanged | received, not edited |
+| email F1 0.947 (Review-2 deck) | `reports/FINAL_NUMBERS.md` | 165 | written in the CP1 finish work | quotes it as wrong |
+| email F1 0.947 (Review-2 deck) | `reports/FINAL_NUMBERS.md` | 186 | written in the CP1 finish work | quotes it as wrong |
+| email F1 0.947 (Review-2 deck) | `reports/FINAL_NUMBERS.md` | 195 | written in the CP1 finish work | quotes it as wrong |
+| email F1 0.947 (Review-2 deck) | `reports/FINAL_NUMBERS.md` | 218 | written in the CP1 finish work | quotes it as wrong |
+| email F1 0.947 (Review-2 deck) | `reports/FINAL_NUMBERS.md` | 220 | written in the CP1 finish work | quotes it as wrong |
+| email F1 0.947 (Review-2 deck) | `reports/FINAL_NUMBERS.md` | 226 | written in the CP1 finish work | quotes it as wrong |
+| email F1 0.947 (Review-2 deck) | `reports/FINAL_NUMBERS.md` | 232 | written in the CP1 finish work | quotes it as wrong |
+| email F1 0.947 (Review-2 deck) | `reports/FINAL_NUMBERS.md` | 235 | written in the CP1 finish work | quotes it as wrong |
+| email F1 0.947 (Review-2 deck) | `reports/FINAL_NUMBERS.md` | 237 | written in the CP1 finish work | quotes it as wrong |
+| SMS F1 0.926 (Review-2 deck) | `reports/FINAL_NUMBERS.md` | 166 | written in the CP1 finish work | quotes it as wrong |
+| SMS F1 0.926 (Review-2 deck) | `reports/FINAL_NUMBERS.md` | 187 | written in the CP1 finish work | quotes it as wrong |
+| SMS F1 0.926 (Review-2 deck) | `reports/FINAL_NUMBERS.md` | 196 | written in the CP1 finish work | quotes it as wrong |
+| SMS F1 0.926 (Review-2 deck) | `reports/FINAL_NUMBERS.md` | 221 | written in the CP1 finish work | quotes it as wrong |
+| SMS F1 0.926 (Review-2 deck) | `reports/FINAL_NUMBERS.md` | 223 | written in the CP1 finish work | quotes it as wrong |
+| SMS F1 0.926 (Review-2 deck) | `reports/FINAL_NUMBERS.md` | 225 | written in the CP1 finish work | quotes it as wrong |
+| SMS F1 0.926 (Review-2 deck) | `reports/FINAL_NUMBERS.md` | 228 | written in the CP1 finish work | quotes it as wrong |
+| SMS F1 0.926 (Review-2 deck) | `reports/FINAL_NUMBERS.md` | 229 | written in the CP1 finish work | quotes it as wrong |
+| SMS F1 0.926 (Review-2 deck) | `reports/FINAL_NUMBERS.md` | 231 | written in the CP1 finish work | quotes it as wrong |
+| SMS F1 0.926 (Review-2 deck) | `reports/FINAL_NUMBERS.md` | 233 | written in the CP1 finish work | quotes it as wrong |
+| SMS F1 0.926 (Review-2 deck) | `reports/FINAL_NUMBERS.md` | 236 | written in the CP1 finish work | quotes it as wrong |
+| SMS F1 0.926 (Review-2 deck) | `reports/FINAL_NUMBERS.md` | 239 | written in the CP1 finish work | quotes it as wrong |
+| URL F1 0.960 (Review-2 deck) | `reports/FINAL_NUMBERS.md` | 167 | written in the CP1 finish work | quotes it as wrong |
+| URL F1 0.960 (Review-2 deck) | `reports/FINAL_NUMBERS.md` | 188 | written in the CP1 finish work | quotes it as wrong |
+| URL F1 0.960 (Review-2 deck) | `reports/FINAL_NUMBERS.md` | 197 | written in the CP1 finish work | quotes it as wrong |
+| F1 0.991 (TRAINING_REPORT.md) | `reports/FINAL_NUMBERS.md` | 168 | written in the CP1 finish work | quotes it as wrong |
+| F1 0.991 (TRAINING_REPORT.md) | `reports/FINAL_NUMBERS.md` | 198 | written in the CP1 finish work | quotes it as wrong |
+| F1 0.991 (TRAINING_REPORT.md) | `reports/FINAL_NUMBERS.md` | 216 | written in the CP1 finish work | quotes it as wrong |
+| F1 0.991 (TRAINING_REPORT.md) | `reports/FINAL_NUMBERS.md` | 217 | written in the CP1 finish work | quotes it as wrong |
+| F1 0.991 (TRAINING_REPORT.md) | `reports/FINAL_NUMBERS.md` | 222 | written in the CP1 finish work | quotes it as wrong |
+| F1 0.991 (TRAINING_REPORT.md) | `reports/FINAL_NUMBERS.md` | 224 | written in the CP1 finish work | quotes it as wrong |
+| F1 0.991 (TRAINING_REPORT.md) | `reports/FINAL_NUMBERS.md` | 227 | written in the CP1 finish work | quotes it as wrong |
+| F1 0.991 (TRAINING_REPORT.md) | `reports/FINAL_NUMBERS.md` | 230 | written in the CP1 finish work | quotes it as wrong |
+| F1 0.991 (TRAINING_REPORT.md) | `reports/FINAL_NUMBERS.md` | 234 | written in the CP1 finish work | quotes it as wrong |
+| F1 0.991 (TRAINING_REPORT.md) | `reports/FINAL_NUMBERS.md` | 238 | written in the CP1 finish work | quotes it as wrong |
+| 'linear SVM' (TRAINING_REPORT.md) | `reports/FINAL_NUMBERS.md` | 169 | written in the CP1 finish work | quotes it as wrong |
+| 'linear SVM' (TRAINING_REPORT.md) | `reports/FINAL_NUMBERS.md` | 199 | written in the CP1 finish work | quotes it as wrong |
+| '460 campaigns' | `reports/FINAL_NUMBERS.md` | 170 | written in the CP1 finish work | quotes it as wrong |
+| '460 campaigns' | `reports/FINAL_NUMBERS.md` | 200 | written in the CP1 finish work | quotes it as wrong |
+| '80.0% -> 84.5%' | `reports/FINAL_NUMBERS.md` | 171 | written in the CP1 finish work | quotes it as wrong |
+| '80.0% -> 84.5%' | `reports/FINAL_NUMBERS.md` | 201 | written in the CP1 finish work | quotes it as wrong |
+| '80.0% -> 84.5%' | `reports/FINAL_NUMBERS.md` | 219 | written in the CP1 finish work | quotes it as wrong |
+| '22 of 60' | `reports/FINAL_NUMBERS.md` | 172 | written in the CP1 finish work | quotes it as wrong |
+| '22 of 60' | `reports/FINAL_NUMBERS.md` | 202 | written in the CP1 finish work | quotes it as wrong |
+| '32 of 60' | `reports/FINAL_NUMBERS.md` | 173 | written in the CP1 finish work | quotes it as wrong |
+| '32 of 60' | `reports/FINAL_NUMBERS.md` | 203 | written in the CP1 finish work | quotes it as wrong |
+| '142 cases' | `reports/FINAL_NUMBERS.md` | 174 | written in the CP1 finish work | quotes it as wrong |
+| '142 cases' | `reports/FINAL_NUMBERS.md` | 189 | written in the CP1 finish work | quotes it as wrong |
+| '142 cases' | `reports/FINAL_NUMBERS.md` | 204 | written in the CP1 finish work | quotes it as wrong |
+| '142 cases' | `reports/FINAL_NUMBERS.md` | 205 | written in the CP1 finish work | quotes it as wrong |
+| '30-minute window' | `reports/FINAL_NUMBERS.md` | 147 | written in the CP1 finish work | quotes it as wrong |
+| '30-minute window' | `reports/FINAL_NUMBERS.md` | 175 | written in the CP1 finish work | quotes it as wrong |
+| '30-minute window' | `reports/FINAL_NUMBERS.md` | 190 | written in the CP1 finish work | quotes it as wrong |
+| '30-minute window' | `reports/FINAL_NUMBERS.md` | 191 | written in the CP1 finish work | quotes it as wrong |
+| '30-minute window' | `reports/FINAL_NUMBERS.md` | 192 | written in the CP1 finish work | quotes it as wrong |
+| '30-minute window' | `reports/FINAL_NUMBERS.md` | 206 | written in the CP1 finish work | quotes it as wrong |
+| '30-minute window' | `reports/FINAL_NUMBERS.md` | 207 | written in the CP1 finish work | quotes it as wrong |
+| '30-minute window' | `reports/FINAL_NUMBERS.md` | 208 | written in the CP1 finish work | quotes it as wrong |
+| '30-minute window' | `reports/FINAL_NUMBERS.md` | 215 | written in the CP1 finish work | quotes it as wrong |
+| '50-minute window' | `reports/FINAL_NUMBERS.md` | 176 | written in the CP1 finish work | quotes it as wrong |
+| '50-minute window' | `reports/FINAL_NUMBERS.md` | 209 | written in the CP1 finish work | quotes it as wrong |
+| quiet-attack demo score 87.8 | `reports/FINAL_NUMBERS.md` | 177 | written in the CP1 finish work | quotes it as wrong |
+| quiet-attack demo score 87.8 | `reports/FINAL_NUMBERS.md` | 210 | written in the CP1 finish work | quotes it as wrong |
+| quiet-attack demo score 85.6 | `reports/FINAL_NUMBERS.md` | 178 | written in the CP1 finish work | quotes it as wrong |
+| quiet-attack demo score 85.6 | `reports/FINAL_NUMBERS.md` | 211 | written in the CP1 finish work | quotes it as wrong |
+| voice ROC-AUC 0.952 | `reports/FINAL_NUMBERS.md` | 179 | written in the CP1 finish work | quotes it as wrong |
+| voice ROC-AUC 0.952 | `reports/FINAL_NUMBERS.md` | 212 | written in the CP1 finish work | quotes it as wrong |
+| '19 routes' | `reports/FINAL_NUMBERS.md` | 180 | written in the CP1 finish work | quotes it as wrong |
+| '19 routes' | `reports/FINAL_NUMBERS.md` | 193 | written in the CP1 finish work | quotes it as wrong |
+| '19 routes' | `reports/FINAL_NUMBERS.md` | 194 | written in the CP1 finish work | quotes it as wrong |
+| '19 routes' | `reports/FINAL_NUMBERS.md` | 213 | written in the CP1 finish work | quotes it as wrong |
+| '19 routes' | `reports/FINAL_NUMBERS.md` | 214 | written in the CP1 finish work | quotes it as wrong |
 | F1 0.991 (TRAINING_REPORT.md) | `reports/baseline_check.md` | 107 | written in the CP1 finish work | written by code: a different measured value with the same digits, not the retired claim |
 | F1 0.991 (TRAINING_REPORT.md) | `reports/baseline_check.md` | 116 | written in the CP1 finish work | written by code: a different measured value with the same digits, not the retired claim |
 | email F1 0.947 (Review-2 deck) | `reports/candidates/email_candidates.json` | 20 | written in the CP1 finish work | written by code: a different measured value with the same digits, not the retired claim |
 | '80.0% -> 84.5%' | `reports/candidates/email_candidates_attempt2.md` | 22 | written in the CP1 finish work | written by code: a different measured value with the same digits, not the retired claim |
 | email F1 0.947 (Review-2 deck) | `reports/email_metrics.json` | 208 | received with v2, unchanged | written by code: a different measured value with the same digits, not the retired claim |
+| email F1 0.947 (Review-2 deck) | `reports/final_numbers.json` | 624 | written in the CP1 finish work | quotes it as wrong |
+| email F1 0.947 (Review-2 deck) | `reports/final_numbers.json` | 687 | written in the CP1 finish work | quotes it as wrong |
+| email F1 0.947 (Review-2 deck) | `reports/final_numbers.json` | 848 | written in the CP1 finish work | quotes it as wrong |
+| email F1 0.947 (Review-2 deck) | `reports/final_numbers.json` | 862 | written in the CP1 finish work | quotes it as wrong |
+| email F1 0.947 (Review-2 deck) | `reports/final_numbers.json` | 904 | written in the CP1 finish work | quotes it as wrong |
+| email F1 0.947 (Review-2 deck) | `reports/final_numbers.json` | 946 | written in the CP1 finish work | quotes it as wrong |
+| email F1 0.947 (Review-2 deck) | `reports/final_numbers.json` | 967 | written in the CP1 finish work | quotes it as wrong |
+| email F1 0.947 (Review-2 deck) | `reports/final_numbers.json` | 981 | written in the CP1 finish work | quotes it as wrong |
+| email F1 0.947 (Review-2 deck) | `reports/final_numbers.json` | 1004 | written in the CP1 finish work | quotes it as wrong |
+| SMS F1 0.926 (Review-2 deck) | `reports/final_numbers.json` | 631 | written in the CP1 finish work | quotes it as wrong |
+| SMS F1 0.926 (Review-2 deck) | `reports/final_numbers.json` | 694 | written in the CP1 finish work | quotes it as wrong |
+| SMS F1 0.926 (Review-2 deck) | `reports/final_numbers.json` | 869 | written in the CP1 finish work | quotes it as wrong |
+| SMS F1 0.926 (Review-2 deck) | `reports/final_numbers.json` | 883 | written in the CP1 finish work | quotes it as wrong |
+| SMS F1 0.926 (Review-2 deck) | `reports/final_numbers.json` | 897 | written in the CP1 finish work | quotes it as wrong |
+| SMS F1 0.926 (Review-2 deck) | `reports/final_numbers.json` | 918 | written in the CP1 finish work | quotes it as wrong |
+| SMS F1 0.926 (Review-2 deck) | `reports/final_numbers.json` | 925 | written in the CP1 finish work | quotes it as wrong |
+| SMS F1 0.926 (Review-2 deck) | `reports/final_numbers.json` | 939 | written in the CP1 finish work | quotes it as wrong |
+| SMS F1 0.926 (Review-2 deck) | `reports/final_numbers.json` | 953 | written in the CP1 finish work | quotes it as wrong |
+| SMS F1 0.926 (Review-2 deck) | `reports/final_numbers.json` | 974 | written in the CP1 finish work | quotes it as wrong |
+| SMS F1 0.926 (Review-2 deck) | `reports/final_numbers.json` | 995 | written in the CP1 finish work | quotes it as wrong |
+| SMS F1 0.926 (Review-2 deck) | `reports/final_numbers.json` | 1005 | written in the CP1 finish work | quotes it as wrong |
+| URL F1 0.960 (Review-2 deck) | `reports/final_numbers.json` | 638 | written in the CP1 finish work | quotes it as wrong |
+| URL F1 0.960 (Review-2 deck) | `reports/final_numbers.json` | 701 | written in the CP1 finish work | quotes it as wrong |
+| URL F1 0.960 (Review-2 deck) | `reports/final_numbers.json` | 1006 | written in the CP1 finish work | quotes it as wrong |
+| F1 0.991 (TRAINING_REPORT.md) | `reports/final_numbers.json` | 708 | written in the CP1 finish work | quotes it as wrong |
+| F1 0.991 (TRAINING_REPORT.md) | `reports/final_numbers.json` | 834 | written in the CP1 finish work | quotes it as wrong |
+| F1 0.991 (TRAINING_REPORT.md) | `reports/final_numbers.json` | 841 | written in the CP1 finish work | quotes it as wrong |
+| F1 0.991 (TRAINING_REPORT.md) | `reports/final_numbers.json` | 876 | written in the CP1 finish work | quotes it as wrong |
+| F1 0.991 (TRAINING_REPORT.md) | `reports/final_numbers.json` | 890 | written in the CP1 finish work | quotes it as wrong |
+| F1 0.991 (TRAINING_REPORT.md) | `reports/final_numbers.json` | 911 | written in the CP1 finish work | quotes it as wrong |
+| F1 0.991 (TRAINING_REPORT.md) | `reports/final_numbers.json` | 932 | written in the CP1 finish work | quotes it as wrong |
+| F1 0.991 (TRAINING_REPORT.md) | `reports/final_numbers.json` | 960 | written in the CP1 finish work | quotes it as wrong |
+| F1 0.991 (TRAINING_REPORT.md) | `reports/final_numbers.json` | 988 | written in the CP1 finish work | quotes it as wrong |
+| F1 0.991 (TRAINING_REPORT.md) | `reports/final_numbers.json` | 1007 | written in the CP1 finish work | quotes it as wrong |
+| 'linear SVM' (TRAINING_REPORT.md) | `reports/final_numbers.json` | 715 | written in the CP1 finish work | quotes it as wrong |
+| 'linear SVM' (TRAINING_REPORT.md) | `reports/final_numbers.json` | 1008 | written in the CP1 finish work | quotes it as wrong |
+| '460 campaigns' | `reports/final_numbers.json` | 722 | written in the CP1 finish work | quotes it as wrong |
+| '460 campaigns' | `reports/final_numbers.json` | 1009 | written in the CP1 finish work | quotes it as wrong |
+| '80.0% -> 84.5%' | `reports/final_numbers.json` | 729 | written in the CP1 finish work | quotes it as wrong |
+| '80.0% -> 84.5%' | `reports/final_numbers.json` | 855 | written in the CP1 finish work | quotes it as wrong |
+| '80.0% -> 84.5%' | `reports/final_numbers.json` | 1010 | written in the CP1 finish work | quotes it as wrong |
+| '22 of 60' | `reports/final_numbers.json` | 736 | written in the CP1 finish work | quotes it as wrong |
+| '22 of 60' | `reports/final_numbers.json` | 1011 | written in the CP1 finish work | quotes it as wrong |
+| '32 of 60' | `reports/final_numbers.json` | 743 | written in the CP1 finish work | quotes it as wrong |
+| '32 of 60' | `reports/final_numbers.json` | 1012 | written in the CP1 finish work | quotes it as wrong |
+| '142 cases' | `reports/final_numbers.json` | 645 | written in the CP1 finish work | quotes it as wrong |
+| '142 cases' | `reports/final_numbers.json` | 750 | written in the CP1 finish work | quotes it as wrong |
+| '142 cases' | `reports/final_numbers.json` | 757 | written in the CP1 finish work | quotes it as wrong |
+| '142 cases' | `reports/final_numbers.json` | 1013 | written in the CP1 finish work | quotes it as wrong |
+| '30-minute window' | `reports/final_numbers.json` | 652 | written in the CP1 finish work | quotes it as wrong |
+| '30-minute window' | `reports/final_numbers.json` | 659 | written in the CP1 finish work | quotes it as wrong |
+| '30-minute window' | `reports/final_numbers.json` | 666 | written in the CP1 finish work | quotes it as wrong |
+| '30-minute window' | `reports/final_numbers.json` | 764 | written in the CP1 finish work | quotes it as wrong |
+| '30-minute window' | `reports/final_numbers.json` | 771 | written in the CP1 finish work | quotes it as wrong |
+| '30-minute window' | `reports/final_numbers.json` | 778 | written in the CP1 finish work | quotes it as wrong |
+| '30-minute window' | `reports/final_numbers.json` | 827 | written in the CP1 finish work | quotes it as wrong |
+| '30-minute window' | `reports/final_numbers.json` | 1014 | written in the CP1 finish work | quotes it as wrong |
+| '50-minute window' | `reports/final_numbers.json` | 785 | written in the CP1 finish work | quotes it as wrong |
+| '50-minute window' | `reports/final_numbers.json` | 1015 | written in the CP1 finish work | quotes it as wrong |
+| quiet-attack demo score 87.8 | `reports/final_numbers.json` | 792 | written in the CP1 finish work | quotes it as wrong |
+| quiet-attack demo score 87.8 | `reports/final_numbers.json` | 1016 | written in the CP1 finish work | quotes it as wrong |
+| quiet-attack demo score 85.6 | `reports/final_numbers.json` | 799 | written in the CP1 finish work | quotes it as wrong |
+| quiet-attack demo score 85.6 | `reports/final_numbers.json` | 1017 | written in the CP1 finish work | quotes it as wrong |
+| voice ROC-AUC 0.952 | `reports/final_numbers.json` | 806 | written in the CP1 finish work | quotes it as wrong |
+| voice ROC-AUC 0.952 | `reports/final_numbers.json` | 1018 | written in the CP1 finish work | quotes it as wrong |
+| '19 routes' | `reports/final_numbers.json` | 673 | written in the CP1 finish work | quotes it as wrong |
+| '19 routes' | `reports/final_numbers.json` | 680 | written in the CP1 finish work | quotes it as wrong |
+| '19 routes' | `reports/final_numbers.json` | 813 | written in the CP1 finish work | quotes it as wrong |
+| '19 routes' | `reports/final_numbers.json` | 820 | written in the CP1 finish work | quotes it as wrong |
+| '19 routes' | `reports/final_numbers.json` | 1019 | written in the CP1 finish work | quotes it as wrong |
 | SMS F1 0.926 (Review-2 deck) | `reports/final_run/comparison_metrics.json` | 41 | written in the CP1 finish work | written by code: a different measured value with the same digits, not the retired claim |
 | F1 0.991 (TRAINING_REPORT.md) | `reports/final_run/email_metrics_plain.json` | 198 | written in the CP1 finish work | written by code: a different measured value with the same digits, not the retired claim |
 | SMS F1 0.926 (Review-2 deck) | `reports/final_run/log_comparison.txt` | 2 | written in the CP1 finish work | written by code: a different measured value with the same digits, not the retired claim |
@@ -237,3 +378,21 @@ Repository search: 163 text files (every tracked file except the built console b
 | email F1 0.947 (Review-2 deck) | `reports/results.md` | 28 | received with v2, regenerated since | written by code: a different measured value with the same digits, not the retired claim |
 | F1 0.991 (TRAINING_REPORT.md) | `reports/results.md` | 62 | received with v2, regenerated since | written by code: a different measured value with the same digits, not the retired claim |
 | SMS F1 0.926 (Review-2 deck) | `reports/url_metrics.json` | 193 | received with v2, unchanged | written by code: a different measured value with the same digits, not the retired claim |
+| email F1 0.947 (Review-2 deck) | `scripts/make_final_numbers.py` | 19 | written in the CP1 finish work | quotes it as wrong |
+| SMS F1 0.926 (Review-2 deck) | `scripts/make_final_numbers.py` | 19 | written in the CP1 finish work | quotes it as wrong |
+| URL F1 0.960 (Review-2 deck) | `scripts/make_final_numbers.py` | 20 | written in the CP1 finish work | quotes it as wrong |
+| F1 0.991 (TRAINING_REPORT.md) | `scripts/make_final_numbers.py` | 20 | written in the CP1 finish work | quotes it as wrong |
+| 'linear SVM' (TRAINING_REPORT.md) | `scripts/make_final_numbers.py` | 21 | written in the CP1 finish work | quotes it as wrong |
+| '460 campaigns' | `scripts/make_final_numbers.py` | 21 | written in the CP1 finish work | quotes it as wrong |
+| '460 campaigns' | `scripts/make_final_numbers.py` | 21 | written in the CP1 finish work | quotes it as wrong |
+| '80.0% -> 84.5%' | `scripts/make_final_numbers.py` | 22 | written in the CP1 finish work | quotes it as wrong |
+| '22 of 60' | `scripts/make_final_numbers.py` | 22 | written in the CP1 finish work | quotes it as wrong |
+| '32 of 60' | `scripts/make_final_numbers.py` | 22 | written in the CP1 finish work | quotes it as wrong |
+| '142 cases' | `scripts/make_final_numbers.py` | 23 | written in the CP1 finish work | quotes it as wrong |
+| '30-minute window' | `scripts/make_final_numbers.py` | 23 | written in the CP1 finish work | quotes it as wrong |
+| '30-minute window' | `scripts/make_final_numbers.py` | 352 | written in the CP1 finish work | quotes it as wrong |
+| '50-minute window' | `scripts/make_final_numbers.py` | 24 | written in the CP1 finish work | quotes it as wrong |
+| quiet-attack demo score 87.8 | `scripts/make_final_numbers.py` | 24 | written in the CP1 finish work | quotes it as wrong |
+| quiet-attack demo score 85.6 | `scripts/make_final_numbers.py` | 25 | written in the CP1 finish work | quotes it as wrong |
+| voice ROC-AUC 0.952 | `scripts/make_final_numbers.py` | 25 | written in the CP1 finish work | quotes it as wrong |
+| '19 routes' | `scripts/make_final_numbers.py` | 25 | written in the CP1 finish work | quotes it as wrong |

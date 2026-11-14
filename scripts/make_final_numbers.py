@@ -243,8 +243,18 @@ def main():
     fcb = BM["full_case"]; put("latency.case.median", f"{fcb['median_ms']:.0f} ms"); put("latency.case.p95", f"{fcb['p95_ms']:.0f} ms"); put("latency.case.max", f"{fcb['max_ms']:.0f} ms")
     put("latency.n", str(BM["n_per_channel"])); put("latency.startup", f"{BM['startup_s']:.1f} s"); put("latency.machine", BM["machine"]); put("latency.demo_laptop", BM["demo_laptop"])
 
+    # Phase 6: every Review-3 figure (CP1_FINISH_TASK.md section 1.2, as listed in compare_reports.py) against this build
+    sys.path.insert(0, str(ROOT / "scripts")); import compare_reports as CR
+    r3 = []
+    for label, fname, path, fig in CR.HEADLINE:
+        cur = CR.get(CR.load(R, fname), path); cnt = isinstance(fig, int) and fig > 1
+        f = (lambda x: str(int(x))) if cnt else pct
+        r3.append({"figure": label, "review3": f(fig), "now": f(cur) if cur is not None else "missing", "same": cur is not None and f(cur) == f(fig)})
+    put("review3.n", str(len(r3))); put("review3.same", str(sum(x["same"] for x in r3)))
+    opend = [{"id": d, "severity": sev(d), "proposal": x.get("proposal") or "", "failing": [k for k, v in x["cases"].items() if v != "Pass"]}
+             for d, x in dd.items() if x["status"] == "Open"]
     doc = {"date": datetime.datetime.now().astimezone().isoformat(timespec="seconds"), "build": B, "values": V, "demo": DEMO, "tests": T, "retired_search": RS,
-           "retired_list": [n for n, _ in RETIRED]}
+           "retired_list": [n for n, _ in RETIRED], "review3": r3, "open_defects": opend}
     (R / "final_numbers.json").write_text(json.dumps(doc, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
     write_md(doc, E, S, U, FU, W, CM, FC, DS, EX, uic)
     print(f"wrote reports/FINAL_NUMBERS.md and reports/final_numbers.json: {len(V)} values; retired-number hits {len(RS['hits'])} "
