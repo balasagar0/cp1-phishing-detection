@@ -56,7 +56,7 @@ Repository: a private local git repository. `git remote -v` is empty; nothing is
 | BLD-04 URL module | Viraj | Branch `module/url`, merged into `main` by `fbee576` 02 Nov 2026 | Local run on `cp1-final`: pytest 180 passed, 7 expected failures, 0 failed |
 | BLD-05 to BLD-07 Event store, identity linking, time window and score | Bala | Branch `module/correlation`, merged into `main` by `33f7b49` 02 Nov 2026; `f23b2b4` 02 Nov 2026 | Local run on `cp1-final`: pytest 180 passed, 7 expected failures, 0 failed |
 | BLD-08, BLD-09 FastAPI service and React console | Viraj | Branch `module/api-console`, merged into `main` by `d0b815a` 02 Nov 2026; `0303319` 02 Nov 2026 | Local run on `cp1-final`: pytest 180 passed, 7 expected failures, 0 failed |
-| BLD-10, BLD-11 Tests, test data and documents | Manoj | Branch `module/testing-docs`, merged into `main` by `343ec8f` 02 Nov 2026; `869422c` 02 Nov 2026; `b3ef2d3` 02 Nov 2026; `228614d` 07 Nov 2026; `dc88d21` 07 Nov 2026; `7761903` 07 Nov 2026; `50c3228` 07 Nov 2026; `18ba1d9` 07 Nov 2026; `ae6fac1` 07 Nov 2026 | Local run on `cp1-final`: pytest 180 passed, 7 expected failures, 0 failed |
+| BLD-10, BLD-11 Tests, test data and documents | Manoj | Branch `module/testing-docs`, merged into `main` by `343ec8f` 02 Nov 2026; `869422c` 02 Nov 2026; `b3ef2d3` 02 Nov 2026; `228614d` 07 Nov 2026; `dc88d21` 07 Nov 2026; `7761903` 07 Nov 2026; `50c3228` 07 Nov 2026; `18ba1d9` 07 Nov 2026; `ae6fac1` 07 Nov 2026; `bbb67c2` 07 Nov 2026 | Local run on `cp1-final`: pytest 180 passed, 7 expected failures, 0 failed |
 | BLD-01 Data preparation | Krishna, Viraj | `download_data.sh` and `run_all.sh`, received with `v2-baseline` (commit `3cc60b8`, 02 Nov 2026) | Final run on `cp1-rc1` (commit `7761903`, 07 Nov 2026): recorded, not adopted (`reports/final_run/`) |
 | BLD-12 Deepfake stub | Viraj | Not built. Video events are accepted and marked 'not assessed' (`src/predict.py`, `NOT_ASSESSED`) | Not applicable |
 
@@ -164,3 +164,4 @@ The defects found by testing. Status comes from the run; accepting a defect is t
 | 07 Nov 2026 16:27 | `1b2e4b5` | R3-02 R3-08 R3-09: final run on cp1-rc1, recorded and not adopted |
 | 07 Nov 2026 16:49 | `4f29865` | R3-03 R3-07 R3-10 R2-11: Phase 4.2-4.4 checks before cp1-final |
 | 07 Nov 2026 17:13 | `c74c4ea` | R2-11 R3-02 R3-07: ported cases, workbook and exit criteria on cp1-final |
+| 07 Nov 2026 17:52 | `ff63440` | R3-12 R3-11 R3-08 R3-05 R3-20 R3-24 PT-03 PT-04 MS-03 MS-05 RD-05 RD-06 RD-07: Phase 5 documents from cp1-final |

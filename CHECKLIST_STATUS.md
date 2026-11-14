@@ -2,7 +2,7 @@
 
 All 69 items from section 9 of `CP1_FINISH_TASK.md`. Updated at the end of every phase. Nothing is marked done without evidence (a file, a test or a commit).
 
-**Last update:** end of Phase 5 (documents), 7 Nov 2026. Build `cp1-final` (commit `18ba1d9`); documents generated from it.
+**Last update:** end of Phase 6 (wrap-up), 14 Nov 2026. All six phases done. Build `cp1-final` (commit `18ba1d9`); documents generated from it.
 
 **Status words:** done (finished, with evidence) · partial (some of it is done; the rest is named) · open (not started) · blocked (waiting on something named) · people (a person does it; tracked here).
 
@@ -18,7 +18,7 @@ All 69 items from section 9 of `CP1_FINISH_TASK.md`. Updated at the end of every
 | 3. Models | done | No model adopted. Email: three attempts, none passed the adoption rule (`reports/candidates/email_candidates*.md`), v3 privacy record in `PRIVACY_AND_ETHICS.md`; URL: no retrain needed (`reports/candidates/url_d01.md`); SMS: no licensed data (`reports/candidates/sms_d09.md`); tag `test-run-20261107-3` |
 | 4. Freeze and final run | done | Tags `cp1-rc1` and `cp1-final`. Final run on `cp1-rc1` recorded and not adopted (`reports/final_run/README.md`, `reports/final_run_check.md`); R3-09 comparison on the live models (`reports/comparison_metrics.json`); every check on `cp1-final`: `reports/final_cases_results.json`, `reports/e2e_check.md`, `reports/ui_checks.json`, `reports/offline_check.md`, `reports/benchmark.md`, `reports/nfr05_fresh_clone.json`, `reports/exit_criteria.md`, the FINAL workbook |
 | 5. Documents | done | All generated from `cp1-final` by `scripts/make_documents.py` (no number typed): `reports/FINAL_NUMBERS.md`, `reports/FINAL_TEST_REPORT.md`, `reports/figures/`, `docs/DEMO_SCRIPT.md`, `docs/PATENT_BASIS.md`, `docs/MANUSCRIPT_METHOD_RESULTS.md`, `docs/VIVA_BY_MODULE.md`, `docs/DIARY_ENTRIES.md`, `docs/report/`; templates in `docs/templates/`; checked by `tests/test_documents.py`. Also `README.md`, `docs/USER_MANUAL.md`, `docs/PRIVACY.md`, `docs/CP2_BACKLOG.md`, `docs/diagrams/` |
-| 6. Wrap up | open | Last |
+| 6. Wrap up | done | `docs/PHASE6_SUMMARY.md` (generated from `cp1-final`): what is done, the Review-3 figures against this build, people tasks by owner, decisions for the owner; this checklist finished |
 
 ## Things found in Phase 0 that a person should know
 
@@ -148,9 +148,9 @@ All 69 items from section 9 of `CP1_FINISH_TASK.md`. Updated at the end of every
 | people | 30 |
 | **total** | **69** |
 
-## Resume here (end of Phase 5, 7 Nov 2026)
+## Resume here (end of Phase 6, 14 Nov 2026)
 
-- **Build:** `cp1-final` (commit `18ba1d9`), v2's models. Every number, screenshot and demo comes from it.
-- **Documents:** rebuild them all with `.venv/Scripts/python.exe scripts/make_documents.py` (about 5 minutes). Edit prose in `docs/templates/`, never a generated file.
-- **What is left for code:** nothing in Phases 0 to 5. Open items need people, data (R2-10) or a decision (defect acceptances, voice scope).
-- **Next:** Phase 6, the summary message to the owner: what is done, every changed number, people tasks by owner, and the decisions needed.
+- **All six phases are done.** Build `cp1-final` (commit `18ba1d9`), v2's models. The owner's summary is `docs/PHASE6_SUMMARY.md`.
+- **Documents:** rebuild them all with `.venv/Scripts/python.exe scripts/make_documents.py`. Edit prose in `docs/templates/`, never a generated file.
+- **What is left:** people tasks and decisions only (`docs/PHASE6_SUMMARY.md`, sections 3 and 4), and real bundles (R2-10) for the correlation claim.
+- **The consultancy app** is built in a separate folder (`../app`), from a pinned copy of `cp1-final`; this project is not changed by it.

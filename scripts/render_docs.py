@@ -35,7 +35,22 @@ def blocks(doc):
         return "\n".join(L)
     def exits():
         return "\n".join(["| # | Criterion | Result |", "|---|---|---|"] + [f"| {k.split('.')[-1]} | {name} | {g(k)} |" for k, name in EXIT_NAMES(V)])
-    return {"demo": demo, "corr": corr, "detectors": detectors, "exit": exits}
+    def review3():
+        L = ["| Review-3 figure | At Review-3 | On this build | Changed? |", "|---|---|---|---|"]
+        return "\n".join(L + [f"| {r['figure']} | {r['review3']} | {r['now']} | {'no' if r['same'] else '**yes**'} |" for r in doc["review3"]])
+    def open_defects():
+        L = ["| Defect | Severity | Failing cases | Written proposal |", "|---|---|---|---|"]
+        return "\n".join(L + [f"| {d['id']} | {d['severity']} | {', '.join(d['failing']) or 'none'} | {d['proposal'] or 'None yet: it needs a fix or data first'} |" for d in doc["open_defects"]])
+    def people():
+        names = {"B": "Bala", "V": "Viraj", "K": "Krishna", "M": "Manoj", "T": "The whole team"}; by = {k: [] for k in names}
+        for line in (ROOT / "CHECKLIST_STATUS.md").read_text(encoding="utf-8").splitlines():
+            m = re.match(r"^\| *([A-Z]{1,3}\d?-\d{2}) *\|", line)
+            if not m: continue
+            c = [x.strip() for x in line.strip().strip("|").split("|")]
+            if c[4] not in ("people", "partial", "blocked") or c[6] in ("None", ""): continue
+            for o in re.findall(r"\b[BVKMT]\b", c[2]): by[o].append(f"- **{c[0]}** {c[1]} ({c[4]}): {c[6]}")
+        return "\n\n".join(f"**{names[o]}**\n\n" + "\n".join(v) for o, v in by.items() if v)
+    return {"demo": demo, "corr": corr, "detectors": detectors, "exit": exits, "review3": review3, "open_defects": open_defects, "people": people}
 
 
 def EXIT_NAMES(V):
